@@ -1,0 +1,16 @@
+.tab-content {
+    min-height: 350px;
+}
+
+.modal-show {
+    padding-left: 17px;
+}
+
+.modal-dialog {
+    min-width: 50% !important;
+}
+
+.form-error {
+    font-size: 14px;
+    color: #d93025;
+}

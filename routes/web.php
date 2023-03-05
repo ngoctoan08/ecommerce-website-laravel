@@ -2,6 +2,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +23,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-Route::get('/admin', 'AdminController@loginAdmin');
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/admin', 'AdminController@loginAdmin');
 
 Route::prefix('admin')->group(function () {
 

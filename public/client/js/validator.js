@@ -69,32 +69,7 @@ function Validator(options) {
                         }
                         formData[enableInputs[i].name] =  enableInputs[i].value;
                     }
-                    ///get formData
-                    // if(form.has('avatar')) {
-                    //     // var avatar = form.getAll('avatar')[0].name
-                    //     var avatar = form.getAll('avatar')[0];
-                    //     formData['avatar'] = avatar;
-                    // }
-                    // console.log(avatar);
                     
-                    // if(form.has('sub_avatar[]')) {
-                    //     var subAvatar = form.getAll('sub_avatar[]')
-                    //     for(let i in subAvatar) {
-                    //         if(!Array.isArray(formData['sub_avatar'])) {
-                    //             formData['sub_avatar'] = [subAvatar[i]];
-                    //         } 
-                    //         else {
-                    //             formData['sub_avatar'].push(subAvatar[i])
-                    //         }
-                    //     }
-                    // }
-                    // const formTest = new FormData();
-                    // var test = $('#avatar')[0];
-                    // formTest.append('avatar', test.files[0])
-                    // console.log(test);
-                    
-                    // options.onSubmit(options.form);
-                    // get file in form
                     options.onSubmit(formData);
                 }
             }
@@ -146,6 +121,25 @@ Validator.isRequired = function(selector) {
                     return $.trim(value) ? undefined : "The " + $(selector).attr("name") + " field is required";
             }
             
+        }
+    };
+}
+
+Validator.isEmail = function(selector) {
+    return {
+        selector: selector,
+        check: function (value) {
+            const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            return regexEmail.test(value) ? undefined : "The " + $(selector).attr("name") + " field is not email";
+        }
+    };
+}
+
+Validator.passwordConfirmation = function(selector, password) {
+    return {
+        selector: selector,
+        check: function (value) {
+            return value === password ? undefined : "The " + $(selector).attr("type") + " field do not match ";
         }
     };
 }

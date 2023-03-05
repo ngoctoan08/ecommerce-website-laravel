@@ -192,6 +192,7 @@ $(document).ready(function(event) {
     // $('.btn-save-item').on('click', handleCreate);
     $('.btn-del-item').on('click', handleDelete); //
     $('.btn-restore-item').on('click', handleRestore);
+    // test process category
     $('.test').on('click', function() {
         var formdata = new FormData();
         formdata.append("name", "John Doe");

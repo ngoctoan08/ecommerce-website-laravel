@@ -31,11 +31,11 @@
                         </li>
                     </ul>
               </li>
-              <li>
+              {{-- <li>
                 <a href="{{route('menu.index')}}">
                     <i class="fas fa-chart-bar"></i>Menu</a>
-            </li>
-              <li>
+            </li> --}}
+              {{-- <li>
                   <a href="table.html">
                       <i class="fas fa-table"></i>Tables</a>
               </li>
@@ -102,7 +102,7 @@
                       </li>
                       <li>
                           <a href="typo.html">Typography</a>
-                      </li>
+                      </li> --}}
                   </ul>
               </li>
           </ul>

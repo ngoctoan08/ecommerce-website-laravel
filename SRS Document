@@ -13,11 +13,11 @@ use authorization activity
 only user create record, who have role to delete this record
 
 * tech requirements
-tbl_category: user_id. 
+tbl_category: id, name, description, user_id. 
 --- action. Delete record
     1. middleware auth check user. is user create record?
         1.1. valid   -> next
-        1.2. invalid -> hide button delete (only show view to user)
+        1.2. invalid -> hide button delete (only show view to user) || if user write button 
     2. show confirm delete
     3. delete (record go to trash list)
 

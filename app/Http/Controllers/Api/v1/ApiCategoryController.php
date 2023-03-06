@@ -9,6 +9,7 @@ use App\Http\Requests\CategoryFormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 
 class ApiCategoryController extends Controller
 {
@@ -27,6 +28,7 @@ class ApiCategoryController extends Controller
     // [GET] /
     public function index()
     {
+        // return Auth::user()->name;
         // $categories = $this->category->latest()->paginate(10); //ngay mooi nhat, phan trang 5 ban ghi
         $categories = $this->category->all(); //ngay mooi nhat, phan trang 5 ban ghi
         return response()->json([
@@ -51,6 +53,7 @@ class ApiCategoryController extends Controller
             'name' => $request->name,
             'slug' => Str::slug($request->name, '-'),
             'description' => $request->description,
+            'user_id' => $request->user_id,
         ]);
         return response()->json([
             'status' => 201,

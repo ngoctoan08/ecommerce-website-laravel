@@ -113,7 +113,7 @@ data-backdrop="static" >
                             <div class="card-body card-block">
                                 <form action="{{route('category.store')}}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="form-create-category" name="form-create-category">
                                     {{-- @csrf --}}
-                                    <input type="hidden" id="id" value="">
+                                    <input type="hidden" id="user_id" value="{{ Auth::user()->id }}">
                                     <div class="row form-group">
                                         <div class="col col-md-5">
                                             <label for="parent_id" class=" form-control-label">Belonging to the group:</label>

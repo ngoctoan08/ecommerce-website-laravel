@@ -64,21 +64,19 @@
 
 @section('js')
     <!-- Config URL API-->
-    <script src="{{asset('client/js/config.js')}}"></script>
+    <script src="{{asset('admin/js/config.js')}}"></script>
     <!-- Call API from URL API-->
     {{-- <script src="{{asset('client/js/callApi.js')}}"></script> --}}
     <!-- Alert CDN -->
     <script src="{{asset('admin_template/js/sweetalert.js')}}"></script>
     <!-- Helper Function -->
-    <script src="{{asset('client/js/helper.js')}}"></script>
-    <!-- Processing JS of this page -->
-    <script src="{{asset('admin/category_public/myCategory.js')}}"></script>
+    <script src="{{asset('admin/js/helper.js')}}"></script>
     <!-- Handle Category page -->
     <script src="{{asset('client/js/categoryController.js')}}"></script>
 
-    @if(Session::has('alert'))
+    @if(Session::has('success'))
     <script>
-        alertSuccess('{{Session::get('alert')}}')
+        alertSuccess('{{Session::get('success')}}')
     </script>
     @endif
 @endsection

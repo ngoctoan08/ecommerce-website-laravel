@@ -18,17 +18,23 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-//hien thi home admin
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+Auth::routes(); //Generate route of Auth: eg: login, logout, password,...
 
-Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// Route::get('/admin', 'AdminController@loginAdmin');
+Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function() {
 
-Route::prefix('admin')->group(function () {
-
+    Route::get('/', [
+        'as' => 'admin',
+        'uses' => 'AdminController@index'
+    ]);
+    
+    //hien thi home admin
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/', [
+            'as' => 'admin.dashboard',
+            'uses' => 'AdminController@index'
+        ]);
+    });
+        
         //su dung them cac action trong cung 1 nhom chu de
     Route::prefix('category')->group(function () {
         //khi click vao add cua san pham
@@ -164,6 +170,6 @@ Route::prefix('admin')->group(function () {
 Route::post('ckeditor/upload', 'CKEditorController@upload')->name('ckeditor.image-upload');
 
 
-Route::group(['prefix' => 'laravel-filemanager', 'middleware'], function () {
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => 'auth'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });

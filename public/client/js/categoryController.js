@@ -42,8 +42,8 @@ function createCaterory(data) {
             }
         } else {
             // handleSuccess(data.message);
+            console.log(data.message);
             alertSuccess(data.message);
-            console.log(data);
             // location.reload();     
         }
     })

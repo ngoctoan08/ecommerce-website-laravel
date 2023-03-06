@@ -16,11 +16,11 @@ use App\Http\Middleware\Authenticate;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('v1')->group(function() {
+Route::group(['prefix' => 'v1'], function() {
     Route::prefix('category')->group(function() {
         Route::post('multipleDelete', [ApiCategoryController::class, 'multipleDelete'])->name('category.multipleDelete');
         Route::post('multiplefDelete', [ApiCategoryController::class, 'multiplefDelete'])->name('category.multiplefDelete');

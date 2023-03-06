@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Components\Recursive;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-
 class CategoryController extends Controller
 {
     private $category;
@@ -27,6 +27,7 @@ class CategoryController extends Controller
      */
     public function index()
     {  
+        // dd(Auth::user()->name);
         $option = $this->optionCategory->makeRecursive($this->category, '');
         $client = new Client();
         $request = $client->get($this->urlApi);
@@ -125,7 +126,6 @@ class CategoryController extends Controller
             return redirect()->route('category.edit', $id)->with('success', $response->message);
         }
         else {
-            dd($response->message);
             return redirect()->route('category.edit', $id)->with('success', $response->message);
         }
     }

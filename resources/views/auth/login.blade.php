@@ -72,15 +72,15 @@
     <!-- Handle validate form -->
     <script src="{{asset('client/js/validator.js')}}"></script>
     <script>
-        Validator({
-            form: '#form-login',
-            errorSelector: '.form-error',
-            rules: [
-                Validator.isRequired('#email'),
-                Validator.isEmail('#email'),
-                Validator.isRequired('#password'),
-                Validator.minLength('#password', 8),
-            ],
-        });
+        // Validator({
+        //     form: '#form-login',
+        //     errorSelector: '.form-error',
+        //     rules: [
+        //         Validator.isRequired('#email'),
+        //         Validator.isEmail('#email'),
+        //         Validator.isRequired('#password'),
+        //         Validator.minLength('#password', 8),
+        //     ],
+        // });
     </script>
 @endsection

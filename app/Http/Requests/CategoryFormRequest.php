@@ -34,9 +34,12 @@ class CategoryFormRequest extends FormRequest
                     'max:191'
                 ],
                 'description' => [
-                    // 'required',
+                    'required',
                     'string',
                     'min:1',
+                ],
+                'user_id' => [
+                    'required',
                 ],
             ];
         }

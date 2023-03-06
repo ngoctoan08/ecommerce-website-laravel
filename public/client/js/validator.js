@@ -53,7 +53,7 @@ function Validator(options) {
                 //get data of form
                 if(typeof options.onSubmit === 'function') { //when form is submited
                     var enableInputs = $(options.form).serializeArray(); //get all value of form
-                    
+                    console.log($(options.form));
                     // console.log(enableInputs);
                     var formData = {}; //all input of form
                     // convert array to object
@@ -69,7 +69,9 @@ function Validator(options) {
                         }
                         formData[enableInputs[i].name] =  enableInputs[i].value;
                     }
-                    
+                    if(!$('#user_id').length == 0) {
+                        formData['user_id'] = $('#user_id').val();
+                    }
                     options.onSubmit(formData);
                 }
             }

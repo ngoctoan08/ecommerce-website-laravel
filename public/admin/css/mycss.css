@@ -14,3 +14,9 @@
     font-size: 14px;
     color: #d93025;
 }
+
+.form-create-item,
+.form-create-item input,
+.form-create-item select {
+    font-size: 15px;
+}

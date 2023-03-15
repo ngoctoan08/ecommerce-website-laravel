@@ -109,8 +109,30 @@
                      <div class="tab-pane fade show active" id="custom-nav-home" role="tabpanel" aria-labelledby="custom-nav-home-tab">
                          <div class="card m-t-30" style="border: none !important">
                              <div class="card-body card-block">
-                                <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="form-create-product" name="form-create-product">
+                                <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data" class="form-horizontal form-create-item" id="form-create-product" name="form-create-product">
                                     @csrf
+                                    <input type="hidden" id="user_id" value="{{ Auth::user()->id }}">
+                                    {{-- <div class="row form-group">
+                                        <div class="col col-md-2">
+                                            <label for="code_id" class=" form-control-label"> Mã code</label>
+                                        </div>
+                                        <div class="col-12 col-md-7">
+                                            <input  type="text" id="code_id" name="code_id" placeholder="Mã code (để trống sẽ tự sinh)" class="form-control" value="">
+                                        </div>
+                                    </div> --}}
+                                    <div class="row form-group">
+                                        <div class="col col-md-5">
+                                            <div class="row form-group">
+                                                <div class="col col-md-4">
+                                                    <label for="code_id" class=" form-control-label"> Mã code</label>
+                                                </div>
+                                                <div class="col-12 col-md-7">
+                                                    <input  type="text" id="code_id" name="code_id" placeholder="Mã code (để trống sẽ tự sinh)" class="form-control" value="">
+                                                </div>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                    {{-- Tên sản phẩm --}}
                                     <div class="row form-group">
                                         <div class="col col-md-4">
                                             <div class="row form-group">
@@ -121,15 +143,15 @@
                                                     <input  type="text" id="name" name="name" placeholder=" Nhập tên sản phẩm" class="form-control" value="">
                                                 </div>
                                             </div>
-                                            
-                                        </div>
+                                        </div> 
                                         <div class="col col-md-4">
                                             <div class="row form-group">
                                                 <div class="col col-md-4">
-                                                    <label for="select" class=" form-control-label">Danh mục</label>
+                                                    <label for="select" class=" form-control-label">Nhóm hàng</label>
                                                 </div>
                                                 <div class="col-12 col-md-8">
                                                     <select  name="category_id" id="select" class="form-control">
+                                                        <option value="0"> Nhóm hàng gốc</option>
                                                         {!!$option!!}
                                                     </select>
                                                 </div>
@@ -138,24 +160,83 @@
                                         <div class="col col-md-4">
                                             <div class="row form-group">
                                                 <div class="col col-md-4">
-                                                    <label for="price" class=" form-control-label">Giá</label>
+                                                    <label for="standard_stock" class=" form-control-label"> Tồn định mức</label>
                                                 </div>
                                                 <div class="col-12 col-md-8">
-                                                    <input type="number" min='0' step="0.5" id="price" name="price" placeholder="Nhập giá" class="form-control" value="">
+                                                    <input  type="number" id="standard_stock" name="standard_stock" placeholder="Nhập tồn đinh mức" class="form-control" value="">
+                                                </div>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                    {{-- Các loại giá --}}
+                                    <div class="row form-group">
+                                        <div class="col col-md-4">
+                                            <div class="row form-group">
+                                                <div class="col col-md-4">
+                                                    <label for="entry_price" class=" form-control-label">Giá nhập</label>
+                                                </div>
+                                                <div class="col-12 col-md-8">
+                                                    <input type="number" min='0' step="0.5" id="entry_price" name="entry_price" placeholder="Nhập giá nhập" class="form-control" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-4">
+                                            <div class="row form-group">
+                                                <div class="col col-md-4">
+                                                    <label for="wholesale_price" class=" form-control-label">Giá bán buôn</label>
+                                                </div>
+                                                <div class="col-12 col-md-8">
+                                                    <input type="number" min='0' step="0.5" id="wholesale_price" name="wholesale_price" placeholder="Nhập giá bán buôn" class="form-control" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-4">
+                                            <div class="row form-group">
+                                                <div class="col col-md-4">
+                                                    <label for="retail_price" class=" form-control-label">Giá bán lẻ</label>
+                                                </div>
+                                                <div class="col-12 col-md-8">
+                                                    <input type="number" min='0' step="0.5" id="retail_price" name="retail_price" placeholder="Nhập giá bán lẻ" class="form-control" value="">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
+                                    {{-- Đơn vị quy đổi và mô tả sản phảm --}}
                                     <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="textarea-input" class=" form-control-label">Chi tiết sản phẩm</label>
+                                        <div class="col col-md-4">
+                                            <div class="row form-group">
+                                                <div class="col col-md-4">
+                                                    <label for="select" class=" form-control-label">Đơn vị quy đổi</label>
+                                                </div>
+                                                <div class="col-12 col-md-6 d-flex">
+                                                    <select  name="category_id" id="select" class="form-control">
+                                                        <option value="0"> Nhóm hàng gốc</option>
+                                                        {!!$option!!}
+                                                    </select>
+                                                    <div class="col col-md-2">
+                                                        <button style="height: 38px;" type="button" class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                                            <i class="fa fa-plus-square"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
                                         </div>
-                                        <div class="col-12 col-md-9">
-                                            <textarea id="description" name="description" class="form-control" placeholder="Nhập chi tiết sản phẩm..."></textarea>
-            
+
+                                        <div class="col col-md-8">
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="textarea-input" class=" form-control-label">Chi tiết sản phẩm</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <textarea id="description" name="description" class="form-control" placeholder="Nhập chi tiết sản phẩm..."></textarea>
+                                                </div>
+                                            </div>
                                         </div>
+
+                                        
                                     </div>
+                                    {{-- Avatar --}}
                                     <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="avatar" class=" form-control-label">Ảnh đại diện</label>
@@ -165,6 +246,7 @@
                                             <img class="m-t-10 up_ava__success" style="width: 100px;" src="" alt="">
                                         </div>
                                     </div>
+                                    {{-- Sub images --}}
                                     <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="sub_avatar" class=" form-control-label">Ảnh phụ</label>
@@ -173,8 +255,6 @@
                                             <input type="file" id="sub_avatar" name="sub_avatar[]" multiple="" class="form-control-file" accept="image/png, image/jpeg, image/jpg">
                                         </div>
                                     </div>
-                                {{-- <button type="submit" class="btn btn-primary btn-save-item">Save</button>
-                                </form> --}}
                              </div>
                              
                          </div>
@@ -198,9 +278,9 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button type="submit" class="btn btn-primary btn-save-item">Save</button>
-                <button type="button" class="btn btn-primary test">test</button>
+                {{-- <button type="button" class="btn btn-primary test">test</button> --}}
             </div>
-         {{-- </form> --}}
+         </form>
         </div>
     </div>
  </div>
@@ -223,19 +303,19 @@
     <!-- Handle Validate Form -->
     
     <script>
-        Validator({
-            form: '#form-create-product',
-            errorSelector: '.form-error',
-            rules: [
-                // Validator.isRequired('#name'),
-                // Validator.isRequired('#price'),
-            ],
-            onSubmit: function(data) {
-                // Call API
-                console.log(data);
-                createProduct(data);
-            }
-        });
+        // Validator({
+        //     form: '#form-create-product',
+        //     errorSelector: '.form-error',
+        //     rules: [
+        //         // Validator.isRequired('#name'),
+        //         // Validator.isRequired('#price'),
+        //     ],
+        //     // onSubmit: function(data) {
+        //     //     // Call API
+        //     //     console.log(data);
+        //     //     createProduct(data);
+        //     // }
+        // });
     </script>
     {{-- Handle ckeditor --}}
     <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>

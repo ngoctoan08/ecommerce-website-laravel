@@ -118,6 +118,8 @@ class CategoryController extends Controller
                 'name' => $request->name,
                 'slug' => Str::slug($request->name, '-'),
                 'description' => $request->description,
+                // 
+                // <!-- 'description' => $request->description, -->
             ]
         ]);
         $response = json_decode($request->getBody()->getContents());

@@ -134,7 +134,12 @@ class ApiCategoryController extends Controller
 
     public function destroy($id)
     {
-        //
+        // try {
+        //     $this->category->find($id);
+        // } catch (\Throwable $th) {
+        //     //throw $th;
+        // }
+        
         $this->category->find($id)->delete();
         // return redirect(route('category.index')); //tro ve ham index category
         return response()->json([

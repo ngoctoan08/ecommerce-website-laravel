@@ -10,4 +10,6 @@ class ImageProduct extends Model
 {
     use SoftDeletes;
     // protected $fillable = ['name', 'slug'];
+    protected $guarded = []; //tat ca cac field dc phep insert
+
 }

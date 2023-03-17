@@ -22,3 +22,12 @@ tbl_category: id, name, description, user_id.
     3. delete (record go to trash list)
 
 --- action. Edit record (same above)
+
+
+
+<!-- Database -->
+
+products - categories: FK set-null
+when category is deleted, product.category_id will be set NULL
+
+products - users: FK set-null

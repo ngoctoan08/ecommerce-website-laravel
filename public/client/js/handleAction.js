@@ -26,6 +26,7 @@ function deleteItem(id, url_fDelete = '') {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') //Fix csrf not miss match
           },
     }
     // Fetch API 

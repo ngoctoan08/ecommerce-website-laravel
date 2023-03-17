@@ -9,8 +9,10 @@ use App\Models\Unit;
 use App\Components\Recursive;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductFormRequest;
+use App\Models\ImageProduct;
 use Illuminate\Support\Str;
 use App\Traits\StoreImageTrait;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProductController extends Controller
 {
@@ -19,14 +21,16 @@ class ProductController extends Controller
     private $category;
     private $optionCategory;
     private $unit;
+    private $imagesProduct;
     
     //ham khoi tao co tham so truyen vao la product
-    public function __construct(Product $productModel, Category $categoryModel, Recursive $recursive, Unit $unitModel)
+    public function __construct(Product $productModel, Category $categoryModel, Recursive $recursive, Unit $unitModel, ImageProduct $imageProductModel)
     {
         $this->product = $productModel;
         $this->category = $categoryModel;
         $this->unit = $unitModel;
         $this->optionCategory = $recursive;
+        $this->imagesProduct = $imageProductModel;
     }
 
     /**
@@ -37,8 +41,9 @@ class ProductController extends Controller
     public function index()
     {
         $option = $this->optionCategory->makeRecursive($this->category, '');
-        $products = $this->product->get();
+        $products = $this->product->latest()->paginate(5);
         $units = $this->unit->get();
+        // dd($products);
         return view('admin.product.index')->with([
                 'option' => $option,
                 'products' => $products,
@@ -71,21 +76,32 @@ class ProductController extends Controller
             'user_id' => $request->user_id,
         ];
         //return 2 value 'name' and 'path' && image has been save in public/storage/product
+        // Upload 1 image
         $dataImageUpload = $this->StoreImageTraitUpload($request, 'avatar', 'product'); 
+        // Upload multiple image
+        $dataSubImageUpload = $this->StoreImageTraitUpload($request, 'sub_avatar', 'product');
+        
         if(!empty($dataImageUpload)) {
             $dataProductCreate['name_image'] = $dataImageUpload['name'];
             $dataProductCreate['path_image'] = $dataImageUpload['path'];
         }
         try {
-            $this->product->create($dataProductCreate);
+            $lastId = $this->product->create($dataProductCreate)->id;
+            // dd($lastId);
+            if(!empty($dataSubImageUpload)) {
+                $length = sizeof($dataSubImageUpload);
+                for ($i = 0; $i < $length; $i++) {
+                    $this->imagesProduct->create([
+                        'product_id'=> $lastId,
+                        'name_sub_image'=> $dataSubImageUpload[$i]['name'],
+                        'path_sub_image' => $dataSubImageUpload[$i]['path'] 
+                    ]);
+                }
+            }
             return redirect()->route('product.index');
         } catch (\Throwable $th) {
             throw $th;
         }
-        // return response()->json([
-        //     'status' => 201,
-        //     'message' => 'Data has been saved'
-        // ]);
     }
 
     /**
@@ -107,7 +123,31 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        try {
+            $product = $this->product->findOrFail($id);
+            $subImages = $this->imagesProduct->where('product_id', $id)->get()->all();
+            // // $subImages = $this->imagesProduct->findOrFail($id);
+            // // dd($subImages);
+            // foreach($subImages as $subImage) {
+                
+            //     // dd($subImage->path_image);
+            // }
+            // return;
+            $option = $this->optionCategory->makeRecursive($this->category, '');
+            $units = $this->unit->get();
+            // dd($subImages[0]->id);
+            // foreach($subImages as $subImage) {
+            //     dd($subImage->product_id);
+            // }
+            return view('admin.product.edit')->with([
+                'option' => $option,
+                'product' => $product,
+                'subImages' => $subImages,
+                'units' => $units
+            ]);
+        } catch (ModelNotFoundException $e) {
+            throw($e);
+        }
     }
 
     /**
@@ -131,11 +171,11 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $this->product->find($id)->delete();
-        return "success";
+        // return "success";
         // return redirect()->back(); //tro ve ham index
-        // return response()->json([
-        //     'status' => 200,
-        //     'message' => 'Data has been deleted'
-        // ]);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Data has been deleted'
+        ]);
     }
 }

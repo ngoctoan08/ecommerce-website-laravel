@@ -35,11 +35,10 @@
                                 </tr>
                             </thead>
                             <tbody id="list_product">
-                                
                                 @foreach($products as $product)
-                                <tr class="tr-shadow" id="{{$product->id}}">
+                                <tr class="tr-shadow" id="item_{{$product->id}}">
                                     {{-- <td style="line-height: 145px;">{{ $loop->index + 1 }}</td> --}}
-                                    <td style="line-height: 145px;">{{ $product->id}}</td>
+                                    <td style="line-height: 145px;">{{$product->id}}</td>
                                     <td><input type="checkbox" name="item[]" value="{{$product->id}}"></td>
                                     <td>
                                         <a href="">
@@ -49,9 +48,9 @@
                                     <td>{{$product->name}}</td>
                                     <td>{{$product->category_id}}</td>
                                     <td>{{$product->status}}</td>
-                                    <td>{{$product->entry_price}}</td>
-                                    <td>{{$product->wholesale_price}}</td>
-                                    <td>{{$product->retail_price}}</td>
+                                    <td>@convert($product->entry_price)</td>
+                                    <td>@convert($product->wholesale_price)</td>
+                                    <td>@convert($product->retail_price)</td>
                                     <td>{{$product->standard_stock}}</td>
                                     <td>
                                         <div class="table-data-feature justify-content-center">
@@ -120,6 +119,7 @@
                                 <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data" class="form-horizontal" id="form-create-product" name="form-create-product">
                                     @csrf
                                     <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                    {{-- Mã code --}}
                                     <div class="row form-group">
                                         <div class="col col-md-5">
                                             <div class="row form-group">
@@ -250,14 +250,14 @@
                                         </div>
                                     </div>
                                     {{-- Sub images --}}
-                                    {{-- <div class="row form-group">
+                                    <div class="row form-group">
                                         <div class="col col-md-3">
                                             <label for="sub_avatar" class=" form-control-label">Ảnh phụ</label>
                                         </div>
                                         <div class="col-12 col-md-9 view_sub__avatar">
                                             <input type="file" id="sub_avatar" name="sub_avatar[]" multiple="" class="form-control-file" accept="image/png, image/jpeg, image/jpg">
                                         </div>
-                                    </div> --}}
+                                    </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                         <button type="submit" class="btn btn-primary">Save</button>

@@ -7,16 +7,32 @@ trait StoreImageTrait {
     {
         if($request->hasFile($fieldName)) {
             $uploadFile = $request->file($fieldName);
-            // $uploadFile = $request->$fieldName;
-            $fileNameOrigin = Str::slug($uploadFile->getClientOriginalName()) ; //name of file origin, it saved in public to view user
-            $fileNameHash = $uploadFile->hashName();
-            $filePath = $uploadFile->storeAs('public/'.$folderName, $fileNameHash); //luu trong database
-            // return redirect(route('product.index')); //tro ve ham index product
-            $data = [
-                'name' => $fileNameOrigin,
-                'path' => Storage::url($filePath), 
-            ];
-            return $data;
+            if(is_array($uploadFile)) {
+                $dataMultipleImage = array();
+                foreach($uploadFile as $file) {
+                    $fileNameOrigin = $file->getClientOriginalName(); //name of file origin, it saved in public to view user
+                    $fileNameHash = $file->hashName();
+                    $filePath = $file->storeAs('public/'.$folderName, $fileNameHash); //luu vao folder voi duong dan
+                    // return redirect(route('product.index')); //tro ve ham index product
+                    $data = [
+                        'name' => $fileNameOrigin,
+                        'path' => Storage::url($filePath), 
+                    ];
+                    $dataMultipleImage[] = $data;
+                }
+                return $dataMultipleImage;
+            }
+            else {
+                $fileNameOrigin = Str::slug($uploadFile->getClientOriginalName()) ; //name of file origin, it saved in public to view user
+                $fileNameHash = $uploadFile->hashName();
+                $filePath = $uploadFile->storeAs('public/'.$folderName, $fileNameHash); //luu vao folder voi duong dan
+                // return redirect(route('product.index')); //tro ve ham index product
+                $data = [
+                    'name' => $fileNameOrigin,
+                    'path' => Storage::url($filePath), 
+                ];
+                return $data;
+            }
         }
         return null;
     }

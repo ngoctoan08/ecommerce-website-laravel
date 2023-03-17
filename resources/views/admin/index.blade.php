@@ -9,7 +9,7 @@
   <meta name="author" content="Hau Nguyen">
   <meta name="keywords" content="au theme template">
   <meta name="referrer" content="same-origin">
-  {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- Title Page-->
   @yield('title')
   <!-- Fontfaces CSS-->
@@ -17,7 +17,8 @@
   <link href="{{asset('admin_template/vendor/font-awesome-4.7/css/font-awesome.min.css')}}" rel="stylesheet" media="all">
   <link href="{{asset('admin_template/vendor/font-awesome-5/css/fontawesome-all.min.css')}}" rel="stylesheet" media="all">
   <link href="{{asset('admin_template/vendor/mdi-font/css/material-design-iconic-font.min.css')}}" rel="stylesheet" media="all">
-
+    {{-- Font awesome crack --}}
+    <link rel="stylesheet" href="{{asset('admin/font-awesome/css/all.min.css')}}">
   <!-- Bootstrap CSS-->
   <link href="{{asset('admin_template/vendor/bootstrap-4.1/bootstrap.min.css')}}" rel="stylesheet" media="all">
 
@@ -30,12 +31,15 @@
   <link href="{{asset('admin_template/vendor/select2/select2.min.css')}}" rel="stylesheet" media="all">
   <link href="{{asset('admin_template/vendor/perfect-scrollbar/perfect-scrollbar.css')}}" rel="stylesheet" media="all">
   <link href="{{asset('admin_template/css/mycss.css')}}" rel="stylesheet" media="all">
+
+  {{-- My css --}}
   <link href="{{asset('admin/css/mycss.css')}}" rel="stylesheet" media="all">
 
   <!-- CK Editor -->
   {{-- @yield('css') --}}
   <!-- Main CSS-->
   <link href="{{asset('admin_template/css/theme.css')}}" rel="stylesheet" media="all">
+
 
 </head>
 

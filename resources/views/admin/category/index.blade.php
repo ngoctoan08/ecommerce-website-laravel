@@ -23,7 +23,6 @@
                                     <input type="checkbox" id="check_all">
                                     </th>
                                   <th>No</th>
-
                                   <th>Name</th>
                                   <th>Group</th>
                                   <th>Slug</th>

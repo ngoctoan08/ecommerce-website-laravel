@@ -27,18 +27,58 @@ class ProductFormRequest extends FormRequest
         if(request()->isMethod('POST')) 
         {
             $rules = [
+                'code_id' => [
+                    'bail',
+                    'unique:products'
+                ],
+                'user_id' => [
+                    'bail',
+                    'required',
+                ],
                 'name' => [
+                    'bail',
                     'required',
                     'string',
                     'min:2',
                     'max:191'
                 ],
+                'slug' => [
+                    'bail',
+                    'required',
+                    'string',
+                ],
+                'category_id' => [
+                    'bail',
+                    'required',
+                ],
                 'description' => [
+                    'bail',
                     'required',
                     'string',
                     'min:1',
                 ],
-                'price' => [
+                'entry_price' => [
+                    'bail',
+                    'required',
+                    'min:1',
+                ],
+                'wholesale_price' => [
+                    'bail',
+                    'required',
+                    'min:1',
+                ],
+                'retail_price' => [
+                    'bail',
+                    'required',
+                    'min:1',
+                ],
+                'standard_stock' => [
+                    'bail',
+                    'required',
+                    'min:1',
+                ],
+                'conversion_unit' => [
+                    'bail',
                     'required',
                     'min:1',
                 ],

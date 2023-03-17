@@ -193,27 +193,6 @@ $(document).ready(function(event) {
     $('.btn-del-item').on('click', handleDelete); //
     $('.btn-restore-item').on('click', handleRestore);
     // test process category
-    $('.test').on('click', function() {
-        var formdata = new FormData();
-        formdata.append("name", "John Doe");
-        formdata.append("phone", "1234567890");
-        var x = document.getElementById("avatar").files[0];
-        console.log(x);
-        formdata.append("image", document.getElementById("avatar").files[0]);
-        console.log(formdata.get("name"));
-        var options = {
-            method: "POST",
-            body: formdata,
-            // mode: 'no-cors'
-        }
-
-        fetch('http://localhost:8001/api/v1/product/', options)
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => 
-            console.log(error)
-        );
-    })
 })
 
 

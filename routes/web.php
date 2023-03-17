@@ -131,38 +131,56 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function() {
     //**
     //Product Process
     //su dung them cac action trong cung 1 nhom chu de
-    Route::prefix('product')->group(function () {
-        Route::get('/', [
-            'as' => 'product.index', //action create
-            'uses' => 'Admin\ProductController@index', // su dung ham index cua ProductController
-        ]);
+    Route::resource('product', 'Admin\ProductController');
+    Route::resource('unit', 'Admin\UnitController');
 
-        Route::post('/store', [
-            'as' => 'product.store', //action store
-            'uses' => 'Admin\ProductController@store', // su dung ham store cua ProductController
-        ]);
+    // Route::prefix('product')->group(function () {
+    //     // Route::resource('products', 'Admin\ProductController');
+    //     // Route::get('/', [
+    //     //     'as' => 'product.index', //action create
+    //     //     'uses' => 'Admin\ProductController@index', // su dung ham index cua ProductController
+    //     // ]);
 
-        // list trashed
-        Route::get('/trash', [
-            'as' => 'product.trash', //action trash
-            'uses' => 'Admin\ProductController@trash', // su dung ham trash cua ProductController
-        ]);
+    //     // Route::post('/store', [
+    //     //     'as' => 'product.store', //action store
+    //     //     'uses' => 'Admin\ProductController@store', // su dung ham store cua ProductController
+    //     // ]);
 
-        Route::get('/edit/{id}', [
-            'as' => 'product.edit', //action edit
-            'uses' => 'Admin\ProductController@edit', // su dung ham edit cua ProductController
-        ]);
+    //     // // list trashed
+    //     // Route::get('/trash', [
+    //     //     'as' => 'product.trash', //action trash
+    //     //     'uses' => 'Admin\ProductController@trash', // su dung ham trash cua ProductController
+    //     // ]);
 
-        Route::put('/update/{id}', [
-            'as' => 'product.update', //action update
-            'uses' => 'Admin\ProductController@update', // su dung ham update cua ProductController
-        ]);
+    //     // Route::get('/edit/{id}', [
+    //     //     'as' => 'product.edit', //action edit
+    //     //     'uses' => 'Admin\ProductController@edit', // su dung ham edit cua ProductController
+    //     // ]);
 
-        Route::post('/handle-action', [
-            'as' => 'product.handle-action', //action handleAction
-            'uses' => 'Admin\ProductController@handleAction', // su dung ham handleAction cua ProductController
-        ]);
-    });
+    //     // Route::put('/update/{id}', [
+    //     //     'as' => 'product.update', //action update
+    //     //     'uses' => 'Admin\ProductController@update', // su dung ham update cua ProductController
+    //     // ]);
+
+    //     // Route::post('/handle-action', [
+    //     //     'as' => 'product.handle-action', //action handleAction
+    //     //     'uses' => 'Admin\ProductController@handleAction', // su dung ham handleAction cua ProductController
+    //     // ]);
+    // });
+
+    // Route::prefix('unit')->group(function () {
+    //     Route::get('/', [
+    //         'as' => 'unit.index', //action create
+    //         'uses' => 'Admin\UnitController@index', // su dung ham index cua UnitController
+    //     ]);
+
+    //     Route::post('/store', [
+    //         'as' => 'unit.store', //action store
+    //         'uses' => 'Admin\UnitController@store', // su dung ham store cua UnitController
+    //     ]);
+        
+    // });
+    
 
      //*
 });

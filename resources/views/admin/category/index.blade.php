@@ -50,7 +50,7 @@
                                             <a class="item" title="Edit" href="{{route('category.edit', $category->id )}}">
                                                 <i class="zmdi zmdi-edit"></i>
                                             </a>
-                                            <a data-id = "{{$category->id}}" class="item btn btn-del-item" title="Delete">
+                                            <a data-id = "{{$category->id}}"  class="item btn btn-del-item" title="Delete">
                                                 <i class="zmdi zmdi-delete"></i>
                                             </a>
                                         </div>

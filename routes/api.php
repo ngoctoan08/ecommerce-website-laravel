@@ -30,16 +30,16 @@ Route::group(['prefix' => 'v1'], function() {
         Route::delete('fDelete/{id}', [ApiCategoryController::class, 'fDelete'])->name('category.fDelete');
     });
 
-    Route::prefix('product')->group(function() {
-        Route::post('multipleDelete', [ApiProductController::class, 'multipleDelete'])->name('product.multipleDelete');
-        Route::post('multiplefDelete', [ApiProductController::class, 'multiplefDelete'])->name('product.multiplefDelete');
-        Route::post('multipleRestore', [ApiProductController::class, 'multipleRestore'])->name('product.multipleRestore');
-        Route::get('trash', [ApiProductController::class, 'trash'])->name('product.trash');
-        Route::get('restore/{id}', [ApiProductController::class, 'restore'])->name('product.restore');
-        Route::delete('fDelete/{id}', [ApiProductController::class, 'fDelete'])->name('product.fDelete');
-    });
+    // Route::prefix('product')->group(function() {
+    //     Route::post('multipleDelete', [ApiProductController::class, 'multipleDelete'])->name('product.multipleDelete');
+    //     Route::post('multiplefDelete', [ApiProductController::class, 'multiplefDelete'])->name('product.multiplefDelete');
+    //     Route::post('multipleRestore', [ApiProductController::class, 'multipleRestore'])->name('product.multipleRestore');
+    //     Route::get('trash', [ApiProductController::class, 'trash'])->name('product.trash');
+    //     Route::get('restore/{id}', [ApiProductController::class, 'restore'])->name('product.restore');
+    //     Route::delete('fDelete/{id}', [ApiProductController::class, 'fDelete'])->name('product.fDelete');
+    // });
 
     Route::resource('category', 'Api\v1\ApiCategoryController');
-    Route::resource('product', 'Api\v1\ApiProductController');
+    // Route::resource('product', 'Api\v1\ApiProductController');
 
 });

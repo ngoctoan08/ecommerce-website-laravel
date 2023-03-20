@@ -80,22 +80,22 @@
     <!-- Handle validate form -->
     <script src="{{asset('client/js/validator.js')}}"></script>
     <script>
-        Validator({
-            form: '#form-register',
-            errorSelector: '.form-error',
-            rules: [
-                Validator.isRequired('#name'),
-                Validator.isRequired('#email'),
-                Validator.isEmail('#email'),
-                Validator.isRequired('#password'),
-                Validator.minLength('#password', 8),
-                Validator.isRequired('#password-confirm'),
-                Validator.passwordConfirmation('#password-confirm', $('#password').val()),
-            ],
-            onSubmit: function(data) {
-                console.log(data);
-                // Call API
-            }
-        });
+        // Validator({
+        //     form: '#form-register',
+        //     errorSelector: '.form-error',
+        //     rules: [
+        //         Validator.isRequired('#name'),
+        //         Validator.isRequired('#email'),
+        //         Validator.isEmail('#email'),
+        //         Validator.isRequired('#password'),
+        //         Validator.minLength('#password', 8),
+        //         Validator.isRequired('#password-confirm'),
+        //         Validator.passwordConfirmation('#password-confirm', $('#password').val()),
+        //     ],
+        //     onSubmit: function(data) {
+        //         console.log(data);
+        //         // Call API
+        //     }
+        // });
     </script>
 @endsection

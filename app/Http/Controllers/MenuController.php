@@ -24,11 +24,12 @@ class MenuController extends Controller
     }
 
     public function index() {
-        $menus = $this->menu->latest()->paginate(5);
-        // $menus = $this->menu->latest()->;
+        // $menus = $this->menu->latest()->paginate(5);
+        $menus = $this->menu->latest();
+        $option = $this->menuRecuise->makeRecursive($this->menu, '');
         //cach 1
-        dd($menus);
-        return view('admin.menu.index', compact('menus'));
+        // dd($menus);
+        return view('admin.menu.index', compact('menus', 'option'));
     }
 
 

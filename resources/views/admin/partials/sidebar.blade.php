@@ -20,6 +20,15 @@
                   </ul>
               </li>
               <li class="active has-sub">
+                <a class="js-arrow" href="#">
+                    <i class="fas fa-tachometer-alt"></i>Hệ thống</a>
+                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                    <li>
+                        <a href="{{route('menu.index')}}">Quản lý Menu</a>
+                    </li>
+                </ul>
+            </li>
+              <li class="active has-sub">
                   <a class="js-arrow" href="#">
                       <i class="fas fa-chart-bar"></i>Manage Items</a>
                       <ul class="list-unstyled navbar__sub-list js-sub-list">

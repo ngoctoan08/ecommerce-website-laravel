@@ -28,15 +28,27 @@
                     </li>
                 </ul>
             </li>
+            <li class="active has-sub">
+                <a class="js-arrow" href="#">
+                    <i class="fas fa-tachometer-alt"></i>Nhập - xuất</a>
+                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                    <li>
+                        <a href="{{route('import_export.index')}}">Nhập hàng</a>
+                    </li>
+                </ul>
+            </li>
               <li class="active has-sub">
                   <a class="js-arrow" href="#">
-                      <i class="fas fa-chart-bar"></i>Manage Items</a>
+                      <i class="fas fa-chart-bar"></i>Danh mục</a>
                       <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li>
-                            <a href="{{route('category.index')}}">Manage Categories</a>
+                            <a href="{{route('category.index')}}">Nhóm hàng hóa</a>
                         </li>
                         <li>
-                            <a href="{{route('product.index')}}">Manage Products</a>
+                            <a href="{{route('product.index')}}">Hàng hóa</a>
+                        </li>
+                        <li>
+                            <a href="{{route('provider.index')}}">Nhà cung cấp</a>
                         </li>
                     </ul>
               </li>

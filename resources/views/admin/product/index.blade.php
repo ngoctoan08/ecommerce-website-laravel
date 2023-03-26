@@ -54,6 +54,9 @@
                                     <td>{{$product->standard_stock}}</td>
                                     <td>
                                         <div class="table-data-feature justify-content-center">
+                                            <a data-id = "{{$product->id}}" class="item" href = "{{route('product.import_export', $product->id )}}" title="Import">
+                                                <i class="zmdi zmdi-edit"></i>
+                                            </a>
                                             <a class="item" title="Edit" href="{{route('product.edit', $product->id )}}">
                                                 <i class="zmdi zmdi-edit"></i>
                                             </a>

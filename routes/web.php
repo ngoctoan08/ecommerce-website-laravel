@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -100,8 +100,11 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function() {
     //**
     //Product Process
     //su dung them cac action trong cung 1 nhom chu de
+    Route::get('product/{id}/import_export', [ProductController::class, 'import_export'])->name('product.import_export');
     Route::resource('product', 'Admin\ProductController');
     Route::resource('unit', 'Admin\UnitController');
+    Route::resource('provider', 'Admin\ProviderController');
+    Route::resource('import_export', 'Admin\ImportExportController');
 });
 
 Route::post('ckeditor/upload', 'CKEditorController@upload')->name('ckeditor.image-upload');

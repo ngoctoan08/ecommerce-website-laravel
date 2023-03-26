@@ -31,3 +31,27 @@ products - categories: FK set-null
 when category is deleted, product.category_id will be set NULL
 
 products - users: FK set-null
+
+
+
+<!-- CHỨC NĂNG -->
+<!-- Web -->
+Xem thông tin hàng hóa
+Đánh giá sản phẩm
+Đặt hàng -> (Yêu cầu đăng nhập)
+Thanh toán: khi nhận hàng || Chuyển khoản
+<!-- Admin -->
+CURD: Menu, Nhóm hàng, Loại hàng, User.
+Phân quyền user: - Quyền truy cập/ quyền hành động
+Báo thu tổng hợp:
+- Thu chi
+- Doanh thu
+- Hàng tồn
+
+<!-- PHẠM VI -->
+
+
+
+
+<!-- Nhập hàng -->
+sử dụng các table: partner

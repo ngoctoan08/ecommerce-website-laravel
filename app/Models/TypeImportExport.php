@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class TypeImportExport extends Model
 {
     use HasFactory;
+    protected $guarded = []; //tat ca cac field dc phep insert
+
 }

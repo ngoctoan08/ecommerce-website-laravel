@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\ImportExportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -104,6 +105,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function() {
     Route::resource('product', 'Admin\ProductController');
     Route::resource('unit', 'Admin\UnitController');
     Route::resource('provider', 'Admin\ProviderController');
+    Route::get('import_export/{id}/add', [ImportExportController::class, 'add'])->name('import_export.add');
+    Route::get('import_export/{id}/{idImportExport}', [ImportExportController::class, 'showDetail'])->name('import_export.show-detail');
     Route::resource('import_export', 'Admin\ImportExportController');
 });
 

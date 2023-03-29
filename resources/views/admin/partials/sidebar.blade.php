@@ -33,7 +33,7 @@
                     <i class="fas fa-tachometer-alt"></i>Nhập - xuất</a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list">
                     <li>
-                        <a href="{{route('import_export.index')}}">Nhập hàng</a>
+                        <a href="{{route('import_export.show', 1)}}">Nhập hàng</a>
                     </li>
                 </ul>
             </li>

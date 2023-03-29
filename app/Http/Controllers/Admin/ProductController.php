@@ -110,9 +110,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id) 
     {
-        //
+        $product = $this->product->find($id);
+        return response()->json([
+            'result' => $product,
+            'status' => 200
+        ]);
     }
 
     /**
@@ -126,13 +130,6 @@ class ProductController extends Controller
         try {
             $product = $this->product->findOrFail($id);
             $subImages = $this->imagesProduct->where('product_id', $id)->get()->all();
-            // // $subImages = $this->imagesProduct->findOrFail($id);
-            // // dd($subImages);
-            // foreach($subImages as $subImage) {
-                
-            //     // dd($subImage->path_image);
-            // }
-            // return;
             $option = $this->optionCategory->makeRecursive($this->category, '');
             $units = $this->unit->get();
             // dd($subImages[0]->id);

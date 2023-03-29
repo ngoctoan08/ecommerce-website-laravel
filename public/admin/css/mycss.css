@@ -52,3 +52,27 @@
     justify-content: center;
     align-items: center;
 }
+
+
+/* CSS font-size import export products */
+
+.form-create-import-product .form-control,
+.form-create-import-product .form-control-label,
+.form-create-import-product .form-check-label,
+.form-create-import-product .form-check-input {
+    font-size: 14px !important;
+}
+
+.form-create-import-product .money {
+    width: 130px;
+}
+
+.form-create-import-product .bill_tax_money {
+    margin-right: 5px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

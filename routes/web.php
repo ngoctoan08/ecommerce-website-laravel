@@ -21,6 +21,7 @@ Route::get('/welcome', function () {
 
 Auth::routes(); //Generate route of Auth: eg: login, logout, password,...
 
+// Admin page
 Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function() {
 
     Route::get('/', [
@@ -110,6 +111,18 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function() {
     Route::resource('import_export', 'Admin\ImportExportController');
 });
 
+
+// Web page
+Route::group(['prefix' => '/'], function() {
+    Route::get('/', [
+        'as' => '/',
+        'uses' => 'HomeController@index'
+    ]);
+    Route::get('/danh-muc', [
+        'as' => '/danh-muc',
+        'uses' => 'HomeController@test'
+    ]);
+});
 Route::post('ckeditor/upload', 'CKEditorController@upload')->name('ckeditor.image-upload');
 
 

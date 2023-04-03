@@ -28,12 +28,14 @@ class MenuFormRequest extends FormRequest
             $rules = [
                 'name' => [
                     'required',
-                    'unique:menus',
                     'string',
                     'min:2',
                     'max:191'
                 ],
                 'parent_id' => [
+                    'required'
+                ],
+                'page_id' => [
                     'required'
                 ],
             ];
@@ -43,7 +45,6 @@ class MenuFormRequest extends FormRequest
             $rules = [
                 'name' => [
                     'required',
-                    'unique:menus',
                     'string',
                     'min:200',
                 ],

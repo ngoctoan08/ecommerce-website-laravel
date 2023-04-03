@@ -18,6 +18,11 @@ class Category extends Model
         return $this->hasMany(Product::class, 'category_id');
     }
 
+    public function categoryChildren()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+    
     public function users() : BelongsTo
     {
         return $this->BelongsTo(User::class, 'user_id');

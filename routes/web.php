@@ -70,30 +70,6 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function() {
             'as' => 'category.handle-action', //action handleAction
             'uses' => 'Admin\CategoryController@handleAction', // su dung ham handleAction cua CategoryController
         ]);
-
-        // Route::get('/delete/{id}', [
-        //     'as' => 'category.delete', //action delete
-        //     'uses' => 'CategoryController@delete', // su dung ham delete cua CategoryController
-        // ]);
-
-        // Route::get('/force-delete/{id}', [
-        //     'as' => 'category.force-delete', //action delete
-        //     'uses' => 'CategoryController@force_delete', // su dung ham delete cua CategoryController
-        // ]);
-        // //phuong thuc post, gui form len server
-        // Route::post('/store', [
-        //     'as' => 'category.store', //action store
-        //     'uses' => 'CategoryController@store',
-        // ]);
-
-        // Route::get('/trash', [
-        //     'as' => 'category.trash', //action trash
-        //     'uses' => 'CategoryController@trash',
-        // ]);
-        // Route::get('/restore/{id}', [
-        //     'as' => 'category.restore', //action trash
-        //     'uses' => 'CategoryController@restore',
-        // ]);
     });
 
     //menu Process
@@ -118,10 +94,25 @@ Route::group(['prefix' => '/'], function() {
         'as' => '/',
         'uses' => 'HomeController@index'
     ]);
+    Route::get('trang-chu', [
+        'as' => '/',
+        'uses' => 'HomeController@index'
+    ]);
     Route::get('/danh-muc', [
         'as' => '/danh-muc',
-        'uses' => 'HomeController@test'
+        'uses' => 'HomeController@category'
     ]);
+
+    Route::group(['prefix' => 'san-pham'], function() { 
+        Route::get('/{title}', [
+            'as' => 'san-pham.index', //action
+            'uses' => 'Web\ProductController@index', // su dung 
+        ]);
+        Route::get('/{title}/{slug}', [
+            'as' => 'san-pham.show', //action
+            'uses' => 'Web\ProductController@show', // su dung
+        ]);
+    });
 });
 Route::post('ckeditor/upload', 'CKEditorController@upload')->name('ckeditor.image-upload');
 

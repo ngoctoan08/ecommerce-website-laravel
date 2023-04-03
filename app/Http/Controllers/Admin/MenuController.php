@@ -58,6 +58,7 @@ class MenuController extends Controller
         $this->menu->create([
             'name' => $request->name,
             'parent_id' => $request->parent_id,
+            'page_id' => $request->page_id,
             'slug' => Str::slug($request->name, '-')
         ]);
         return response()->json([
@@ -103,6 +104,7 @@ class MenuController extends Controller
         $menu = $this->menu->find($id)->update([
             'name' => $request->name,
             'parent_id' => $request->parent_id,
+            'page_id' => $request->page_id,
             'slug' => Str::slug($request->name, '-')
         ]);
         return redirect()->back()->with('success', 'Cập nhật danh mục thành công!'); //tro ve ham index menu

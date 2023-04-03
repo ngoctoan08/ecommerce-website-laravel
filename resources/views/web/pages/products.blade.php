@@ -1,207 +1,152 @@
 @extends('web.index')
 @section('title')
-<title>Trang chủ</title>
+<title>Sản phẩm</title>
 @endsection
 
-@section('content')
 <!-- banner -->
 <section class="banner">
     <div class="img-banner">
-        <img src="{{asset('web/image/banner/banner-index.jpg')}}" alt="">
+        <img src="{{asset('web/image/banner/banner-product.jpg')}}" alt="">
     </div>
-    <div class="content-banner">
-        <div class="note-title-banner">
-            <span>New collection</span>
-        </div>
-        <div class="title-banner mb-60">
-            <span>Summer - Autumn Lookbook 2022</span>
-        </div>
-        <div class="mini-note-title-banner">
-            <span>How to be a gentleman</span>
-        </div>
-        <div class="text-banner">
-            <span>Ấn tượng, lịch lãm và đầy nam tính cùng với những xu hướng phụ kiện Hè Thu 2022 của LaForce</span>
-        </div>
-    </div>
-</section>
-
-<!-- product -->
-<section class="product d-flex">
-    <!-- left -->
-    <div class="box-product">
-        <div class="box-content-product color-box-left" >
-            <a href="index.php?page=product&method=western">
-                <div class="img-product d-flex jtf-center">
-                    <img src="{{asset('web/image/index-product (1).png')}}" alt="">
-                </div>
-                <div class="text-img-product">
-                    <h2>Giày da nam</h2>
-                    <p>230 sản phẩm</p>
-                </div>
-            </a>
-        </div>
-    </div>
-    <!-- right -->
-    <div class="box-product box-product-right">
-        <!-- 1 -->
-        <div class="box-content-product">
-            <a href="./list-detail-product.html">
-                <div class="img-product d-flex jtf-center">
-                    <img src="{{asset('web/image/index-product (2).png')}}" alt="">
-                </div>
-                <div class="text-img-product">
-                    <h2>Ví da nam</h2>
-                    <p>230 sản phẩm</p>
-                </div>
-            </a>
-        </div>
-        <!-- 2 -->
-        <div class="box-content-product color-box-right-gray">
-            <a href="./list-detail-product.html">
-                <div class="img-product d-flex jtf-center">
-                    <img src="{{asset('web/image/index-product (3).png')}}" alt="">
-                </div>
-                <div class="text-img-product">
-                    <h2>Túi xách nam</h2>
-                    <p>230 sản phẩm</p>
-                </div>
-            </a>
-        </div>
-        <!-- 3 -->
-        <div class="box-content-product color-box-right-gray">
-            <a href="./list-detail-product.html">
-                <div class="img-product d-flex jtf-center">
-                    <img src="{{asset('web/image/index-product (4).png')}}" alt="">
-                </div>
-                <div class="text-img-product">
-                    <h2>Thắt lưng nam</h2>
-                    <p>230 sản phẩm</p>
-                </div>
-            </a>
-        </div>
-        <!-- 4 -->
-        <div class="box-content-product color-box-right-green">
-            <a href="index.php?page=category">
-                <div class="text-img-product-seen-more">
-                    <h3>xem thêm</h3>
-                    <h3>các sản phẩm khác</h3>
-                    <span>
-                        <i class="fa-solid fa-arrow-right-long"></i>
-                    </span>
-                </div>
-            </a>
+    <div class="mini-list-banner">
+        <ul class="custom-nav d-flex jtf-center alg-center">
+            <li>
+                <a href="trang-chu">Trang chủ</a>
+            </li>
+            <li>/</li>
+            <li>
+                <a href="{{route('san-pham.index', $title)}}">Sản phẩm</a>
+            </li>
+        </ul>
+        <div class="name-page">
+            <span>Sản phẩm</span>
         </div>
     </div>
 </section>
 
-<!-- about-the-product -->
-<section class="about-the-product">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="widget-title d-flex jtf-between">
-                    <span>01</span>
-                    <span>Về sản phẩm</span>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="box-text-content">
-                    <div class="note-text-content">
-                        <span>Về chất liệu</span>
-                        <p>Chất liệu da nguyên tấm</p>
-                    </div>
-                    <div class="text-content">
-                        <p>Tất cả các sản phẩm của LaForce được làm từ chất liệu da nguyên tấm, đây là phần da đắt tiền nhất lấy từ lớp da trên cùng của con bò, giữ lại được tất cả kết cấu nguyên thủy của da, mang đến chất lượng tốt nhất, chính vì thế chúng rất bền và khó bị hỏng.</p>
-                        <p>Đó cũng là điểm khác biệt lớn nhất trong sản phẩm của LaForce so với các sản phẩm làm bằng da thông thường khác. Đối với những sản phẩm da thông thường, bề mặt chúng được phủ lên một lớp da tổng hợp nên rất dễ bị nổ hoặc gấp nếp.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="img-about-the-product">
-                    <img src="{{asset('web/image/chatlieuda.png')}}" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- 1 -->
-<section class="about-the-product quytrinh_home">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-7">
-                <div class="img-about-the-product">
-                    <img src="{{asset('web/image/cach-tao-ra-sp.png')}}" alt="">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="box-text-content">
-                    <div class="note-text-content txt-right">
-                        <span>QUY TRÌNH</span>
-                        <p>Cách tạo ra 1 sản phẩm</p>
-                    </div>
-                    <div class="text-content">
-                        <p>Chế tạo những sản phẩm từ da nguyên tấm là cả một nghệ thuật. Chúng được áp dụng những kĩ thuật truyền thống kết hợp với công nghệ hiện đại nhất. Cả quá trình được diễn ra khép kín và không hề có ảnh hưởng từ môi trường bên ngoài. Khi sản phẩm đã được chế xuất, chúng sẽ được hoàn thiện thông qua bàn tay khéo léo của những người thợ có kinh nghiệm lâu năm. Chính vì thế, bạn có thể cảm nhận rõ được chất liệu của sản phẩm qua những đặc tính của sản phẩm như màu sắc ẩn sâu bên trong sản phẩm, khác với những đồ da rẻ tiền.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="line-content-about-product">
-                    <span></span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- 2 -->
-<section class="about-the-product quytrinh_home">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="line-content-about-product">
-                    <span></span>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="box-text-content">
-                    <div class="note-text-content">
-                        <span>Sản phẩm</span>
-                        <p>Thiết kế độc đáo —sáng tạo</p>
-                    </div>
-                    <div class="text-content">
-                        <p>LaForce mang đến cho người dùng những trải nghiệm tuyệt vời về các sản phẩm. Thiết kế độc đáo và đầy sáng tạo làm nổi bật tính cách của sản phẩm khiến bất cứ khách hàng nào cũng muốn sở hữu. Những ý tưởng thiết kế tuyệt vời được phối hợp nhuần nhuyễn qua bàn tay của những thợ thủ công có nhiều năm kinh nghiệm cùng với những chất liệu xa xỉ, cao cấp để tạo ra những sản phẩm không những chỉ tốt về chất lượng mà còn hợp thời trang, thẩm mỹ của người dùng.</p>
-                        <p>LaForce luôn cập nhật, phát triển theo xu hướng thời trang thế giới nhưng vẫn luôn giữ lại những nét đẹp trong thiết kế để tạo cho khách hàng những sản phẩm không chỉ sang trọng, đẳng cấp mà còn hợp thời trang, có tính thẩm mỹ.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="img-about-the-product">
-                    <img src="{{asset('web/image/Thiet-ke-sang-tao.png')}}" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- about-the-La-forcet -->
-<section class="about-the-La-force">
+ <!-- list-detail-product -->
+<section class="list-detail-product">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
-                <div class="widget-title d-flex jtf-between">
-                    <span>02</span>
-                    <span>Về La-force</span>
+            <!-- filter -->
+            <div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="filter-list-product">
+                    <!-- filter-name-product -->
+                    <div class="filter-product">
+                        <div class="title-filter">
+                            <span>Sản phẩm</span>
+                        </div>
+                        <div class="box-list-filter">
+                            <ul class="list-filter">
+                                @foreach($categories as $category)
+                                <li>
+                                    <a href="{{$category->category_slug}}"> <span>{{$category->category_qty}}</span> {{$category->category_name}}</a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- filter-price -->
+                    <div class="filter-price mt-60">
+                        <select name="arrange_price" id="" class="inp-choose-size">
+                            <option value="">Sắp sắp theo giá</option>
+                            <option value="">Từ cao đến thấp</option>
+                            <option value="">Từ thấp đến cao</option>
+                        </select>
+                        <!-- <div class="title-filter">
+                            <span>Lọc theo giá tiền</span>
+                        </div>
+                        <div class="range-slide">
+                            <div class="slide">
+                                <div class="line-range-input" id="line-range-input" style="left: 0%; right: 0%;"></div>
+                                <span class="thumb-range-input" id="thumbMin" style="left: 0%;"></span>
+                                <span class="thumb-range-input" id="thumbMax" style="left: 100%;"></span>
+                            </div>
+                            <input id="rangeMin" type="range" max="100" min="10" step="5" value="0">
+                            <input id="rangeMax" type="range" max="100" min="10" step="5" value="100">
+                        </div>
+                        <div class="txt-filter-price d-flex alg-center">
+                            <div class="btn-filter-price">
+                                <button>
+                                    <span>Lọc</span>
+                                </button>
+                            </div>
+                            <div class="txt-values">
+                                <span>Giá</span>
+                                <span id="min">1,200,000 ₫</span>
+                                <span>-</span>
+                                <span id="max">2,350,000 ₫</span>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <!-- filter-size -->
+                    
                 </div>
             </div>
-            <div class="col-md-8">
-                <div class="box-text-content">
-                    <div class="note-text-content txt-right ">
-                        <p>Chất liệu 100% da bò nhập khẩu</p>
+            <!-- content-list-detail-product -->
+            <div class="col-md-9 col-sm-12 col-xs-12">
+                <div class="content-list-detail-product">
+                    <div class="row">
+                        @foreach($products as $product)
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <a href="{{route('san-pham.show',['title'=> $title, 'slug' =>  $product->slug])}}">
+                                <div class="box-list-detail">
+                                    <div class="img-list-detail">
+                                        <img src="{{asset($product->path_image)}}" alt="{{$product->name_image}}">
+                                    </div>
+                                    <div class="box-text-list-detail">
+                                        <div class="name-product">
+                                            <span>{{$product->name}} </span>
+                                        </div>
+                                        <div class="text-price">
+                                            <span class="text-price-gray">{{$product->retail_price * 100 / 10}} </span>
+                                            <span>{{$product->retail_price}} </span>
+                                        </div>
+                                    </div>
+                                    <div class="sale-off">
+                                        <span>-10%</span>
+                                    </div>
+                            </a>
+
+                            <div class="btn-add">
+                                <button class="icon-add add_to_cart" value="{{$product->id}} ">
+                                    <span>
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </span>
+                                </button>
+                                <span class="icon-add icon-view-infor view-infor" product-id = "{{$product->id}} ">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>
+                            </div>
+                            {{-- Chọn size --}}
+                        </div>
                     </div>
-                    <div class="text-content">
-                        <p>LaForce với hệ thống 23 cửa hàng trên toàn quốc và tiếp tục mở rộng trong tương lai, chúng tôi mong muốn sẽ mang đến những sản phẩm đồ da chất lượng nhất cho khách hàng.</p>
-                        <p>LaForce – sản phẩm đồ da của người Việt.</p>
+                        @endforeach
+                    </div>
+
+                    {{-- thiếu phần phân trang --}}
+                    <div class="post-product">
+                        <h1>Giày tăng chiều cao nam cao cấp Laforce – Độn đế cao 5 – 7cm</h1>
+                        <p>Giày tăng chiều cao nam Laforce cao bao nhiêu cm? Kết hợp thế nào? Mẫu giày độn nam nào bán chạy nhất?,…Là những băn khoăn hàng đầu của khách hàng khi mua giày đế cao nam tại Laforce. Đừng bỏ lỡ bài viết nếu bạn đang quan tâm tới dòng sản phẩm thời thượng này nhé.</p>
+                        <h2>I – Giày cao nam Laforce cao bao nhiêu cm? Hợp với phong cách nào?</h2>
+                        <p>Giày tăng chiều cao nam hay còn được biết đến với tên gọi giày cao, giày độn đế, giày đế cao. Đây là loại phụ kiện hoàn hảo giúp tăng thêm sự lịch lãm và cải thiện chiều cao siêu đỉnh của nam giới.</p>
+                        <p>Với thế mạnh hơn 10 năm nghiên cứu sản xuất đồ da, quy tụ hàng trăm nghệ nhân chế tác giày, Laforce đã khẳng định được vị thế số 1 trên thị trường giày cao nam.</p>
+                        <p>
+                            <img src="./image/produc-detail/post-product-detail (1).png" alt="">
+                        </p>
+                        <p>
+                            <i>Giày nam tăng chiều cao tại Laforce có thể giúp cải thiện chiều cao tới 5 – 7cm.</i>
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, nostrum cumque aspernatur blanditiis nam tenetur tempore numquam itaque, quos mollitia iusto quaerat sed assumenda vel placeat quibusdam tempora rem dolorem.
+                        </p>
+                    </div>
+                    <div class="btn-readmore">
+                        <span>đọc thêm</span>
+                        <div class="btn-readmore-post">
+                            <span>thu gọn</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -209,8 +154,31 @@
     </div>
 </section>
 
-<!-- look-book -->
+<!-- popup-infor-product -->
+<section class="popup-infor-product">
+    <div class="box-list-popup-infor">
+        <!-- 1 -->
+        <div class="content-popup-infor">
+            <div class="name-list-popup">
+                <span>Thông tin chi tiết</span>
+            </div>
+            <div class="content-list-popup">
+                {{-- Xử lý ajax --}}
+            </div>
+        </div>
+        <!-- close-popup -->
+        <div class="close-popup">
+            <span>
+                <i class="fa-solid fa-xmark"></i>
+            </span>
+        </div>
+    </div>
+</section>
+
+
+
 @section('lookbook')
+<!-- look-book -->
 <section class="look-book">
     <div class="title-lookbook">
         <a href="#">
@@ -272,9 +240,9 @@
 </section>
 @endsection
 
-
-<!-- feedback -->
 @section('feedback')
+<!-- feedback -->
+<!-- feedback -->
 <section class="feedback">
     <div class="box-feedback d-flex jtf-between ">
         <!-- left -->
@@ -370,9 +338,10 @@
     </div>
 </section>
 @endsection
-<!-- news -->
 
 @section('news')
+<!-- news -->
+<!-- news -->
 <section class="news">
     <div class="container">
         <div class="title-box-news">
@@ -444,5 +413,4 @@
         </div>
     </div>  
 </section>
-
 @endsection

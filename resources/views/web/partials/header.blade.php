@@ -18,47 +18,32 @@
                         <i class="fa-solid fa-xmark"></i>
                     </span>
                 </div>
-                <ul class="custom-nav list-menu-header d-flex"> 
-                    <li class="">
-                        <a href="trang-chu">Trang chủ</a>
-                    </li>
-                    {{-- <li class="<?= checkActive('category') ?>"> --}}
-                    <li class="">
-                        <div class="d-flex alg-center jtf-between">
-                            <a href="danh-muc">Danh mục</a>
-                            <div class="icon-mini-menu">
-                                <span>
-                                    <i class="fa-solid fa-plus"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <ul class="custom-nav mini-box-list-menu">
-                            <!-- giầy nam -->
-                            <li class="menu-item-has-children">
-                                <a href="san-pham/giay-luoi/1"></a>
-                                <ul class="custom-nav sub-menu">
-                                    <li>
-                                        <a href="san-pham/giay-tay/1">Giày tây nam</a>
-                                    </li>
-                                    <li>
-                                        <a href="san-pham/giay-luoi/1">Giày lười nam</a>
+                <ul class="custom-nav list-menu-header d-flex">
+                    @foreach($menus as $menu) 
+                        <li class="">
+                            <a href="{{$menu->slug}}">{{$menu->name}}</a>
+                            {{-- @if($menu->menuChildren->count())
+                                <div class="d-flex alg-center jtf-between">
+                                    <div class="icon-mini-menu">
+                                        <span>
+                                            <i class="fa-solid fa-plus"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <ul class="custom-nav mini-box-list-menu">
+                                    <li class="menu-item-has-children">
+                                        <ul class="custom-nav sub-menu">
+                                            @foreach($menu->menuChildren as $menuChidlren)
+                                                <li>
+                                                    <a href="{{$menuChidlren->slug}}">{{$menuChidlren->name}}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </li>
                                 </ul>
-                            </li>
-                        </ul>
-                    </li>       
-                    <li class="">
-                        <a href="gioi-thieu">Giới thiệu</a>
-                    </li>
-                    <li class="">
-                        <a href="lien-he">Liên hệ</a>
-                    </li>
-                    <li class="">
-                        <a href="tin-tuc">Tin tức</a>
-                    </li>
-                    <!-- <li>
-                        <a href="#">Đăng ký đại lý</a>
-                    </li> -->
+                            @endif --}}
+                        </li>
+                    @endforeach
                 </ul>
             </div>  
             <div class="box-cart_search d-flex mr-60">

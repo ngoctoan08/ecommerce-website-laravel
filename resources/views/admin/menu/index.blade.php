@@ -26,6 +26,7 @@
                                     <th>Tên menu</th>
                                     <th>Slug</th>
                                     <th>Parent ID</th>
+                                    <th>Page</th>
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
@@ -42,6 +43,7 @@
                                     <td>{{$menu->name}}</td>
                                     <td>{{$menu->slug}}</td>
                                     <td>{{$menu->parent_id}}</td>
+                                    <td>{{$menu->page_id == 0 ? 'Admin' : 'Web'}}</td>
                                     <td>
                                         <div class="table-data-feature justify-content-center">
                                             <div class="table-data-feature justify-content-center">
@@ -100,10 +102,6 @@ data-backdrop="static" >
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home"
                             aria-selected="true">General information</a>
-                        {{-- <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile"
-                            aria-selected="false">Profile</a>
-                        <a class="nav-item nav-link" id="custom-nav-contact-tab" data-toggle="tab" href="#custom-nav-contact" role="tab" aria-controls="custom-nav-contact"
-                            aria-selected="false">Contact</a> --}}
                     </div>
                 </nav>
                 <div class="tab-content pl-3 pt-2" id="nav-tabContent">
@@ -132,6 +130,18 @@ data-backdrop="static" >
                                         <div class="col-12 col-md-7 col-name">
                                             <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="">
                                         </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-5">
+                                            <label for="page" class=" form-control-label">Page:</label>
+                                        </div>
+                                        <div class="col-12 col-md-7">
+                                            <select required name="page_id" id="page" class="form-control">
+                                                <option value="0"> Admin</option>
+                                                <option value="1"> Web</option>
+                                            </select>
+                                        </div>
+                                        <span class="form-message"></span>
                                     </div>
                             </div>
                             

@@ -4,7 +4,7 @@
             <!-- 1 -->
             <div class="icon-mini-footer d-flex alg-center">
                 <div class="img-icon">
-                    <img src="./image/icon/icon_security.png" alt="">
+                    <img src="{{asset('web/image/icon/icon_security.png')}}" alt="">
                 </div>
                 <div class="text-mini-footer ml-15">
                     <span>Chất liệu 100% da thật</span>
@@ -13,7 +13,7 @@
             <!-- 2 -->
             <div class="icon-mini-footer d-flex alg-center">
                 <div class="img-icon">
-                    <img src="./image/icon/icon_baohanh.png" alt="">
+                    <img src="{{asset('web/image/icon/icon_baohanh.png')}}" alt="">
                 </div>
                 <div class="text-mini-footer ml-15">
                     <span>Chất liệu 100% da thật</span>
@@ -22,7 +22,7 @@
             <!-- 3 -->
             <div class="icon-mini-footer d-flex alg-center">
                 <div class="img-icon">
-                    <img src="./image/icon/icon_car.png" alt="">
+                    <img src="{{asset('web/image/icon/icon_car.png')}}" alt="">
                 </div>
                 <div class="text-mini-footer ml-15">
                     <span>Chất liệu 100% da thật</span>
@@ -256,7 +256,7 @@
                 <!-- hotline -->
                 <div class="hotline-footer">
                     <div class="icon-logo-footer">
-                        <img src="./image/logo/logo-footer.png" alt="">
+                        <img src="{{asset('web/image/logo/logo-footer.png')}}" alt="">
                     </div>
                     <p>
                         <span>Hotline:</span>
@@ -357,7 +357,7 @@
             <!-- footer-under -->
             <div class="footer-under">
                 <div class="box-copyright">
-                    <img src="./image/logo/bocongthuong.png" alt="">
+                    <img src="{{asset('web/image/icon/bocongthuong.png')}}" alt="">
                     <span> @2022 All rights reserved Laforce</span>
                 </div>
                 <div class="contact-address-footer">

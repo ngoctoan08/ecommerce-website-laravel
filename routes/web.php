@@ -95,23 +95,61 @@ Route::group(['prefix' => '/'], function() {
         'uses' => 'HomeController@index'
     ]);
     Route::get('trang-chu', [
-        'as' => '/',
+        'as' => 'trang-chu',
+        'uses' => 'HomeController@index'
+    ]);
+    Route::get('gioi-thieu', [
+        'as' => 'gioi-thieu',
+        'uses' => 'HomeController@index'
+    ]);
+    Route::get('tin-tuc', [
+        'as' => 'tin-tuc',
+        'uses' => 'HomeController@index'
+    ]);
+    Route::get('lien-he', [
+        'as' => 'lien-he',
         'uses' => 'HomeController@index'
     ]);
     Route::get('/danh-muc', [
-        'as' => '/danh-muc',
+        'as' => 'danh-muc',
         'uses' => 'HomeController@category'
     ]);
 
     Route::group(['prefix' => 'san-pham'], function() { 
+        // Show list product by category_id
+        // param: title = slug of category
         Route::get('/{title}', [
-            'as' => 'san-pham.index', //action
-            'uses' => 'Web\ProductController@index', // su dung 
+            'as' => 'web-product.index', //name of route
+            'uses' => 'Web\ProductController@index', // 
         ]);
-        Route::get('/{title}/{slug}', [
-            'as' => 'san-pham.show', //action
-            'uses' => 'Web\ProductController@show', // su dung
+        
+        // Show detail product by product_id
+        // param: slug = slug of product
+        Route::get('/{title}/{id}/{slug}', [
+            'as' => 'web-product.show', //name of route
+            'uses' => 'Web\ProductController@show', // 
         ]);
+
+        // Handle add to cart
+        Route::post('/add-to-cart', [
+            'as' => 'web-product.add-to-cart', //name of route
+            'uses' => 'Web\ProductController@addToCart', // 
+        ]);
+        
+        // post data to san-pham/id
+        Route::post('/feedback/{id}', [
+            'as' => 'web-product.store-feedback', //name of route
+            'uses' => 'Web\ProductController@storeFeedback', // 
+        ]);
+
+        
+    });
+
+    
+    // 1. Show list item in cart
+    Route::group(['prefix' => 'gio-hang'], function() { 
+
+        
     });
 });
 Route::post('ckeditor/upload', 'CKEditorController@upload')->name('ckeditor.image-upload');

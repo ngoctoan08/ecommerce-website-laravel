@@ -55,3 +55,18 @@ Báo thu tổng hợp:
 
 <!-- Nhập hàng -->
 sử dụng các table: partner
+
+
+<!-- In cart -->
+
+Dựa vào trạng thái: 
+1. Trước khi đặt hàng: 
+- hiện thị các sản phẩm đã thêm vào giỏ
+
+2. Sau khi đặt hàng
+- hiện thị các sản phẩmđã đặt và trạng thái của nó
+
+<!-- Chức năng đăng nhập phía web -->
+
+1. KH phải đăng nhập thành công mới tiến hành đặt hàng được, nếu không quay lại trang đăng ký
+2. 

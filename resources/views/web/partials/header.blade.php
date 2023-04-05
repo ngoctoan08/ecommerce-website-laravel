@@ -21,7 +21,7 @@
                 <ul class="custom-nav list-menu-header d-flex">
                     @foreach($menus as $menu) 
                         <li class="">
-                            <a href="{{$menu->slug}}">{{$menu->name}}</a>
+                            <a href="{{route($menu->slug)}}">{{$menu->name}}</a>
                             {{-- @if($menu->menuChildren->count())
                                 <div class="d-flex alg-center jtf-between">
                                     <div class="icon-mini-menu">

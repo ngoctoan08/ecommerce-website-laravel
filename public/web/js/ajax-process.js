@@ -6,32 +6,40 @@ $(document).ready(function () {
     });
     $(document).on('click', '.add_to_cart', function() {
         var idProduct = $(this).val();
-        var sizeProduct = $(".product_size_"+idProduct).val(); //idsize (1->6)
-        console.log(idProduct);
-        console.log(sizeProduct);
-        $.ajax({
-            type: "POST",
-            url: "./Servers/AjaxProcess.php?action=add",
-            data: {
-                id : idProduct,
-                size: sizeProduct,
-                qty: 1
-            },
-            dataType: "html",
-            success: function (response) {
-                if(response!=false) {
-                    $(`.cart-order`).html(response);
-                    toastr["success"](`<a href="gio-hang" style = "display: inline-block;" class="icon-cart h5">
-                        Thêm vào giỏ hàng thành công! 
-                            <span>
-                                <i class="fa-solid fa-bag-shopping"></i>
-                            </span>
-                    </a>`)
-                }
-            }
-        });
+        var qty = 1;
+        var url = $(this).attr('url');
+        var sizeProduct = $(".product_size_"+idProduct).val(); //idsize (38-43)
+        const data = {idProduct, sizeProduct, qty};
+        addToCart(url, data);
     });
 });
+
+// Hàm add to cart
+
+function addToCart(url, data) {
+    // Body API
+    var options = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            // 'accept': '*',
+            'Accept': 'application/json',
+          },
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+    }
+    // Fetch API 
+    fetch(url, options)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        if(data.errors) {
+
+        } else {
+                 
+        }
+    })
+}
+
 
 
 // Hàm cập nhật html ở trang cart

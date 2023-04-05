@@ -23,6 +23,7 @@
 
     {{-- Script --}}
     @include('web.partials.script')
+    @yield('script')
     {{-- End Script --}}
 </body>
 </html>

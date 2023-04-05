@@ -35,7 +35,7 @@
             @foreach($categories as $category)
             <div class="col-md-6">
                 <div class="box-content">
-                    <a href="san-pham/{{$category->category_slug}}">
+                    <a href="{{route('web-product.index', $category->category_slug)}}">
                         <div class="img-product-page">
                             <img src="{{asset('web/image/product/product-shoes (1).png')}}" alt="">
                         </div>

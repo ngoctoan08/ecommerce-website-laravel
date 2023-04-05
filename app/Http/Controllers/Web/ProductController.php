@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\Category;
+use App\Models\ImageProduct;
 use App\Models\Product;
+use App\Models\ProductSizeStore;
 use App\Models\Size;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -36,7 +38,7 @@ class ProductController extends Controller
      */
     public function index($title)
     {
-        $menus = $this->menu->where('parent_id', 0)->where('page_id', 1)->get();
+        $menus = $this->menu->showMenusHeader();
         $categories = DB::table('categories')
         ->select('categories.name as category_name', 'categories.slug as category_slug', DB::raw('COUNT(products.id) as category_qty'))
         ->join('products', 'categories.id', '=', 'products.category_id')
@@ -50,7 +52,6 @@ class ProductController extends Controller
         ->get();
         
         $products = $this->product->join('categories', 'products.category_id', '=', 'categories.id')->select('products.id', 'products.name', 'products.name_image', 'products.path_image', 'products.retail_price', 'products.slug', 'products.description')->where('categories.slug', 'like', $title)->get();
-        // dd($products);
         return view('web.pages.products')->with([
             'products' => $products,
             'menus' => $menus,
@@ -61,36 +62,72 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display detail product by product's id
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function show($title, $id, $slug)
     {
-        //
+        // Show menus of header
+        $menus = $this->menu->showMenusHeader();
+
+        // Query show info of product detail
+        $product = $this->product->showProductDetail($id);
+        
+        // Query to show list images of product
+        $images = $this->product->showListImagesProduct($id);
+        
+        // Query to show list sizes of product
+        $sizes = $this->product->showSizeProduct($id);
+        
+        // Query to show list feedback by product's id
+ 
+        // return view product-detail
+        return view('web.pages.detail_product')->with([
+            'product' => $product,
+            'menus' => $menus,
+            'images' => $images,
+            'sizes' => $sizes,
+            'title' => $title,
+            'slug' => $slug
+        ]); 
     }
 
+
     /**
-     * Store a newly created resource in storage.
+     * Handle add to cart of
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function addToCart(Request $request)
+    {
+        return $request;
+    }
+    
+    /**
+     * Show list feedback by product's id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listFeedback($id)
     {
         //
     }
 
     /**
-     * Display the specified resource.
+     * Handle feedback of product
      *
-     * @param  int  $slug
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function storeFeedback(Request $request)
     {
-        dd($slug);
+        //
     }
+
+    
 
     /**
      * Show the form for editing the specified resource.

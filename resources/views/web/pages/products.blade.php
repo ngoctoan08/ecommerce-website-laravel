@@ -11,11 +11,11 @@
     <div class="mini-list-banner">
         <ul class="custom-nav d-flex jtf-center alg-center">
             <li>
-                <a href="trang-chu">Trang chủ</a>
+                <a href="{{route('/')}}">Trang chủ</a>
             </li>
             <li>/</li>
             <li>
-                <a href="{{route('san-pham.index', $title)}}">Sản phẩm</a>
+                <a href="{{route('web-product.index', $title)}}">Sản phẩm</a>
             </li>
         </ul>
         <div class="name-page">
@@ -90,7 +90,7 @@
                     <div class="row">
                         @foreach($products as $product)
                         <div class="col-md-4 col-sm-6 col-xs-12">
-                            <a href="{{route('san-pham.show',['title'=> $title, 'slug' =>  $product->slug])}}">
+                            <a href="{{route('web-product.show',['title'=> $title, 'id' => $product->id, 'slug' =>  $product->slug])}}">
                                 <div class="box-list-detail">
                                     <div class="img-list-detail">
                                         <img src="{{asset($product->path_image)}}" alt="{{$product->name_image}}">
@@ -110,7 +110,7 @@
                             </a>
 
                             <div class="btn-add">
-                                <button class="icon-add add_to_cart" value="{{$product->id}} ">
+                                <button class="icon-add add_to_cart" value="{{$product->id}}" url = "{{route('web-product.add-to-cart')}}">
                                     <span>
                                         <i class="fa-solid fa-cart-shopping"></i>
                                     </span>
@@ -120,6 +120,16 @@
                                 </span>
                             </div>
                             {{-- Chọn size --}}
+                            <div class="inp-choose-size">
+                                @if($product->productSizes->count() > 0)
+                                <select name="size" class="product_size_{{$product->id}}">
+                                    @foreach($product->productSizes as $size)
+                                        <option class="product_size_op" value="{{$size->size_name}}">{{$size->size_name}}</option>
+                                    @endforeach
+                                </select>
+                                @endif
+                                <div class="final"></div>
+                            </div>
                         </div>
                     </div>
                         @endforeach

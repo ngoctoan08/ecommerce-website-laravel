@@ -38,44 +38,46 @@ function Validator(options) {
 
     var formElement = $(options.form);
     if (formElement) {
-        $(options.form).on('submit', function(e) {
-            e.preventDefault();
-            var isFormValid = true;
-            // Loop each rule, listen event and do rulee when form have error 
-            options.rules.forEach(function (rule) {
-                var isValid = validate(options, rule); //do validate
-                if(!isValid) { //
-                    isFormValid = false;
-                }
-            });
-            //when form haven't error. After that. Do submit form
-            if(isFormValid) {
-                //get data of form
-                if(typeof options.onSubmit === 'function') { //when form is submited
-                    var enableInputs = $(options.form).serializeArray(); //get all value of form
-                    console.log($(options.form));
-                    // console.log(enableInputs);
-                    var formData = {}; //all input of form
-                    // convert array to object
-                    for(let i in enableInputs) {
-                        // if object has two same key... merge two value = array of this to same key
-                        //eg: samekey => [value1, value2]
-                        if(formData.hasOwnProperty(enableInputs[i].name)) {
-                            if(!Array.isArray(formData[enableInputs[i-1].name])) {                     
-                                formData[enableInputs[i-1].name] = [enableInputs[i-1].value];
+        if (!$(options.form).data('submit-bound')) {
+            $(options.form).on('submit', function(e) {
+                e.preventDefault();
+                var isFormValid = true;
+                // Loop each rule, listen event and do rulee when form have error 
+                options.rules.forEach(function (rule) {
+                    var isValid = validate(options, rule); //do validate
+                    if(!isValid) { //
+                        isFormValid = false;
+                    }
+                });
+                //when form haven't error. After that. Do submit form
+                if(isFormValid) {
+                    //get data of form
+                    if(typeof options.onSubmit === 'function') { //when form is submited
+                        var enableInputs = $(options.form).serializeArray(); //get all value of form
+                        // console.log(enableInputs);
+                        var formData = {}; //all input of form
+                        // convert array to object
+                        for(let i in enableInputs) {
+                            // if object has two same key... merge two value = array of this to same key
+                            //eg: samekey => [value1, value2]
+                            if(formData.hasOwnProperty(enableInputs[i].name)) {
+                                if(!Array.isArray(formData[enableInputs[i-1].name])) {                     
+                                    formData[enableInputs[i-1].name] = [enableInputs[i-1].value];
+                                }
+                                formData[enableInputs[i-1].name].push(enableInputs[i].value);
+                                break;
                             }
-                            formData[enableInputs[i-1].name].push(enableInputs[i].value);
-                            break;
+                            formData[enableInputs[i].name] =  enableInputs[i].value;
                         }
-                        formData[enableInputs[i].name] =  enableInputs[i].value;
+                        if(!$('#user_id').length == 0) {
+                            formData['user_id'] = $('#user_id').val();
+                        }
+                        options.onSubmit(formData);
                     }
-                    if(!$('#user_id').length == 0) {
-                        formData['user_id'] = $('#user_id').val();
-                    }
-                    options.onSubmit(formData);
                 }
-            }
-        })
+            })
+        $(options.form).data('submit-bound', true);
+        }
 
         // Loop each rule and listen event 
         options.rules.forEach(function (rule) {

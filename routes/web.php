@@ -21,8 +21,9 @@ Route::get('/welcome', function () {
 
 Auth::routes(); //Generate route of Auth: eg: login, logout, password,...
 
+
 // Admin page
-Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function() {
+Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'checkRole']], function() {
 
     Route::get('/', [
         'as' => 'admin',
@@ -133,7 +134,12 @@ Route::group(['prefix' => '/'], function() {
         // Handle add to cart
         Route::post('/add-to-cart', [
             'as' => 'web-product.add-to-cart', //name of route
-            'uses' => 'Web\ProductController@addToCart', // 
+            'uses' => 'Web\CartController@addToCart', // 
+        ]);
+
+        Route::post('/del-item-in-cart', [
+            'as' => 'web-product.del-item-in-cart', //name of route
+            'uses' => 'Web\CartController@delItemInCart', // 
         ]);
         
         // post data to san-pham/id

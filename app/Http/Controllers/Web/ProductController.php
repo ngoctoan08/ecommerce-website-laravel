@@ -12,6 +12,7 @@ use App\Models\ProductSizeStore;
 use App\Models\Size;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 class ProductController extends Controller
 {
     private $menu;
@@ -50,7 +51,6 @@ class ProductController extends Controller
         })
         ->groupBy('categories.name', 'categories.slug')
         ->get();
-        
         $products = $this->product->join('categories', 'products.category_id', '=', 'categories.id')->select('products.id', 'products.name', 'products.name_image', 'products.path_image', 'products.retail_price', 'products.slug', 'products.description')->where('categories.slug', 'like', $title)->get();
         return view('web.pages.products')->with([
             'products' => $products,
@@ -95,16 +95,6 @@ class ProductController extends Controller
     }
 
 
-    /**
-     * Handle add to cart of
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function addToCart(Request $request)
-    {
-        return $request;
-    }
     
     /**
      * Show list feedback by product's id

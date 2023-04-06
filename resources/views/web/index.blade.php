@@ -10,10 +10,6 @@
 
     @yield('content')
 
-    @yield('lookbook')
-    @yield('feedback')
-    @yield('news')
-
     {{-- Footer --}}
     @include('web.partials.footer')
     {{-- End Footer --}}

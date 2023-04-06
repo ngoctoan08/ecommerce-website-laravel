@@ -100,8 +100,8 @@
                                             <span>{{$product->name}} </span>
                                         </div>
                                         <div class="text-price">
-                                            <span class="text-price-gray">{{$product->retail_price * 100 / 10}} </span>
-                                            <span>{{$product->retail_price}} </span>
+                                            <span class="text-price-gray">@formatMoney($product->retail_price * 11 / 10) </span>
+                                            <span> @formatMoney($product->retail_price) </span>
                                         </div>
                                     </div>
                                     <div class="sale-off">
@@ -109,8 +109,15 @@
                                     </div>
                             </a>
 
+                            <form action="{{route('web-product.add-to-cart')}}" method="post" id="form_add_to_cart_{{$product->id}}" name="form_add_to_cart_{{$product->id}}">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{$product->id}}">
+                                <input type="hidden" name="product_name" value="{{$product->name}}">
+                                <input type="hidden" name="product_retail_price" value="{{$product->retail_price}}">
+                                <input type="hidden" name="product_path_image" value="{{$product->path_image}}">
+                                <input type="hidden" name="product_qty" value="1">
                             <div class="btn-add">
-                                <button class="icon-add add_to_cart" value="{{$product->id}}" url = "{{route('web-product.add-to-cart')}}">
+                                <button type="submit" class="icon-add add_to_cart add_item_to_cart" value="{{$product->id}}" url = "{{route('web-product.add-to-cart')}}">
                                     <span>
                                         <i class="fa-solid fa-cart-shopping"></i>
                                     </span>
@@ -122,7 +129,7 @@
                             {{-- Chọn size --}}
                             <div class="inp-choose-size">
                                 @if($product->productSizes->count() > 0)
-                                <select name="size" class="product_size_{{$product->id}}">
+                                <select name="product_size" class="product_size_{{$product->id}}">
                                     @foreach($product->productSizes as $size)
                                         <option class="product_size_op" value="{{$size->size_name}}">{{$size->size_name}}</option>
                                     @endforeach
@@ -130,6 +137,7 @@
                                 @endif
                                 <div class="final"></div>
                             </div>
+                        </form>
                         </div>
                     </div>
                         @endforeach
@@ -423,4 +431,33 @@
         </div>
     </div>  
 </section>
+@endsection
+
+@section('script')
+    <!-- Handle validate form -->
+    <script src="{{asset('client/js/validator.js')}}"></script>
+    {{-- Handle Cart --}}
+    {{-- Handle add to cart --}}
+    <script>
+       $(document).ready(function () {
+            $('.add_item_to_cart').click(function(e) {
+                // Lấy tất cả dữ liệu của sản phẩm đó lên
+                // id, name, retail_price, name_image, path_image, qty
+                var idProduct = $(this).val();
+                var url = $(this).attr('url');
+                Validator({
+                    form: '#form_add_to_cart_' + idProduct,
+                    errorSelector: '.form-error',
+                    rules: [
+                        
+                    ],
+                    onSubmit: function(data) {
+                        // Call API
+                        console.log(data);
+                        addToCart(url, data);
+                    }
+                });
+            });
+       });
+    </script>
 @endsection

@@ -26,8 +26,9 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
-        Blade::directive('convert', function ($money) {
-            return "<?php echo number_format($money, 2); ?>";
+        
+        Blade::directive('formatMoney', function ($money) {
+            return "<?php echo number_format($money, 0) . ' VNĐ'; ?>";
 });
 }
 }

@@ -70,3 +70,12 @@ Dựa vào trạng thái:
 
 1. KH phải đăng nhập thành công mới tiến hành đặt hàng được, nếu không quay lại trang đăng ký
 2. 
+
+<!-- Tạo chức năng đăng nhập và đăng ký ở web -->
+1. Tạo thêm database: 
+    * roles -> set role_id = 1 => Standard User
+    * partner: 1 partner có thể có nhiều tài khoản, 1 tài khoản chỉ sở hữu bởi 1 partner -->
+    
+
+<!-- Chức năng đặt hàng -->
+OrderController -> Handle Order

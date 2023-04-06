@@ -1,17 +1,6 @@
 // Xử lý ajax thêm sản phẩm: Bằng id và size
 
 $(document).ready(function () {
-    $(document).on('change', '.product_size', function() { //Lấy giá giá trị của select size
-        let sizeJS = $(this).val();
-    });
-    $(document).on('click', '.add_to_cart', function() {
-        var idProduct = $(this).val();
-        var qty = 1;
-        var url = $(this).attr('url');
-        var sizeProduct = $(".product_size_"+idProduct).val(); //idsize (38-43)
-        const data = {idProduct, sizeProduct, qty};
-        addToCart(url, data);
-    });
 });
 
 // Hàm add to cart
@@ -24,6 +13,7 @@ function addToCart(url, data) {
             'Content-Type': 'application/json',
             // 'accept': '*',
             'Accept': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
           },
         body: JSON.stringify(data) // body data type must match "Content-Type" header
     }
@@ -35,12 +25,37 @@ function addToCart(url, data) {
         if(data.errors) {
 
         } else {
-                 
+            toastr["success"](data.message);
         }
     })
 }
 
+// Hàm xóa sản phẩm trong giỏ hàng
 
+function delItemInCart(url, data) {
+    // Body API
+    var options = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            // 'accept': '*',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+          },
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+    }
+    // Fetch API 
+    fetch(url, options)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        if(data.errors) {
+
+        } else {
+            toastr["success"](data.message);
+        }
+    })
+}
 
 // Hàm cập nhật html ở trang cart
 
@@ -72,24 +87,11 @@ const updateCart = () => {
 // Xử lý ajax xóa sản phẩm: Bằng id và size
 $(document).ready(function () {
     $(document).on('click', '.del_order', function() {
-        var idJS = $(this).attr("id-product"); 
-        var sizeJS = $(this).attr("size-product"); //38 -> 43
-        $.ajax({
-            type: "POST",
-            url: "./Servers/AjaxProcess.php?action=del",
-            data: {
-                id : idJS,
-                size: sizeJS
-            },
-            dataType: "html",
-            success: function (response) {
-                if (response!=false) {
-                    renderOrderCart();
-                    updateCart();
-                    toastr["success"]("Xóa sản phẩm thành công!")
-                }
-            }
-        });
+        var productId = $(this).attr("id-product"); 
+        var productSize = $(this).attr("size-product"); //38 -> 43
+        var url = $(this).attr("url");
+        var data = {productId, productSize};
+        delItemInCart(url, data);
     });
 });
 

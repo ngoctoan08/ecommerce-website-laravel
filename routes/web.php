@@ -115,6 +115,10 @@ Route::group(['prefix' => '/'], function() {
         'as' => 'danh-muc',
         'uses' => 'HomeController@category'
     ]);
+    Route::get('/gio-hang', [
+        'as' => 'gio-hang',
+        'uses' => 'Web\CartController@index'
+    ]);
 
     Route::group(['prefix' => 'san-pham'], function() { 
         // Show list product by category_id

@@ -50,7 +50,7 @@
                 <!-- cart -->
                 <div class="box-icon-cart mr-15 cart-order">
                     <div class="icon-cart">
-                        <a href="gio-hang">
+                        <a href="{{route('gio-hang')}}">
                             <span>
                                 <span>
                                     <i class="fa-solid fa-bag-shopping"></i>
@@ -108,7 +108,7 @@
                                     </div>
                                 </li>
                                         <?php 
-                                            $total += $productDetail['product_retail_price'] * $productDetail['product_qty'];
+                                            $total +=  $productDetail['product_retail_price'] * $productDetail['product_qty'];
                                         ?>
                                     @endforeach
                                 @endforeach
@@ -133,7 +133,10 @@
                                     <a href="san-pham/giay-tay">Tiếp tục mua hàng</a>
                                 </div>
                             </div>
-                        @endif
+                        @else
+                            <span>Không có sản phẩm nào</span>
+                            @endif
+                        
                     </div>
                 </div>
                 <!-- search -->

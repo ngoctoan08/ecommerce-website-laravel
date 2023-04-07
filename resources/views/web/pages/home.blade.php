@@ -210,7 +210,6 @@
 </section>
 
 <!-- look-book -->
-@section('lookbook')
 <section class="look-book">
     <div class="title-lookbook">
         <a href="#">
@@ -270,11 +269,9 @@
         </div>
     </div>
 </section>
-@endsection
 
 
 <!-- feedback -->
-@section('feedback')
 <section class="feedback">
     <div class="box-feedback d-flex jtf-between ">
         <!-- left -->
@@ -369,10 +366,8 @@
         </div>
     </div>
 </section>
-@endsection
 <!-- news -->
 
-@section('news')
 <section class="news">
     <div class="container">
         <div class="title-box-news">

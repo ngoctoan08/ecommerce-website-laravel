@@ -4,9 +4,38 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Menu;
 
 class CartController extends Controller
 {
+
+    private $menu;
+    private $category;
+    private $product;
+    
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct(Menu $menuModel)
+    {
+        $this->menu = $menuModel;
+    }
+    
+    /**
+     * Show list item in cart
+     *
+     */
+    public function index()
+    {
+        $menus = $this->menu->showMenusHeader();
+        
+        return view('web.pages.cart')->with([
+            'menus' => $menus,
+            
+        ]);
+    }
     /**
      * Handle add to cart of
      *
@@ -56,9 +85,13 @@ class CartController extends Controller
             }
         }
         
+        // Trả về html để update icon cart in header
+        $htmlIconCart = $this->updateIconCart();
+        
         return response()->json([
             'status' => 201,
-            'message' => 'Thêm vào giỏ hàng thành công!'
+            'message' => 'Thêm vào giỏ hàng thành công!',
+            'htmlIconCart' => $htmlIconCart
         ]);
     }
     
@@ -70,6 +103,8 @@ class CartController extends Controller
      */
     public function delItemInCart(Request $request)
     {
+        
+        
         $idProduct = $request->productId;
         $sizeProduct = $request->productSize;
         session()->start();
@@ -84,10 +119,25 @@ class CartController extends Controller
                 session()->forget('cart');
             }
         }
+        // Trả về html để update icon cart in header
+        $htmlIconCart = $this->updateIconCart();
+        $htmlPageCart = $this->updatePageCart();
         return response()->json([
             'status' => 201,
-            'message' => 'Xóa sản phẩm thành công!'
+            'message' => 'Xóa sản phẩm thành công!',
+            'htmlIconCart' => $htmlIconCart,
+            'htmlPageCart' => $htmlPageCart
         ]);
+    }
+
+    public function updateIconCart()
+    {
+        return view('web.partials.cart.icon_cart')->render();
+    }
+
+    public function updatePageCart()
+    {
+        return view('web.partials.cart.page_cart')->render();
     }
     
 }

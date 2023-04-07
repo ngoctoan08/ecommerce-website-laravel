@@ -58,11 +58,16 @@ class LoginController extends Controller
         return redirect('/login');
     }
 
+    // $user like Auth::user, it contain info of user when login success
     protected function authenticated(Request $request, $user)
     {
+        // Web user
         if ($user->role_id == 1) {
             return redirect('trang-chu');
-        } else if ($user->role_id != 2) {
+        }
+
+        // Admin user
+        else {
             return redirect('/admin/dashboard');
         }
     }

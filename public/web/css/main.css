@@ -1126,21 +1126,28 @@
 }
 .box-inp-infor {
     width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
+
 .box-input-short-cart {
     display: grid;
     grid-template-columns: repeat(2,1fr);
     column-gap: 30px;
 }
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
 .box-inp-infor input, 
 .box-inp-infor textarea,
 .box-inp-infor select {
     width: 100%;
-    border: none;
-    border-bottom: 1px solid #e6e6e6;
+    padding: 14px;
+    border: 1px solid #e6e6e6;
     outline: none;
     color: #000000a3;
+    margin-bottom: 10px;
 }
 /* .box-inp-infor input::placeholder,
 .box-inp-infor textarea::placeholder,
@@ -1487,4 +1494,43 @@
 @keyframes aitf {
     0% { background-position: 0% 50%; }
     100% { background-position: 100% 50%; }
+}
+
+
+
+/* Login register btn */
+
+.btn-login-register {
+    border: none;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn-login-register:hover {
+    color: var(--color-primary);
+}
+
+.list-action-account {
+    position: absolute;
+    width: 200px;
+    padding: 30px;
+    right: 0%;
+    background-color: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s;
+    box-shadow: 8px 7px 16px rgb(0 0 0 / 20%);
+    cursor: auto;
+    z-index: 1;
+}
+
+.name-user a {
+    display: block;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
 }

@@ -205,6 +205,7 @@
 .box-cart_search {
     width: 156px;
     justify-content: right;
+    align-items: center;
 }
 /* cart */
 .box-icon-cart, .box-icon-search {
@@ -1045,3 +1046,17 @@ a.more-link {
     }
 }
         /* end popup-pay-success */
+
+
+
+/* CSS error messages */
+
+.form-error {
+    font-size: 14px;
+    color: #d93025;
+}
+
+.error_message {
+    font-size: 14px;
+    color: #d93025;
+}

@@ -145,6 +145,11 @@ Route::group(['prefix' => '/'], function() {
             'as' => 'web-product.del-item-in-cart', //name of route
             'uses' => 'Web\CartController@delItemInCart', // 
         ]);
+
+        Route::post('/update-qty-in-cart', [
+            'as' => 'web-product.update-qty-in-cart', //name of route
+            'uses' => 'Web\CartController@updateQtyInCart', // 
+        ]);
         
         // post data to san-pham/id
         Route::post('/feedback/{id}', [
@@ -158,9 +163,17 @@ Route::group(['prefix' => '/'], function() {
     
     // 1. Show list item in cart
     Route::group(['prefix' => 'gio-hang'], function() { 
-
-        
+        Route::get('/', [
+            'as' => 'web-cart.index', //name of route
+            'uses' => 'Web\CartController@index', // 
+        ]);
     });
+
+    // checkout
+    Route::post('/web-checkout.store', [
+        'as' => 'web-checkout.store', //name of route
+        'uses' => 'Web\CheckoutController@handleCheckout', // 
+    ]);
 });
 Route::post('ckeditor/upload', 'CKEditorController@upload')->name('ckeditor.image-upload');
 

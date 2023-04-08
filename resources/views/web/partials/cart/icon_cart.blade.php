@@ -1,5 +1,5 @@
 <div class="icon-cart">
-    <a href="gio-hang">
+    <a href="{{route('web-cart.index')}}">
         <span>
             <span>
                 <i class="fa-solid fa-bag-shopping"></i>
@@ -73,7 +73,7 @@
         </div>
         <!-- pay-cart -->
         <div class="btn-pay-cart">
-            <a href="gio-hang">
+            <a href="{{route('web-cart.index')}}">
                 <button>
                     <span>Thanh toán</span>
                 </button>

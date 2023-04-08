@@ -47,8 +47,8 @@
                         <div class="quantity-custom d-flex mb-30">
                             <input aria-label="quantity" class="product_{{$productDetail['product_id']}}" min="1" max="10" name="" type="number" value="{{$productDetail['product_qty']}}">
                             <div class="btn-up-down">
-                                <input class="plus is-form change_qty" type="button" value="+" id-product = "{{$productDetail['product_id']}}" size-product = "{{$productDetail['product_size']}}">
-                                <input class="minus is-form change_qty" type="button" value="-" id-product = "{{$productDetail['product_id']}}" size-product = "{{$productDetail['product_size']}}">
+                                <input class="plus is-form change_qty" type="button" value="+" id-product = "{{$productDetail['product_id']}}" size-product = "{{$productDetail['product_size']}}" url="{{route('web-product.update-qty-in-cart')}}">
+                                <input class="minus is-form change_qty" type="button" value="-" id-product = "{{$productDetail['product_id']}}" size-product = "{{$productDetail['product_size']}}" url="{{route('web-product.update-qty-in-cart')}}">
                             </div>
                         </div>
                     </td>

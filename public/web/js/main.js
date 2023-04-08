@@ -306,6 +306,8 @@ function getText(valueId ,text_id)
     // console.log(test);
 }
 
+// handle  
+
 // Upload file feedback
 
 // Xử lý ajax upload nhiều ảnh 

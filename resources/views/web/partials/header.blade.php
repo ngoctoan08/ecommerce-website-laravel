@@ -7,11 +7,13 @@
                     <i class="fa-solid fa-bars"></i>
                 </span>
             </div>
+
             <div class="icon-logo ml-60">
                 <a href="trang-chu">
                     <img src="{{asset('web/image/logo/logo.png')}}" alt="">
                 </a>
             </div>
+
             <div class="box-list-menu-header">
                 <div class="icon-close-menu-respon">
                     <span>
@@ -46,11 +48,12 @@
                     @endforeach
                 </ul>
             </div>  
+
             <div class="box-cart_search d-flex mr-60">
                 <!-- cart -->
-                <div class="box-icon-cart mr-15 cart-order">
+                <div class="box-icon-cart cart-order">
                     <div class="icon-cart">
-                        <a href="{{route('gio-hang')}}">
+                        <a href="{{route('web-cart.index')}}">
                             <span>
                                 <span>
                                     <i class="fa-solid fa-bag-shopping"></i>
@@ -140,29 +143,54 @@
                     </div>
                 </div>
                 <!-- search -->
-                <div class="box-icon-search ml-15">
-                        <div class="icon-search">
-                            <span> 
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </span>
+                <div class="box-icon-search ml-30 mr-30">
+                    <div class="icon-search">
+                        <span> 
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                    </div>
+                    <div class="form-inp-search">
+                        <div class="inp-search">
+                            <input type="text" name="inp-search" class="search_product" placeholder="Nhập tên sản phẩm cần tìm ..." autocomplete="off">
                         </div>
-                        <div class="form-inp-search">
-                            <!-- <form action=""> -->
-                                <div class="inp-search">
-                                    <input type="text" name="inp-search" class="search_product" placeholder="Nhập tên sản phẩm cần tìm ..." autocomplete="off">
-                                </div>
-                                <!-- <div class="btn-search-header">
-                                    <button type="submit" class="btn_search_product">Tìm </button>
-                                </div> -->
-                            <!-- </form> -->
-                            <div class="search-suggestions">
-                                <ul class="custom-nav list-search-suggestions">
-                                
-                                </ul>
-                            </div>
+                        <div class="search-suggestions">
+                            <ul class="custom-nav list-search-suggestions">
+                            
+                            </ul>
                         </div>
                     </div>
-            </div>
+                </div>
+                @if(!Auth::user())
+                {{-- login/register --}}
+                <div class="login-register">
+                    <a href="{{route('login')}}" class="btn btn-login-register">LOGIN</a>
+                    <a href="{{route('register')}}" class="btn btn-login-register">REGISTER</a>
+                </div>
+                @else
+                <div class="box-icon-cart">
+                    <div class="name-user">
+                        <a href="">{{Auth::user()->name}}</a>
+                    </div>
+                    
+                    <div class="list-action-account list-cart">
+                        <ul class="custom-nav">
+                            <li><a class="btn" href="">Theo dõi đơn hàng</a>   </li>
+                            <li><a class="btn" href="">Cập nhật thông tin</a> </li>
+                            <li>
+                                <a href="http://127.0.0.1:8000/logout" onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                    <form id="logout-form" action="http://127.0.0.1:8000/logout" method="POST" class="d-none">
+                                      <input type="hidden" name="_token" value="6zVqXvzh02uOdgcsdwoHeJkV154lmIHFLAUQdDKC">
+                                    </form>
+                                    <i class="zmdi zmdi-power"></i>
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>                            
+                    </div>
+                </div>
+                @endif
+            </div>  
         </div>
     </div>
 </header>

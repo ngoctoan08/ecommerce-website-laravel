@@ -84,15 +84,7 @@ class CartController extends Controller
                 session()->put('cart.'.$idProduct.'.'.$sizeProduct, $infoProduct);
             }
         }
-        
-        // Trả về html để update icon cart in header
-        $htmlIconCart = $this->updateIconCart();
-        
-        return response()->json([
-            'status' => 201,
-            'message' => 'Thêm vào giỏ hàng thành công!',
-            'htmlIconCart' => $htmlIconCart
-        ]);
+        return $this->responseCart('Thêm vào giỏ hàng thành công!');
     }
     
     /**
@@ -103,8 +95,6 @@ class CartController extends Controller
      */
     public function delItemInCart(Request $request)
     {
-        
-        
         $idProduct = $request->productId;
         $sizeProduct = $request->productSize;
         session()->start();
@@ -119,17 +109,40 @@ class CartController extends Controller
                 session()->forget('cart');
             }
         }
+        return $this->responseCart('Xóa sản phẩm thành công!');
+    }
+
+    // Update qty in cart
+    public function updateQtyInCart(Request $request)
+    {
+        $idProduct = $request->idProduct;
+        $sizeProduct = $request->sizeProduct;
+        $newQty = $request->qtyProduct;
+        session()->start();
+        if(session()->has('cart')) {
+            if(array_key_exists($idProduct, session('cart'))) {
+                // Nếu trùng size thì sửa qty lên 1 đơn vị
+                if(array_key_exists($sizeProduct, session('cart')[$idProduct])) {
+                    session()->put('cart.'.$idProduct.'.'.$sizeProduct.'.product_qty', $newQty);
+                    return $this->responseCart('Cập nhật số lượng sản phẩm thành công!');
+                }
+            }
+        }
+    }
+
+    public function responseCart($message)
+    {
         // Trả về html để update icon cart in header
         $htmlIconCart = $this->updateIconCart();
         $htmlPageCart = $this->updatePageCart();
         return response()->json([
             'status' => 201,
-            'message' => 'Xóa sản phẩm thành công!',
+            'message' => $message,
             'htmlIconCart' => $htmlIconCart,
             'htmlPageCart' => $htmlPageCart
         ]);
-    }
-
+    } 
+    
     public function updateIconCart()
     {
         return view('web.partials.cart.icon_cart')->render();

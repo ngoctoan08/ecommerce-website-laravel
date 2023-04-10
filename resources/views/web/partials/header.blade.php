@@ -167,20 +167,24 @@
                     <a href="{{route('register')}}" class="btn btn-login-register">REGISTER</a>
                 </div>
                 @else
+                <?php
+                    $user = Auth::user();
+                    $profile = $user->profile;
+                ?>
                 <div class="box-icon-cart">
                     <div class="name-user">
-                        <a href="">{{Auth::user()->name}}</a>
+                        <a href="">{{$profile->name}}</a>
                     </div>
                     
                     <div class="list-action-account list-cart">
                         <ul class="custom-nav">
-                            <li><a class="btn" href="">Theo dõi đơn hàng</a>   </li>
-                            <li><a class="btn" href="">Cập nhật thông tin</a> </li>
+                            <li><a class="btn" href="">Theo dõi đơn hàng</a></li>
+                            <li><a class="btn" href="">Cập nhật thông tin</a></li>
                             <li>
                                 <a href="http://127.0.0.1:8000/logout" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
                                     <form id="logout-form" action="http://127.0.0.1:8000/logout" method="POST" class="d-none">
-                                      <input type="hidden" name="_token" value="6zVqXvzh02uOdgcsdwoHeJkV154lmIHFLAUQdDKC">
+                                        @csrf
                                     </form>
                                     <i class="zmdi zmdi-power"></i>
                                     Logout
@@ -194,3 +198,4 @@
         </div>
     </div>
 </header>
+

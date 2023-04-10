@@ -63,7 +63,7 @@ class LoginController extends Controller
     {
         // Web user
         if ($user->role_id == 1) {
-            return redirect('trang-chu');
+            return redirect()->route('web-cart.index');
         }
 
         // Admin user

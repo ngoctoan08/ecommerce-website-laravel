@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Illuminate\Support\Facades\DB;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -46,5 +46,23 @@ class User extends Authenticatable
     public function categories() 
     {
         return $this->hasMany(Category::class, 'user_id');
+    }
+
+
+    // get profile user by user_id
+    // join 2 tbl users and profiles
+    public function getInfoUser($id)
+    {
+        return DB::table('users')
+        ->join('profiles', 'users.id', '=', 'profiles.user_id')
+        ->select('product_size_stores.size_name', 'product_size_stores.product_id')
+        ->where('users.id', '=', $id)
+        ->get();
+    }
+
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
     }
 }

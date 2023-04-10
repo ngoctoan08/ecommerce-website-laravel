@@ -40,11 +40,6 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'checkRole']], func
         
         //su dung them cac action trong cung 1 nhom chu de
     Route::prefix('category')->group(function () {
-        //khi click vao add cua san pham
-        // Route::post('/store', [
-        //     'as' => 'category.store', //action create
-        //     'uses' => 'TestController@store', // su dung ham add cua CategoryController
-        // ]);
         
         Route::get('/', [
             'as' => 'category.index', //action create
@@ -80,7 +75,9 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'checkRole']], func
     //Product Process
     //su dung them cac action trong cung 1 nhom chu de
     Route::get('product/{id}/import_export', [ProductController::class, 'import_export'])->name('product.import_export');
+    // hanlde product
     Route::resource('product', 'Admin\ProductController');
+    // handle unit
     Route::resource('unit', 'Admin\UnitController');
     Route::resource('provider', 'Admin\ProviderController');
     Route::get('import_export/{id}/add', [ImportExportController::class, 'add'])->name('import_export.add');

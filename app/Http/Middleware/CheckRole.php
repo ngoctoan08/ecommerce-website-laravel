@@ -18,11 +18,12 @@ class CheckRole
     {
         $user = Auth::user();
         if(!$user) {
-            return redirect('/login');
+            return redirect('/login')->with('error', 'Login fails!');
+
         } 
         if($user->role_id == 1) {
             Auth::logout();
-            return redirect('/login')->with('error', 'Bạn không có quyền truy cập vào trang này.');
+            return redirect('/login')->with('error', 'Login fails!');
         }
         return $next($request);
     }

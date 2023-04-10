@@ -167,10 +167,19 @@ Route::group(['prefix' => '/'], function() {
     });
 
     // checkout
-    Route::post('/web-checkout.store', [
-        'as' => 'web-checkout.store', //name of route
-        'uses' => 'Web\CheckoutController@handleCheckout', // 
-    ]);
+    Route::group(['prefix' => 'thanh-toan'], function() { 
+        Route::get('/', [
+            'as' => 'web-checkout.index', //name of route
+            'uses' => 'Web\CheckoutController@index', // 
+        ]);
+        
+        Route::post('/web-checkout.store', [
+            'as' => 'web-checkout.store', //name of route
+            'uses' => 'Web\CheckoutController@handleCheckout', // 
+        ]);
+    });
+    
+    
 });
 Route::post('ckeditor/upload', 'CKEditorController@upload')->name('ckeditor.image-upload');
 

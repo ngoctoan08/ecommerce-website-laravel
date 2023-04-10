@@ -62,7 +62,7 @@ class ImportExportController extends Controller
     {
         // dd($request);
         $now = Carbon::now()->toDateTimeString();
-        $billCode = !strcmp($request->bill_code, '') ? 'IE'.rand() : $request->bill_code;
+        $billCode = !strcmp($request->bill_code, '') ? 'HD_NHAP'.rand() : $request->bill_code;
         $status = 'Đã giao hàng';
         // insert table import-export-products
         $dataImportExports = [
@@ -171,9 +171,10 @@ class ImportExportController extends Controller
      * @return \Illuminate\Http\Response
      */
      
-    public function showDetail($id)
+    public function showDetail($id, $idImportExport)
     {
-        $orderItems = DB::table('import_export_details')->join('products', 'import_export_details.product_id', '=', 'products.id')->where('import_export_details.import_export_product_id', '=', $id)->select('products.name', 'products.path_image', 'import_export_details.*')->get();
+        $orderItems = DB::table('import_export_details')->join('products', 'import_export_details.product_id', '=', 'products.id')->where('import_export_details.import_export_product_id', '=', $idImportExport)->select('products.name', 'products.path_image', 'import_export_details.*')->get();
+        
         return view('admin.import_export.show-detail')->with([
             'type_import_export' => $id,
             'orderItems' => $orderItems,

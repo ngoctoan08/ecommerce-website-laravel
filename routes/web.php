@@ -80,8 +80,30 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'checkRole']], func
     // handle unit
     Route::resource('unit', 'Admin\UnitController');
     Route::resource('provider', 'Admin\ProviderController');
-    Route::get('import_export/{id}/add', [ImportExportController::class, 'add'])->name('import_export.add');
-    Route::get('import_export/{id}/{idImportExport}', [ImportExportController::class, 'showDetail'])->name('import_export.show-detail');
+    
+    Route::prefix('import_export')->group(function () { 
+        Route::get('{id}/add', [
+            'as' => 'import_export.add', 
+            'uses' => 'Admin\ImportExportController@add', 
+        ]);
+        
+        // update status of order
+        Route::post('{id}/{idImportExport}', [
+            'as' => 'import_export.update-status',
+            'uses' => 'Admin\ImportExportController@updateStatus',
+        ]);
+        // show order detail
+        Route::get('{id}/{idImportExport}', [
+            'as' => 'import_export.show-detail',
+            'uses' => 'Admin\ImportExportController@showDetail',
+        ]);
+
+        
+    // Route::get('import_export/{id}/add', [ImportExportController::class, 'add'])->name('import_export.add');
+        
+    });
+    // Route::get('import_export/{id}/add', [ImportExportController::class, 'add'])->name('import_export.add');
+    // Route::get('import_export/{id}/{idImportExport}', [ImportExportController::class, 'showDetail'])->name('import_export.show-detail');    
     Route::resource('import_export', 'Admin\ImportExportController');
 });
 

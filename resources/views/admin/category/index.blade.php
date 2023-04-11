@@ -198,7 +198,7 @@ data-backdrop="static" >
     <!-- Config URL API-->
     <script src="{{asset('admin/js/config.js')}}"></script>
     <!-- Alert CDN -->
-    <script src="{{asset('admin_template/js/sweetalert.js')}}"></script>
+    <script src="{{asset('shared/js/sweetalert.js')}}"></script>
     <!-- Helper Function -->
     <script src="{{asset('admin/js/helper.js')}}"></script>
     <!-- Handle validate form -->

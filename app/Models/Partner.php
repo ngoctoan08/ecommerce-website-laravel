@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
 class Partner extends Model
 {
     use HasFactory;
@@ -26,5 +26,12 @@ class Partner extends Model
         //     'code_id' => $codeId,
         //     'user_id' => $request->user_id,
         // ];
+    }
+
+    public function showProvider()
+    {
+        return DB::table('partners')
+        ->where('type_partner_id', '=', 1)
+        ->get();
     }
 }

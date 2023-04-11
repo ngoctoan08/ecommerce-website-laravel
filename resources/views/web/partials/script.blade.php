@@ -22,9 +22,18 @@
 <script src="{{asset('client/js/toastr.min.js')}}"></script>
 <script src="{{asset('web/js/toastr.js')}}"></script>
 
+<!-- Handle validate form -->
+<script src="{{asset('client/js/validator.js')}}"></script>
+
+<!-- sweetalert -->
+<script src="{{asset('shared/js/sweetalert.js')}}"></script>
+<script src="{{asset('shared/js/helper.js')}}"></script>
+
 <!-- Xử lý ajax -->
 <script src="{{asset('web/js/ajax-process.js')}}"></script>
 
 <!-- Rateting -->
 <script src="{{asset('web/js/star-rating-svg.js')}}"></script>
+
+
 

@@ -20,7 +20,8 @@ function addToCart(url, data) {
         .then((response) => response.json())
         .then((data) => {
             if (data.status == 201) {
-                toastr['success'](data.message);
+                // toastr['success'](data.message);
+                alertSuccess(data.message);
                 $('.cart-order').html(data.htmlIconCart);
             } else {
                 alert("lỗi");
@@ -52,7 +53,6 @@ function delItemInCart(url, data) {
                 $('.infor-product-pay').html(data.htmlPageCart);
             } else {
                 alert("lỗi");
-                
             }
         });
 }
@@ -122,141 +122,52 @@ function handleUpdateQtyInCart() {
         updateQtyInCart(url, data);
     }
 }
-// Hàm cập nhật html ở trang cart
 
-const renderOrderCart = () => {
-    $.ajax({
-        type: 'GET',
-        url: './Servers/AjaxProcess.php?action=render',
-        dataType: 'html',
-
-        success: function (response) {
-            $('.infor-product-pay').html(response);
-        },
+function handleAddItemToCart() {
+    // Lấy tất cả dữ liệu của sản phẩm đó lên
+    // id, name, retail_price, name_image, path_image, qty
+    var idProduct = $(this).val();
+    var url = $(this).attr('url');
+    // Dùng hàm validator để lấy data
+    Validator({
+        form: '#form_add_to_cart_' + idProduct,
+        errorSelector: '.form-error',
+        rules: [
+        ],
+        onSubmit: function(data) {
+            // Call API
+            console.log(data);
+            addToCart(url, data); //gọi hàm
+        }
     });
-};
+}
 
+function handleSearchItem() {
+    alert("Loading...");
+}
 // Xử lý ajax xóa sản phẩm: Bằng id và size
 $(document).ready(function () {
     $(document).on('click', '.del_order', handleDelItemInCart);
     $(document).on('click', '.change_qty', handleUpdateQtyInCart);
-});
-
-// Xử lý ajax thanh toán ngay tại trang product detail
-$(document).ready(function () {
-    $('.border-choose-size').click(function () {
-        if ($(this).hasClass(`active`)) {
-            $('.product-size').val($(this).attr('product-size'));
-        }
-    });
-
-    $(document).on('click', '.pay_now', function () {
-        var idProduct = $(this).val();
-        var sizeProduct = $('.product-size').val();
-        var qtyProduct = $('.input-qty').val();
-        $.ajax({
-            type: 'POST',
-            url: './Servers/AjaxProcess.php?action=add',
-            data: {
-                id: idProduct,
-                size: sizeProduct,
-                qty: qtyProduct,
-            },
-            dataType: 'html',
-            success: function (response) {
-                if (response != false) {
-                    $(`.cart-order`).html(response);
-                    toastr['success'](`<a href="gio-hang" style = "display: inline-block;" class="icon-cart h5">
-                        Thêm vào giỏ hàng thành công! 
-                            <span>
-                                <i class="fa-solid fa-bag-shopping"></i>
-                            </span>
-                    </a>`);
-                }
-            },
-        });
-    });
-});
-
-// Xử lý ajax cập nhật số lượng sản phẩm ở trang giỏ hàng
-// $(document).ready(function () {
-//     $(document).on('click', '.change_qty', function () {
-//         var x = $(this).val(); //Lấy ra là cộng hoặc trừ
-//         var idProduct = $(this).attr('id-product');
-//         var sizeProduct = $(this).attr('size-product');
-//         var temp = $('.product_' + idProduct).val();
-//         if (x == '+') {
-//             temp++;
-//             $('.product_' + idProduct).val(temp);
-//             if ($('.product_' + idProduct).val() > 10 || $('.product_' + idProduct).val() <= 0) {
-//                 $('.product_' + idProduct).val(1);
-//                 toastr['info']('Số lượng sản phẩm không hợp lệ!');
-//             }
-//         }
-//         if (x == '-') {
-//             temp--;
-//             $('.product_' + idProduct).val(temp);
-//             if ($('.product_' + idProduct).val() > 10 || $('.product_' + idProduct).val() <= 0) {
-//                 $('.product_' + idProduct).val(1);
-//                 toastr['info']('Số lượng sản phẩm không hợp lệ!');
-//             }
-//         }
-//         var qtyProduct = $('.product_' + idProduct).val();
-//         if (qtyProduct > 0 && qtyProduct < 10) {
-//             $.ajax({
-//                 type: 'POST',
-//                 url: './Servers/AjaxProcess.php?action=edit',
-//                 data: {
-//                     id: idProduct,
-//                     size: sizeProduct,
-//                     qty: qtyProduct,
-//                 },
-//                 dataType: 'html',
-//                 success: function (response) {
-//                     if (response) {
-//                         renderOrderCart();
-//                         updateCart();
-//                         toastr['success']('Cập nhật giỏ hàng thành công!');
-//                     }
-//                 },
-//             });
-//         }
-//     });
-// });
-
-// Hiện thị thông tin chi tiết sản phẩm ở thanh pop up
-$(document).ready(function () {
-    $(document).on('click', '.view-infor', function () {
-        var idProduct = $(this).attr('product-id');
-        $.ajax({
-            type: 'POST',
-            url: './Servers/AjaxProcess.php?action=view',
-            data: {
-                id: idProduct,
-            },
-            dataType: 'json',
-            success: function (response) {
-                $(`.content-list-popup`).html(response);
-            },
-        });
-    });
+    $(document).on('click', '.add_item_to_cart', handleAddItemToCart);
+    $(document).on('keyup', '.search_product', handleSearchItem);
 });
 
 // Xử lý ajax tìm kiếm sản phẩm
 
 $(document).ready(function () {
-    $(document).on('keyup', '.search_product', function () {
-        var text = $('.search_product').val();
-        $.ajax({
-            type: 'POST',
-            url: './Servers/AjaxProcess.php?action=search',
-            data: {
-                data: text,
-            },
-            dataType: 'html',
-            success: function (response) {
-                $(`.list-search-suggestions`).html(response);
-            },
-        });
-    });
+    // $(document).on('keyup', '.search_product', function () {
+    //     var text = $('.search_product').val();
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: './Servers/AjaxProcess.php?action=search',
+    //         data: {
+    //             data: text,
+    //         },
+    //         dataType: 'html',
+    //         success: function (response) {
+    //             $(`.list-search-suggestions`).html(response);
+    //         },
+    //     });
+    // });
 });

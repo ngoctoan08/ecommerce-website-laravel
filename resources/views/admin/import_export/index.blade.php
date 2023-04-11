@@ -1,6 +1,6 @@
 @extends('admin.index')
 @section('title')
-    <title>Nhập hàng</title>
+    <title>Nhập xuất hàng hóa</title>
 @endsection
 
 @section('content')
@@ -35,15 +35,16 @@
                                     <th>
                                         <input type="checkbox" id="check_all">
                                     </th>
-                                    <th>Nhân viên</th>
+                                    {{-- <th>Nhân viên</th> --}}
                                     <th>Mã</th>
                                     <th>Ngày</th>
-                                    <th>Tên NCC</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Tel</th>
+                                    {{-- <th>Tên NCC</th> --}}
+                                    {{-- <th>Địa chỉ</th> --}}
+                                    {{-- <th>Tel</th> --}}
                                     <th>Tổng tiền</th>
                                     <th>VAT</th>
                                     <th>Thành tiền</th>
+                                    <th>Trạng thái</th>
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
@@ -52,15 +53,26 @@
                                 <tr class="tr-shadow" id="item_{{$ieProduct->id}}">
                                     <td style="line-height: 145px;">{{ $loop->index + 1}}</td>
                                     <td><input type="checkbox" name="item[]" value="{{$ieProduct->id}}"></td>
-                                    <td>{{$ieProduct->name}}</td>
+                                    {{-- <td>{{$ieProduct->name}}</td> --}}
                                     <td>{{$ieProduct->bill_code}}</td>
                                     <td>{{$ieProduct->day}}</td>
-                                    <td>{{$ieProduct->name_partner}}</td>
-                                    <td>{{$ieProduct->address}}</td>
-                                    <td>{{$ieProduct->tel}}</td>
-                                    <td>@convert($ieProduct->total_amount)</td>
-                                    <td>@convert($ieProduct->tax_money)</td>
-                                    <td>@convert($ieProduct->into_money)</td>
+                                    {{-- <td>{{$ieProduct->name_partner}}</td> --}}
+                                    {{-- <td>{{$ieProduct->address}}</td> --}}
+                                    {{-- <td>{{$ieProduct->tel}}</td> --}}
+                                    <td>@formatMoney($ieProduct->total_amount)</td>
+                                    <td>@formatMoney($ieProduct->tax_money)</td>
+                                    <td>@formatMoney($ieProduct->into_money)</td>
+                                    <td>
+                                        @if($ieProduct->status == 1)
+                                        {{-- Select option --}}
+                                        <select url="{{route('import_export.update-status', [$type_import_export, $ieProduct->id])}}" name="status" data-id = "{{$ieProduct->id}}" id="update_status" class="form-control">
+                                            <option value="1"> Chờ xử lý </option>
+                                            <option value="2"> Đã hoàn thành </option>
+                                        </select>
+                                        @else
+                                        Đã hoàn thành
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="table-data-feature justify-content-center">
                                             <a class="item" title="Edit" href="{{route('import_export.show-detail', [
@@ -112,7 +124,7 @@
     <!-- Config URL API-->
     <script src="{{asset('admin/js/config.js')}}"></script>
     <!-- Alert CDN -->
-    <script src="{{asset('admin_template/js/sweetalert.js')}}"></script>
+    <script src="{{asset('shared/js/sweetalert.js')}}"></script>
     <!-- Helper Function -->
     <script src="{{asset('admin/js/helper.js')}}"></script>
     <!-- Handle validate form -->
@@ -136,6 +148,60 @@
                 createUnit(data);
             }
         });
+
+        function updateStatusById(request, url) {
+            // Body API
+            var options = {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
+                body: JSON.stringify(request)
+            }
+            // Fetch API 
+            fetch(url, options)
+            .then((response) => response.json())
+            .then((data) => {
+                if(data.status === 201) {
+                    alertSuccess(data.message);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 3000);
+                }
+                else {
+                    alertError(data.message);
+                }
+            })
+        }
+
+        // update status
+        $(document).ready(function () {
+            $('#update_status').on('change', function() {
+                var id = $(this).attr('data-id');
+                var status = $(this).val();
+                var url = $(this).attr('url');
+                alert(url);
+                if (status != 1) {
+                    Swal.fire({
+                    title: 'Xử lý đơn hàng?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, update it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            var request = {id, status};
+                            updateStatusById(request, url)
+                        }
+                    })
+                }
+            });
+        });
+        
     </script>
 
     {{-- Handle alert response from server to client --}}

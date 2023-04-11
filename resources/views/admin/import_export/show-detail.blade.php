@@ -1,6 +1,6 @@
 @extends('admin.index')
 @section('title')
-    <title>Nhập hàng</title>
+    <title>Chi tiết nhập xuất</title>
 @endsection
 
 @section('content')
@@ -22,11 +22,8 @@
                             <thead>
                                 <tr >
                                     <th>No</th>
-                                    <th>
-                                        <input type="checkbox" id="check_all">
-                                    </th>
-                                    <th>Tên</th>
                                     <th>Avatar</th>
+                                    <th>Tên</th>
                                     <th>Đơn vị</th>
                                     <th>Size</th>
                                     <th>Số lượng</th>
@@ -39,16 +36,15 @@
                                 @foreach($orderItems as $orderItem)
                                 <tr class="tr-shadow" id="item_{{$orderItem->id}}">
                                     <td style="line-height: 145px;">{{ $loop->index + 1}}</td>
-                                    <td><input type="checkbox" name="item[]" value="{{$orderItem->id}}"></td>
-                                    <td>{{$orderItem->name}}</td>
                                     <td><a href="">
                                         <img style="width: 150px;" src="{{asset($orderItem->path_image)}}" alt="">
                                     </a></td>
+                                    <td>{{$orderItem->name}}</td>
                                     <td>{{$orderItem->unit}}</td>
                                     <td>{{$orderItem->size}}</td>
                                     <td>{{$orderItem->quantity}}</td>
-                                    <td>@convert($orderItem->price)</td>
-                                    <td>@convert($orderItem->into_money)</td>
+                                    <td>@formatMoney($orderItem->price)</td>
+                                    <td>@formatMoney($orderItem->into_money)</td>
                                     <td>{{$orderItem->note}}</td>
                                 </tr>
                                 @endforeach

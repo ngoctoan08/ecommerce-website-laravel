@@ -20,13 +20,13 @@ class ProviderController extends Controller
         $this->area = $areaModel;
     }
     /**
-     * Display a listing of the resource.
+     * Display a listing of the provider.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $providers = $this->provider->latest()->paginate(5);
+        $providers = $this->provider->showProvider();
         $typePartners = $this->typePartner->get();
         $areas = $this->area->get();
         return view('admin.provider.index')->with([

@@ -27,15 +27,17 @@ class UpdateStoreQuantity
      */
     public function handle(ImportExportDetailCreated $event)
     {
-        $importExportDetail = $event->importExportDetail;
-        $productId = $importExportDetail->product_id;
-        $productSize = $importExportDetail->size;
-        $quantity = $importExportDetail->quantity;
+        $importExportDetail = $event->importExportDetail; //lấy ra thông tin của import detail
+        return $importExportDetail;
+        // foreach($importExportDetail as $item)
+        // $productId = $importExportDetail->product_id;
+        // $productSize = $importExportDetail->size;
+        // $quantity = $importExportDetail->quantity;
 
-        // Giảm số lượng sản phẩm trong bảng store
-        DB::table('product_size_stores')
-            ->where('product_id', $productId)
-            ->where('size_name', $productSize)
-            ->decrement('quantity', $quantity);
+        // // Giảm số lượng sản phẩm trong bảng store
+        // DB::table('product_size_stores')
+        //     ->where('product_id', $productId)
+        //     ->where('size_name', $productSize)
+        //     ->decrement('quantity', $quantity);
     }
 }

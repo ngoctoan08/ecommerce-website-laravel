@@ -13,6 +13,7 @@ use App\Models\StoreProduct;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 class ImportExportController extends Controller
 {
     private $product;
@@ -22,6 +23,8 @@ class ImportExportController extends Controller
     private $size;
     private $store;
     private $productSizeStore;
+
+    
     public function __construct(Product $productModel, ImportExportProduct $importExportModel, ImportExportDetail $importExportDetailModel, Partner $partnerModel, Size $sizeModel, StoreProduct $storeModel , ProductSizeStore $productSizeStoreModel)
     {
         $this->product = $productModel;
@@ -62,7 +65,7 @@ class ImportExportController extends Controller
     {
         // dd($request);
         $now = Carbon::now()->toDateTimeString();
-        $billCode = !strcmp($request->bill_code, '') ? 'HD_NHAP'.rand() : $request->bill_code;
+        $billCode = !strcmp($request->bill_code, '') ? 'HD_NHAP_'.Str::random(10) : $request->bill_code;
         $status = 'Đã giao hàng';
         // insert table import-export-products
         $dataImportExports = [
@@ -81,6 +84,7 @@ class ImportExportController extends Controller
         ];
         // insert table
         try {
+            DB::beginTransaction(); 
             $importExportId = $this->importExport->create($dataImportExports)->id;
             // dd($lastId);
             // Insert table import-export-details
@@ -109,13 +113,15 @@ class ImportExportController extends Controller
                         'size_name' => $request->size[$i]
                     ];
                     $this->importExportDetail->create($dataImportExportDetails);
+                    // insert table product_size_stores
                     $this->productSizeStore->create($dataProductSizeStores);
                 }
             }
-            // insert table product_size_stores
+            DB::commit();
             // Back to show list items page
             return redirect()->route('import_export.show', $request->type)->with('success', 'Nhập hàng thành công!'); //config message
         } catch (\Throwable $th) {
+            DB::rollback();
             throw $th;
         }
     }
@@ -153,15 +159,44 @@ class ImportExportController extends Controller
      */
     public function show($id)
     {
-        // $products = $this->product->get();
-        // $sizes = $this->size->get();
-        // $partners = $this->partner->get();
-        $ieProducts = DB::table('type_import_export_products')->join('import_export_products', 'type_import_export_products.id', '=', 'import_export_products.type_import_export_id')->join('partners', 'import_export_products.partner_id', '=' , 'partners.id')->join('users', 'users.id', '=', 'import_export_products.user_id')->select('import_export_products.*', 'partners.name_partner', 'partners.address', 'partners.tel', 'users.name')->get();
-        
+        $ieProducts = $this->importExport->showListOrderByTypeImportExport($id);
         return view('admin.import_export.index')->with([
             'type_import_export' => $id,
             'ieProducts' => $ieProducts,
         ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStatus(Request $request)
+    {
+        $id = $request->id;
+        $newStatus = $request->status;
+        try {
+            DB::beginTransaction();
+            DB::table('import_export_products')
+            ->where('id', $id)
+            ->update([
+                'status' => $newStatus
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => 201,
+                'message' => "Cập nhật trạng thái đơn hàng thành công!"
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 400,
+                'message' => $th
+            ]);
+        }
+        
     }
 
     /**
@@ -191,17 +226,7 @@ class ImportExportController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    
 
     /**
      * Remove the specified resource from storage.

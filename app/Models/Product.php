@@ -52,6 +52,7 @@ class Product extends Model
         ->select('product_size_stores.size_name', 'product_size_stores.product_id')
         ->where('products.id', '=', $id)
         ->whereNull('products.deleted_at')
+        ->groupBy('product_size_stores.size_name','product_size_stores.product_id')
         ->get();
         
     }
@@ -70,4 +71,21 @@ class Product extends Model
 
     // Show list feedback
     
+    
+
+
+    // Admin 
+    // Show list product in admin page
+    public function showInfoProducts()
+    {
+        return DB::table('products')
+        ->select('products.id', 'products.name', 'products.slug', 'categories.name as category_name', 'products.status','products.name_image', 'products.path_image', 'products.description', 'products.conversion_unit', 'products.entry_price', 'products.wholesale_price', 'products.retail_price' ,DB::raw('SUM(product_size_stores.quantity) as quantity'))
+        ->latest('products.created_at')
+        ->groupBy('products.id', 'products.name', 'products.slug', 'categories.name', 'products.status', 'products.name_image', 'products.path_image', 'products.description', 'products.conversion_unit', 'products.entry_price', 'products.wholesale_price', 'products.retail_price')
+        ->join('product_size_stores', 'products.id', '=', 'product_size_stores.product_id')
+        ->join('categories', 'products.category_id', '=', 'categories.id')
+        ->whereNull('products.deleted_at')
+        ->paginate(5);
+        // nếu sử dụng phân trang thì thay bằng get
+    }
 }

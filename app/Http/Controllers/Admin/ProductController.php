@@ -41,7 +41,11 @@ class ProductController extends Controller
     public function index()
     {
         $option = $this->optionCategory->makeRecursive($this->category, '');
-        $products = $this->product->latest()->paginate(5);
+        // show product in store
+        
+        // $products = $this->product->latest()->paginate(5);
+        $products = $this->product->showInfoProducts();
+        // return $products;
         $units = $this->unit->get();
         // dd($products);
         return view('admin.product.index')->with([

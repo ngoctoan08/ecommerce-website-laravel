@@ -432,32 +432,3 @@
     </div>  
 </section>
 @endsection
-
-@section('script')
-    <!-- Handle validate form -->
-    <script src="{{asset('client/js/validator.js')}}"></script>
-    {{-- Handle Cart --}}
-    {{-- Handle add to cart --}}
-    <script>
-       $(document).ready(function () {
-            $('.add_item_to_cart').click(function(e) {
-                // Lấy tất cả dữ liệu của sản phẩm đó lên
-                // id, name, retail_price, name_image, path_image, qty
-                var idProduct = $(this).val();
-                var url = $(this).attr('url');
-                Validator({
-                    form: '#form_add_to_cart_' + idProduct,
-                    errorSelector: '.form-error',
-                    rules: [
-                        
-                    ],
-                    onSubmit: function(data) {
-                        // Call API
-                        console.log(data);
-                        addToCart(url, data);
-                    }
-                });
-            });
-       });
-    </script>
-@endsection

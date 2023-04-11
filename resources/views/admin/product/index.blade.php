@@ -25,7 +25,6 @@
                                     </th>
                                     <th>Ảnh đại diện</th>
                                     <th>Tên</th>
-                                    <th>Danh mục</th>
                                     <th>Trạng thái</th>
                                     <th>Giá nhập</th>
                                     <th>Giá bán buôn</th>
@@ -45,13 +44,16 @@
                                             <img style="width: 150px;" src="{{asset($product->path_image)}}" alt="">
                                         </a>
                                     </td>
-                                    <td>{{$product->name}}</td>
-                                    <td>{{$product->category_id}}</td>
+                                    <td>
+                                        <a href=""><span class="text-dark">{{$product->name}}</span></a>
+                                        <br>
+                                        <span>Danh mục: {{$product->category_name}}</span>
+                                    </td>
                                     <td>{{$product->status}}</td>
-                                    <td>@convert($product->entry_price)</td>
-                                    <td>@convert($product->wholesale_price)</td>
-                                    <td>@convert($product->retail_price)</td>
-                                    <td>{{$product->standard_stock}}</td>
+                                    <td>@formatMoney($product->entry_price)</td>
+                                    <td>@formatMoney($product->wholesale_price)</td>
+                                    <td>@formatMoney($product->retail_price)</td>
+                                    <td>{{$product->quantity}}</td>
                                     <td>
                                         <div class="table-data-feature justify-content-center">
                                             <a data-id = "{{$product->id}}" class="item" href = "{{route('product.import_export', $product->id )}}" title="Import">
@@ -331,7 +333,7 @@
     <!-- Config URL API-->
     <script src="{{asset('admin/js/config.js')}}"></script>
     <!-- Alert CDN -->
-    <script src="{{asset('admin_template/js/sweetalert.js')}}"></script>
+    <script src="{{asset('shared/js/sweetalert.js')}}"></script>
     <!-- Helper Function -->
     <script src="{{asset('admin/js/helper.js')}}"></script>
     <!-- Handle validate form -->

@@ -35,6 +35,9 @@
                     <li>
                         <a href="{{route('import_export.show', 1)}}">Nhập hàng</a>
                     </li>
+                    <li>
+                        <a href="{{route('import_export.show', 3)}}">Đơn hàng</a>
+                    </li>
                 </ul>
             </li>
               <li class="active has-sub">

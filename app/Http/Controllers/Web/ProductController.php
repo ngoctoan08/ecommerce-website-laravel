@@ -33,25 +33,19 @@ class ProductController extends Controller
 
     
     /**
-     * Display a listing of the resource in web page
+     * Display a listing of the resource in web page by slug of category
      *
      * @return \Illuminate\Http\Response
      */
     public function index($title)
     {
         $menus = $this->menu->showMenusHeader();
-        $categories = DB::table('categories')
-        ->select('categories.name as category_name', 'categories.slug as category_slug', DB::raw('COUNT(products.id) as category_qty'))
-        ->join('products', 'categories.id', '=', 'products.category_id')
-        ->whereExists(function ($query) {
-            $query->select(DB::raw(1))
-                ->from('product_size_stores')
-                ->whereRaw('product_size_stores.product_id = products.id')
-                ->where('product_size_stores.quantity', '>', 0);
-        })
-        ->groupBy('categories.name', 'categories.slug')
-        ->get();
+        // Show thông tin danh mục và số lượng mặt hàng của từng danh mục
+        $categories = $this->category->showQtyProductWithCategory();
+        
+        // Show list product by slug category
         $products = $this->product->join('categories', 'products.category_id', '=', 'categories.id')->select('products.id', 'products.name', 'products.name_image', 'products.path_image', 'products.retail_price', 'products.slug', 'products.description')->where('categories.slug', 'like', $title)->get();
+        
         return view('web.pages.products')->with([
             'products' => $products,
             'menus' => $menus,

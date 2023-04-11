@@ -14,11 +14,11 @@
             </li>
             <li>/</li>
             <li>
-                <a href="">Gio hang</a>
+                <a href="">Thanh toán</a>
             </li>
         </ul>
         <div class="name-page">
-            <span>Giỏ hàng</span>
+            <span>Thanh toán</span>
         </div>
     </div>
 </section>
@@ -27,6 +27,8 @@
 <section class="infor-pay">
     <div class="container">
         <div class="row">
+            @if(session()->has('cart'))
+                <?php $total = 0; ?>
             <!-- form-infor-customer -->
             <div class="col-md-6">
                 <div class="form-infor-customer">
@@ -67,8 +69,7 @@
                                 
                             </div>
                             <!-- address-city -->
-                            @if(session()->has('cart'))
-                                <?php $total = 0; ?>
+                            
                                     @foreach(session('cart') as $productId)
                                         @foreach($productId as $productDetail)
                                         <?php 
@@ -76,7 +77,6 @@
                                         ?>
                                         @endforeach
                                     @endforeach
-                            @endif
                             {{-- input hidden --}}
                             <input type="hidden" name="text_province" id="text_province" value="" />
                             <input type="hidden" name="text_district" id="text_district" value="" />
@@ -112,6 +112,7 @@
                     </form>
                 </div>
             </div>
+            @endif
 
             <!-- infor-product-pay -->
             <div class="col-md-6">
@@ -180,10 +181,6 @@
 
 {{-- Section Script --}}
 @section('script')
-    <!-- Handle validate form -->
-    <script src="{{asset('client/js/validator.js')}}"></script>
-    {{-- Handle Cart --}}
-    {{-- Handle add to cart --}}
     <script>
         Validator({
             form: '#frm_checkout',
@@ -224,10 +221,12 @@
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.status == 201) {
-                        toastr['success'](data.message);
+                        alertSuccess(data.message)
+                        setTimeout(() => {
+                            location.reload();
+                        }, 3000);
                     } else {
-                        alert(data.status);
-                        
+                        alertError(data.message)
                     }
                 });
         }

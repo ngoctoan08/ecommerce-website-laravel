@@ -29,8 +29,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // query list menu
-        $menus = $this->menu->where('parent_id', 0)->where('page_id', 1)->get();
+        // Show menus of header
+        $menus = $this->menu->showMenusHeader();
         return view('web.pages.home')->with('menus', $menus);
     }
 

@@ -223,7 +223,7 @@
                     if (data.status == 201) {
                         alertSuccess(data.message)
                         setTimeout(() => {
-                            location.reload();
+                            location.href(data.redirect);
                         }, 3000);
                     } else {
                         alertError(data.message)

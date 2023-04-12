@@ -65,7 +65,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // $dataProductCreate = $request->validated();
-        $codeId = !strcmp($request->code_id, '') ? 'SP'.rand().time() : $request->code_id;
+        $codeId = !strcmp($request->code_id, '') ? 'HH_'.Str::random(10) : $request->code_id;
         $dataProductCreate = [
             'name' => $request->name,
             'slug' => Str::slug($request->name),
@@ -102,7 +102,7 @@ class ProductController extends Controller
                     ]);
                 }
             }
-            return redirect()->route('product.index');
+            return redirect()->back()->with('success', 'Thêm sản phẩm mới thành công!');
         } catch (\Throwable $th) {
             throw $th;
         }

@@ -3,6 +3,7 @@
 <title>Danh mục</title>
 @endsection
 
+@section('content')
 <!-- banner -->
 <section class="banner">
     <div class="img-banner">
@@ -24,7 +25,7 @@
     </div>
 </section>
 
-        <!-- list-product shoes -->
+    <!-- list-product shoes -->
 <section class="box-list-product mb-15">
     <div class="container">
         <div class="title-boc-cart-list">
@@ -51,7 +52,8 @@
         </div>
     </div>
 </section>
-    <!-- banner -->
+@endsection
+
 
     
 

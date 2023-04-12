@@ -127,7 +127,8 @@ class CheckoutController extends Controller
             session()->forget('cart');
             return response()->json([
                 'status' => 201,
-                'message' => 'Bạn đã đặt hàng thành công!'
+                'message' => 'Bạn đã đặt hàng thành công!',
+                'redirect'=> route('web-order.index') 
             ]);
             
         } catch (\Throwable $th) {

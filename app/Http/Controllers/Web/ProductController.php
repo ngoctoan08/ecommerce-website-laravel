@@ -6,29 +6,31 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\Category;
-use App\Models\ImageProduct;
 use App\Models\Product;
-use App\Models\ProductSizeStore;
-use App\Models\Size;
-use Illuminate\Support\Facades\DB;
+use App\Models\Feedback;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Session;
+use App\Traits\StoreImageTrait;
+use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
+    use StoreImageTrait;
     private $menu;
     private $category;
     private $product;
+    private $feedback;
     
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(Menu $menuModel, Category $categoryModel, Product $productModel)
+    public function __construct(Menu $menuModel, Category $categoryModel, Product $productModel, Feedback $feedbackModel)
     {
         $this->menu = $menuModel;
         $this->category = $categoryModel;
         $this->product = $productModel;
+        $this->product = $productModel;
+        $this->feedback = $feedbackModel;
     }
 
     
@@ -76,10 +78,11 @@ class ProductController extends Controller
         $sizes = $this->product->showSizeProduct($id);
         
         // Query to show list feedback by product's id
- 
+        $feedbacks = $this->product->showListFeedback($id);
         // return view product-detail
         return view('web.pages.detail_product')->with([
             'product' => $product,
+            'feedbacks' => $feedbacks,
             'menus' => $menus,
             'images' => $images,
             'sizes' => $sizes,
@@ -108,7 +111,37 @@ class ProductController extends Controller
      */
     public function storeFeedback(Request $request)
     {
-        //
+        $dataFeedback = [
+            'content' => $request->comment,
+            'rate' => $request->rate,
+        ];
+        try {
+            // dd($request);
+
+            DB::beginTransaction();
+            $feedbackId = $this->feedback->create($dataFeedback)->id;
+            $dataFeedback = $this->StoreImageTraitUpload($request, 'img_feedback', 'feedback');
+            dd($dataFeedback);
+
+            if(!empty($dataFeedback)) {
+                
+                $length = sizeof($dataFeedback);
+                for ($i = 0; $i < $length; $i++) {
+                    DB::table('feedback_images')->insert([
+                        'feedback_id'=> $feedbackId,
+                        'name_image'=> $dataFeedback[$i]['name'],
+                        'path_image' => $dataFeedback[$i]['path'] 
+                    ]);
+                }
+            }
+            DB::commit();
+            return redirect()->back()->with('success', 'Đánh giá sản phẩm thành công!');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Đánh giá sản phẩm thất bại!');
+            //throw $th;
+        }
+        
     }
 
     

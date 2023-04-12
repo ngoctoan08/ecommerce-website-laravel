@@ -134,9 +134,9 @@ class ImportExportController extends Controller
     public function add($id)
     {
         $now = Carbon::now()->format('d-m-Y');
-        $products = $this->product->get();
+        $products = $this->product->showInfoProducts();
         $sizes = $this->size->get();
-        $partners = $this->partner->get();
+        $partners = $this->partner->where('type_partner_id', '=', 1)->get();
         // $ieProducts = $this->importExport->where('type_import_export_id', $id)->get();
         // $ieProducts = $this->importExport->join('type_import_export_products', $id, '=', 'type_import_export_products_id')->join('partners', 'partner_id', '=', );
         $ieProducts = DB::table('type_import_export_products')->join('import_export_products', 'type_import_export_products.id', '=', 'import_export_products.type_import_export_id')->join('partners', 'import_export_products.partner_id', '=' , 'partners.id')->join('users', 'users.id', '=', 'import_export_products.user_id')->select('import_export_products.*', 'partners.name_partner', 'partners.address', 'partners.tel', 'users.name')->get();
@@ -159,6 +159,7 @@ class ImportExportController extends Controller
      */
     public function show($id)
     {
+        //idL type import export
         $ieProducts = $this->importExport->showListOrderByTypeImportExport($id);
         return view('admin.import_export.index')->with([
             'type_import_export' => $id,
@@ -179,11 +180,15 @@ class ImportExportController extends Controller
         $newStatus = $request->status;
         try {
             DB::beginTransaction();
+            // Update status
             DB::table('import_export_products')
             ->where('id', $id)
             ->update([
-                'status' => $newStatus
+                'status' => $newStatus,
+                'paymented' => DB::raw('into_money')
             ]);
+            // Update paymented sử dụng trigger trong migation
+            
             DB::commit();
             return response()->json([
                 'status' => 201,

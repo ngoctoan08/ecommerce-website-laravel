@@ -13,10 +13,24 @@ class ImportExportProduct extends Model
     public function showListOrderByTypeImportExport($id)
     {
         return DB::table('type_import_export_products')
-        ->join('import_export_products', 'type_import_export_products.id', '=', 'import_export_products.type_import_export_id')->join('partners', 'import_export_products.partner_id', '=' , 'partners.id')
-        ->join('users', 'users.id', '=', 'import_export_products.user_id')
-        ->select('import_export_products.*', 'partners.name_partner', 'partners.address', 'partners.tel', 'users.name')
+        ->select('import_export_products.*', 'partners.name_partner', 'partners.address', 'partners.tel')
+        ->latest('import_export_products.created_at')
+        ->join('import_export_products', 'type_import_export_products.id', '=', 'import_export_products.type_import_export_id')
+        ->join('partners', 'import_export_products.partner_id', '=' , 'partners.id')
         ->where('type_import_export_products.id', '=', $id)
+        ->get();
+    }
+
+    // userId: tài khoản đặt cái đơn hàng đó
+    public function showOrdered($userId)
+    {
+        return DB::table('type_import_export_products')
+        ->select('import_export_products.*', 'partners.name_partner', 'partners.address', 'partners.tel')
+        ->latest('import_export_products.created_at')
+        ->join('import_export_products', 'type_import_export_products.id', '=', 'import_export_products.type_import_export_id')
+        ->join('partners', 'import_export_products.partner_id', '=' , 'partners.id')
+        ->join('users', 'import_export_products.user_id', '=', 'users.id')
+        ->where('users.id', '=', $userId)
         ->get();
     }
 }

@@ -45,7 +45,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href=""><span class="text-dark">{{$product->name}}</span></a>
+                                        <a href=""><span class="text-dark fs-1 text">{{$product->name}}</span></a>
                                         <br>
                                         <span>Danh mục: {{$product->category_name}}</span>
                                     </td>
@@ -57,7 +57,7 @@
                                     <td>
                                         <div class="table-data-feature justify-content-center">
                                             <a data-id = "{{$product->id}}" class="item" href = "{{route('product.import_export', $product->id )}}" title="Import">
-                                                <i class="zmdi zmdi-edit"></i>
+                                                <i class="zmdi zmdi-download"></i>
                                             </a>
                                             <a class="item" title="Edit" href="{{route('product.edit', $product->id )}}">
                                                 <i class="zmdi zmdi-edit"></i>
@@ -181,7 +181,7 @@
                                                     <label for="entry_price" class=" form-control-label">Giá nhập</label>
                                                 </div>
                                                 <div class="col-12 col-md-8">
-                                                    <input type="number" min='0' step="0.5" id="entry_price" name="entry_price" placeholder="Nhập giá nhập" class="form-control input-currency" value="100">
+                                                    <input type="number" min='0' step="0.5" id="entry_price" name="entry_price" placeholder="Nhập giá nhập" class="form-control input-currency" value="300000">
                                                 </div>
                                             </div>
                                         </div>
@@ -191,7 +191,7 @@
                                                     <label for="wholesale_price" class=" form-control-label">Giá bán buôn</label>
                                                 </div>
                                                 <div class="col-12 col-md-8">
-                                                    <input type="number" min='0' step="0.5" id="wholesale_price" name="wholesale_price" placeholder="Nhập giá bán buôn" class="form-control input-currency" value="120">
+                                                    <input type="number" min='0' step="0.5" id="wholesale_price" name="wholesale_price" placeholder="Nhập giá bán buôn" class="form-control input-currency" value="1000000">
                                                 </div>
                                             </div>
                                         </div>
@@ -201,7 +201,7 @@
                                                     <label for="retail_price" class=" form-control-label">Giá bán lẻ</label>
                                                 </div>
                                                 <div class="col-12 col-md-8">
-                                                    <input type="number" min='0' step="0.5" id="retail_price" name="retail_price" placeholder="Nhập giá bán lẻ" class="form-control input-currency" value="">
+                                                    <input type="number" min='0' step="0.5" id="retail_price" name="retail_price" placeholder="Nhập giá bán lẻ" class="form-control input-currency" value="1500000">
                                                 </div>
                                             </div>
                                         </div>

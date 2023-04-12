@@ -1,5 +1,3 @@
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
-
 {{-- Jquery --}}
 <script src="{{asset('web/js/jquery-3.6.4.min.js')}}"></script>
 <!-- API -->
@@ -7,8 +5,8 @@
 
 <script src="{{asset('web/js/api-location.js')}}"></script>
 
-<script src="{{asset('web/js/jquery-3.6.4.min.js')}}"></script>
-<script src="{{asset('web/js/bootstrap.min.js')}}"></script>
+{{-- <script src="{{asset('web/js/bootstrap.min.js')}}"></script> --}}
+<script src="{{asset('shared/bootstrap-5.0.2-dist/js/bootstrap.min.js')}}"></script>
 
 {{-- Swipper --}}
 <script src="{{asset('web/js/swiper-bundle.min.js')}}"></script>
@@ -20,6 +18,7 @@
 
 <!-- toastr -->
 <script src="{{asset('client/js/toastr.min.js')}}"></script>
+{{-- config toastr --}}
 <script src="{{asset('web/js/toastr.js')}}"></script>
 
 <!-- Handle validate form -->

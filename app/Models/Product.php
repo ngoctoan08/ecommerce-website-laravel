@@ -70,8 +70,14 @@ class Product extends Model
     }
 
     // Show list feedback
-    
-    
+    public function showListFeedback($id)
+    {
+        return DB::table('products')
+        ->join('feedback', 'products.id', '=', 'feedback.product_id')
+        ->select('feedback.*')
+        ->where('products.id', '=', $id)
+        ->get();
+    }
 
 
     // Admin 
@@ -79,13 +85,14 @@ class Product extends Model
     public function showInfoProducts()
     {
         return DB::table('products')
-        ->select('products.id', 'products.name', 'products.slug', 'categories.name as category_name', 'products.status','products.name_image', 'products.path_image', 'products.description', 'products.conversion_unit', 'products.entry_price', 'products.wholesale_price', 'products.retail_price' ,DB::raw('SUM(product_size_stores.quantity) as quantity'))
+        ->select('products.id', 'products.name', 'products.slug', 'categories.name as category_name', 'products.status','products.name_image', 'products.path_image', 'products.description', 'products.conversion_unit', 'products.entry_price', 'products.wholesale_price', 'products.retail_price' , DB::raw('SUM(COALESCE(product_size_stores.quantity, 0)) as quantity'))
         ->latest('products.created_at')
         ->groupBy('products.id', 'products.name', 'products.slug', 'categories.name', 'products.status', 'products.name_image', 'products.path_image', 'products.description', 'products.conversion_unit', 'products.entry_price', 'products.wholesale_price', 'products.retail_price')
-        ->join('product_size_stores', 'products.id', '=', 'product_size_stores.product_id')
+        ->leftJoin('product_size_stores', 'products.id', '=', 'product_size_stores.product_id')
         ->join('categories', 'products.category_id', '=', 'categories.id')
         ->whereNull('products.deleted_at')
-        ->paginate(5);
+        ->get();
+        // ->paginate(5);
         // nếu sử dụng phân trang thì thay bằng get
     }
 }

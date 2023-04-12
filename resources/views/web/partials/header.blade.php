@@ -178,7 +178,7 @@
                     
                     <div class="list-action-account list-cart">
                         <ul class="custom-nav">
-                            <li><a class="btn" href="">Theo dõi đơn hàng</a></li>
+                            <li><a class="btn" href="{{route('web-order.index')}}">Theo dõi đơn hàng</a></li>
                             <li><a class="btn" href="">Cập nhật thông tin</a></li>
                             <li>
                                 <a href="http://127.0.0.1:8000/logout" onclick="event.preventDefault();

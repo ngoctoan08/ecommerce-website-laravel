@@ -119,31 +119,6 @@ $(document).ready(function() {
     })
 })
 
-// popup check-user
-$(document).ready(function() {
-    $(".inp-write-review").click(function() {
-        let value = $(".check-user").css("display");
-        // console.log(value);
-        if(value == "none"){
-            $(".check-user").css({
-                'display' : 'flex'
-            })
-        } else {
-            $(".check-user").css({
-                'display' : 'none'
-            })
-        }
-    })
-
-    $(".close-check-user").click(function() {
-        $(".check-user").hide();
-
-        $(".check-user").click(function(event) {
-            event.stopPropagation();
-        })
-    })
-})
-
 $(document).ready(function() {
     $('.btn-pay').click(function() {
         $('.popup-pay-success').addClass('ant-popup-pay-success');
@@ -281,9 +256,9 @@ $(document).ready(function() {
     })
 })
 
-document.getElementById('trigger_file').addEventListener('click', () => {
-    document.getElementById('img_feedback').click()
-  })
+// document.getElementById('trigger_file').addEventListener('click', () => {
+//     document.getElementById('img_feedback').click()
+//   })
 
 
 // animation success
@@ -311,33 +286,33 @@ function getText(valueId ,text_id)
 // Upload file feedback
 
 // Xử lý ajax upload nhiều ảnh 
-$(document).ready(function () {
-    $('#img_feedback').on('change', function(){
-        var upImg = this;
-        var formData = new FormData();
-        var file, len = upImg.files.length;
-        for(var i = 0; i < len; i++) {
-            file = upImg.files[i];
-            formData.append("img_feedback[]", file);
-        }
-        var ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function() {
-            if(ajax.status == 200 && ajax.readyState == 4) {
-                console.log(ajax.responseText);
-                if(ajax.responseText == 0) {
-                    toastr['error']('Upload images fail!');
-                }
-                else if(ajax.responseText == 'qty') {
-                    toastr['error']('Upload images fail!');
-                }
-                else {
-                    // res trả về tag img html có src link tới thư mục upload
-                    var res = ajax.responseText;
-                    $('.view_feedback').append(res)
-                }
-            }
-        }
-        ajax.open("POST", './Servers/upload.php', true);
-        ajax.send(formData)
-    })
-})
+// $(document).ready(function () {
+//     $('#img_feedback').on('change', function(){
+//         var upImg = this;
+//         var formData = new FormData();
+//         var file, len = upImg.files.length;
+//         for(var i = 0; i < len; i++) {
+//             file = upImg.files[i];
+//             formData.append("img_feedback[]", file);
+//         }
+//         var ajax = new XMLHttpRequest();
+//         ajax.onreadystatechange = function() {
+//             if(ajax.status == 200 && ajax.readyState == 4) {
+//                 console.log(ajax.responseText);
+//                 if(ajax.responseText == 0) {
+//                     toastr['error']('Upload images fail!');
+//                 }
+//                 else if(ajax.responseText == 'qty') {
+//                     toastr['error']('Upload images fail!');
+//                 }
+//                 else {
+//                     // res trả về tag img html có src link tới thư mục upload
+//                     var res = ajax.responseText;
+//                     $('.view_feedback').append(res)
+//                 }
+//             }
+//         }
+//         ajax.open("POST", './Servers/upload.php', true);
+//         ajax.send(formData)
+//     })
+// })

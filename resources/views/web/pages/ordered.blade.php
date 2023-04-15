@@ -44,9 +44,9 @@
 					<td>{{$order->bill_code}}</td>
 					<td>{{$order->day}}</td>
 					<td>@formatMoney($order->total_amount)</td>
-					<td>@formatMoney($order->tax_money)</td>
+					<td>{{$order->tax_money}}</td>
 					<td>@formatMoney($order->into_money)</td>
-					<td>{{$order->status}}</td>
+					<td><?= $order->status == 1 ? 'Chờ xử lý' : 'Đã hoàn thành' ?></td>
 					<td>
                         <div class="table-data-feature justify-content-center">
                             <a class="item" title="Chi tiết" href="{{route('web-order.show', $order->id )}}">

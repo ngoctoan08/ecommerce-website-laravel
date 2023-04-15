@@ -49,10 +49,10 @@ class Product extends Model
         return DB::table('products')
         ->join('product_size_stores', 'products.id', '=', 'product_size_stores.product_id')
         ->join('sizes', 'sizes.size_name', '=', 'product_size_stores.size_name')
-        ->select('product_size_stores.size_name', 'product_size_stores.product_id')
+        ->select('sizes.size_name', 'product_size_stores.product_id')
         ->where('products.id', '=', $id)
         ->whereNull('products.deleted_at')
-        ->groupBy('product_size_stores.size_name','product_size_stores.product_id')
+        ->groupBy('sizes.size_name','product_size_stores.product_id')
         ->get();
     }
 

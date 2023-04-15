@@ -14,10 +14,11 @@ class ImportExportProduct extends Model
     {
         return DB::table('type_import_export_products')
         ->select('import_export_products.*', 'partners.name_partner', 'partners.address', 'partners.tel')
-        ->latest('import_export_products.created_at')
+        // ->latest('import_export_products.created_at')
         ->join('import_export_products', 'type_import_export_products.id', '=', 'import_export_products.type_import_export_id')
         ->join('partners', 'import_export_products.partner_id', '=' , 'partners.id')
         ->where('type_import_export_products.id', '=', $id)
+        ->orderBy('import_export_products.status', 'asc')
         ->get();
     }
 

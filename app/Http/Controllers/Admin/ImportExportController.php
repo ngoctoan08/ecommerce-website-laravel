@@ -68,8 +68,9 @@ class ImportExportController extends Controller
     {
         // dd($request);
         $now = Carbon::now()->toDateTimeString();
-        $billCode = !strcmp($request->bill_code, '') ? 'HD_NHAP_'.Str::random(10) : $request->bill_code;
+        $billCode = !strcmp($request->bill_code, '') ? 'HD_NHAP_'.time() .'' : $request->bill_code;
         $status = '2'; //Đã giao hàng
+        $contentRevenueExpenditureId = 2; //phiếu chi
         // insert table import-export-products
         $dataImportExports = [
             'bill_code'=> $billCode,
@@ -124,6 +125,17 @@ class ImportExportController extends Controller
                     
                 }
             }
+
+            // xuất phiếu chi
+            $dataRevenueExpenditure = [
+                'user_id' => Auth::user()->id,
+                'partner_id' => $request->partner_id,
+                'content_revenue_expenditure_id' => $contentRevenueExpenditureId,
+                're_amount_money' => $request->bill_into_money,
+                'import_export_id' => $importExportId,
+                're_content' => 'Chi trả nhà cung cấp '.$request->partner_id,
+            ];
+            $this->revenueExpenditure->create($dataRevenueExpenditure);
             DB::commit();
             // Back to show list items page
             return redirect()->route('import_export.show', $request->type)->with('success', 'Nhập hàng thành công!'); //config message
@@ -190,21 +202,22 @@ class ImportExportController extends Controller
         $totalMoney = $request->into_money;
         $partnerId = $request->partner_id;
         $contentRevenueExpenditureId = 1; //phiếu thu
+        
         try {
             DB::beginTransaction();
             // Cập nhật trạng thái đơn hàng
             // 1: chờ xử lý
             // 2: đã giao hàng
-            
-            // B1. lấy ra phương thức thanh toán của đơn hàng đó
-            if($paymentMethod != 'momo') {
-                
-                DB::table('import_export_products')
-                ->where('id', $id)
-                ->update([
-                    'status' => $newStatus,
-                    'paymented' => DB::raw('into_money')
-                ]);
+            // cap nhat status don hang
+            DB::table('import_export_products')
+            ->where('id', $id)
+            ->update([
+                'status' => $newStatus,
+                'paymented' => DB::raw('into_money')
+            ]);
+            // B1. nên lấy paymented hay payment method? 
+            // nếu đã thanh toán rồi thì 
+            if($paymentMethod  == 'code') {
                 // xuất phiếu chi -> insert table 
                 $dataRevenueExpenditure = [
                     'user_id' => Auth::user()->id,
@@ -225,7 +238,7 @@ class ImportExportController extends Controller
             DB::rollBack();
             $response = [
                 'status' => 400,
-                'message' => $th
+                'message' => $th->getMessage()
             ];
         }
         return response()->json($response);

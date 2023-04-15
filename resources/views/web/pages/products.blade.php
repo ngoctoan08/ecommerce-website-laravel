@@ -130,7 +130,7 @@
                             <div class="inp-choose-size">
                                 @if($product->productSizes->count() > 0)
                                 <select name="product_size" class="product_size_{{$product->id}}">
-                                    @foreach($product->productSizes as $size)
+                                    @foreach($product->showSizeProduct($product->id) as $size)
                                         <option class="product_size_op" value="{{$size->size_name}}">{{$size->size_name}}</option>
                                     @endforeach
                                 </select>

@@ -95,13 +95,13 @@
                         </div>
                         <div class="box-radio-infor">
                             <div class="radio-infor">
-                                <input type="radio" class="input-radio" name="payment_method" id="checkout_live" value="code">
-                                <label for="checkout_live">Thanh toán khi nhận hàng</label>
+                                <input type="radio" class="input-radio" name="payment_method" id="checkout_code" value="code">
+                                <label for="checkout_code">Thanh toán khi nhận hàng</label>
                             </div>
                             <div class="radio-infor">
-                                <input type="radio" class="input-radio" name="payment_method" id="checkout_vnpay" value="vnpay">
-                                <label for="checkout_vnpay"> <img width="120px" src="{{asset('web/image/icon/logo-vnpay.webp')}}"
-                                        alt=""> VNPAY</label>
+                                <input type="radio" class="input-radio" name="payment_method" id="checkout_momo" value="momo_wallet">
+                                <label for="checkout_momo"> <img width="120px" src="{{asset('web/image/icon/logo-momo.png')}}"
+                                        alt="">Ví Momo</label>
                             </div>
                         </div>
                         <div class="btn-pay">
@@ -220,14 +220,22 @@
             fetch(url, options)
                 .then((response) => response.json())
                 .then((data) => {
-                    if (data.status == 201) {
-                        alertSuccess(data.message)
-                        setTimeout(() => {
-                            location.href = data.redirect;
-                        }, 3000);
-                    } else {
-                        alertError(data.message)
+                    // Thanh toán trực tiếp
+                    if(!data.payUrl) {
+                        if (data.status == 201) {
+                            alertSuccess(data.message)
+                            setTimeout(() => {
+                                location.href = data.redirect;
+                            }, 3000);
+                        } else {
+                            alertError(data.message)
+                        }
                     }
+                    else {
+                        location.href = data.payUrl
+
+                    }
+                    
                 });
         }
     </script>

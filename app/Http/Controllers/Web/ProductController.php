@@ -80,6 +80,9 @@ class ProductController extends Controller
         
         // Query to show list feedback by product's id
         $feedbacks = $this->product->showListFeedback($id);
+        
+        // show list images feedback
+        
         // return view product-detail
         return view('web.pages.detail_product')->with([
             'product' => $product,
@@ -92,8 +95,6 @@ class ProductController extends Controller
         ]); 
     }
 
-
-    
     /**
      * Show list feedback by product's id
      *
@@ -105,7 +106,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Handle feedback of product
+     * Handle save feedback of product
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

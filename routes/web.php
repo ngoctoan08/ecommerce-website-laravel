@@ -195,7 +195,11 @@ Route::group(['prefix' => '/'], function() {
             'uses' => 'Web\CheckoutController@index', // 
         ]);
 
-        
+        Route::get('/thanh-cong', [
+            'as' => 'web-checkout.pay-success', //name of route
+            'uses' => 'Web\CheckoutController@paySuccess', // 
+        ]);
+  
         
         Route::post('/web-checkout.store', [
             'as' => 'web-checkout.store', //name of route

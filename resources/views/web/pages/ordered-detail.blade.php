@@ -119,4 +119,9 @@
                 });
         }
     </script>
+    @if(Session::has('message'))
+    <script>
+        alertSuccess('{{Session::get('message')}}')
+    </script>
+    @endif
 @endsection

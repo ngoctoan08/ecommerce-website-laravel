@@ -16,6 +16,7 @@ class ImportExportDetail extends Model
         ->join('products', 'import_export_details.product_id', '=', 'products.id')
         ->where('import_export_details.import_export_product_id', '=', $id)
         ->select('products.name', 'products.path_image', 'import_export_details.*')
+        
         ->get();
     }
 }

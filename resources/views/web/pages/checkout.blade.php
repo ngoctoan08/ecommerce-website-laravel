@@ -95,11 +95,11 @@
                         </div>
                         <div class="box-radio-infor">
                             <div class="radio-infor">
-                                <input type="radio" class="input-radio" name="payment" id="checkout_live" value="code">
+                                <input type="radio" class="input-radio" name="payment_method" id="checkout_live" value="code">
                                 <label for="checkout_live">Thanh toán khi nhận hàng</label>
                             </div>
                             <div class="radio-infor">
-                                <input type="radio" class="input-radio" name="payment" id="checkout_vnpay" value="vnpay">
+                                <input type="radio" class="input-radio" name="payment_method" id="checkout_vnpay" value="vnpay">
                                 <label for="checkout_vnpay"> <img width="120px" src="{{asset('web/image/icon/logo-vnpay.webp')}}"
                                         alt=""> VNPAY</label>
                             </div>
@@ -194,7 +194,7 @@
                 Validator.isRequired('#district'),
                 Validator.isRequired('#ward'),
                 Validator.isRequired('#address'),
-                Validator.isRequired('input[name="payment"]'),
+                Validator.isRequired('input[name="payment_method"]'),
             ],
             onSubmit: function(data) {
                 // Call API
@@ -223,7 +223,7 @@
                     if (data.status == 201) {
                         alertSuccess(data.message)
                         setTimeout(() => {
-                            location.href(data.redirect);
+                            location.href = data.redirect;
                         }, 3000);
                     } else {
                         alertError(data.message)

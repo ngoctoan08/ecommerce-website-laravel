@@ -54,7 +54,6 @@ class Product extends Model
         ->whereNull('products.deleted_at')
         ->groupBy('product_size_stores.size_name','product_size_stores.product_id')
         ->get();
-        
     }
 
     //$id is id of product
@@ -72,9 +71,13 @@ class Product extends Model
     // Show list feedback
     public function showListFeedback($id)
     {
+        // show name users
+        // show images feedback
         return DB::table('products')
         ->join('feedback', 'products.id', '=', 'feedback.product_id')
-        ->select('feedback.*')
+        ->join('users', 'users.id', '=', 'feedback.user_id')
+        ->join('profiles', 'users.id', '=', 'profiles.user_id')
+        ->select('feedback.*', 'profiles.name')
         ->where('products.id', '=', $id)
         ->get();
     }

@@ -174,7 +174,7 @@ Route::group(['prefix' => '/'], function() {
         Route::post('/feedback', [
             'as' => 'web-product.store-feedback', //name of route
             'uses' => 'Web\ProductController@storeFeedback', // 
-        ]);
+        ])->middleware('auth');
 
         
     });
@@ -189,7 +189,7 @@ Route::group(['prefix' => '/'], function() {
     });
 
     // checkout
-    Route::group(['prefix' => 'thanh-toan', 'middleware' => ['auth', 'checkRole']], function() { 
+    Route::group(['prefix' => 'thanh-toan', 'middleware' => ['auth']], function() { 
         Route::get('/', [
             'as' => 'web-checkout.index', //name of route
             'uses' => 'Web\CheckoutController@index', // 
@@ -209,7 +209,7 @@ Route::group(['prefix' => '/'], function() {
             'uses' => 'Web\UserController@showOrdered', // 
         ]);
         Route::get('/{id}', [
-            'as' => 'web-checkout.show', //name of route
+            'as' => 'web-order.show', //name of route
             'uses' => 'Web\UserController@showDetailOrdered', // 
         ]);
     });

@@ -65,7 +65,7 @@
                                     <td>
                                         @if($ieProduct->status == 1)
                                         {{-- Select option --}}
-                                        <select url="{{route('import_export.update-status', [$type_import_export, $ieProduct->id])}}" name="status" data-id = "{{$ieProduct->id}}" id="update_status" class="form-control">
+                                        <select url="{{route('import_export.update-status', [$type_import_export, $ieProduct->id])}}" name="status" data-id = "{{$ieProduct->id}}" data-total = "{{$ieProduct->into_money}} " data-payment = "{{$ieProduct->payment_method}}" data-partner = "{{$ieProduct->partner_id}}" id="update_status" class="form-control">
                                             <option value="1"> Chờ xử lý </option>
                                             <option value="2"> Đã hoàn thành </option>
                                         </select>
@@ -180,9 +180,11 @@
         $(document).ready(function () {
             $('#update_status').on('change', function() {
                 var id = $(this).attr('data-id');
+                var payment_method = $(this).attr('data-payment');
+                var into_money = $(this).attr('data-total');
+                var partner_id =$(this).attr('data-partner');;
                 var status = $(this).val();
                 var url = $(this).attr('url');
-                alert(url);
                 if (status != 1) {
                     Swal.fire({
                     title: 'Xử lý đơn hàng?',
@@ -194,7 +196,8 @@
                     confirmButtonText: 'Yes, update it!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            var request = {id, status};
+                            var request = {id, payment_method, into_money , status, partner_id};
+                            console.log(request);
                             updateStatusById(request, url)
                         }
                     })

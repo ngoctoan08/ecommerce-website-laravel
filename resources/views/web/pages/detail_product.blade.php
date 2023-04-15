@@ -142,7 +142,7 @@
                                 </div>
                                 <div class="name-user">
                                     <div class="txt-name-user">
-                                        <span></span>
+                                        <span>{{$feedback->name}}</span>
                                         <span><i>{{$feedback->created_at}}</i></span>
                                     </div>
                                     <div class="d-flex alg-center">
@@ -163,6 +163,7 @@
                             </div>
                             <div>
                                 {{-- Show list image feedback --}}
+                                
                                 <img width="20%" src="" alt="">
                             </div>
                         </div>
@@ -234,6 +235,8 @@
         <div class="form-check-user">
             <form action="{{route('web-product.store-feedback')}}" name="feed_back" method="POST" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="product_id" value="{{$product->id}}">
+
                 <div class="inp-check-user text-center">
                     <ul class="ul-star">
                         <li data-val = 1><i class="fa-regular fa-star"></i><p>Rất tệ</p></li>

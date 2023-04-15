@@ -11,6 +11,7 @@ use App\Models\Feedback;
 use Illuminate\Support\Str;
 use App\Traits\StoreImageTrait;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     use StoreImageTrait;
@@ -111,9 +112,14 @@ class ProductController extends Controller
      */
     public function storeFeedback(Request $request)
     {
+        
+        // Check isBuyed;
+        
         $dataFeedback = [
             'content' => $request->comment,
             'rate' => $request->rate,
+            'product_id' => $request->product_id,
+            'user_id' => Auth::user()->id
         ];
         try {
             // dd($request);
@@ -121,10 +127,8 @@ class ProductController extends Controller
             DB::beginTransaction();
             $feedbackId = $this->feedback->create($dataFeedback)->id;
             $dataFeedback = $this->StoreImageTraitUpload($request, 'img_feedback', 'feedback');
-            dd($dataFeedback);
 
             if(!empty($dataFeedback)) {
-                
                 $length = sizeof($dataFeedback);
                 for ($i = 0; $i < $length; $i++) {
                     DB::table('feedback_images')->insert([
@@ -138,7 +142,8 @@ class ProductController extends Controller
             return redirect()->back()->with('success', 'Đánh giá sản phẩm thành công!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Đánh giá sản phẩm thất bại!');
+            dd($th);
+            // return redirect()->back()->with('error', 'Đánh giá sản phẩm thất bại!');
             //throw $th;
         }
         

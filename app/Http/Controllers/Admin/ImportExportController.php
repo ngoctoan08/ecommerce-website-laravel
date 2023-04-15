@@ -8,12 +8,14 @@ use App\Models\ImportExportProduct;
 use App\Models\Partner;
 use App\Models\Product;
 use App\Models\ProductSizeStore;
+use App\Models\RevenueExpenditure;
 use App\Models\Size;
 use App\Models\StoreProduct;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 class ImportExportController extends Controller
 {
     private $product;
@@ -23,9 +25,9 @@ class ImportExportController extends Controller
     private $size;
     private $store;
     private $productSizeStore;
-
+    private $revenueExpenditure;
     
-    public function __construct(Product $productModel, ImportExportProduct $importExportModel, ImportExportDetail $importExportDetailModel, Partner $partnerModel, Size $sizeModel, StoreProduct $storeModel , ProductSizeStore $productSizeStoreModel)
+    public function __construct(Product $productModel, ImportExportProduct $importExportModel, ImportExportDetail $importExportDetailModel, Partner $partnerModel, Size $sizeModel, StoreProduct $storeModel , ProductSizeStore $productSizeStoreModel, RevenueExpenditure $revenueExpenditureModel)
     {
         $this->product = $productModel;
         $this->importExport = $importExportModel;
@@ -34,6 +36,7 @@ class ImportExportController extends Controller
         $this->partner = $partnerModel;
         $this->store = $storeModel;
         $this->productSizeStore = $productSizeStoreModel;
+        $this->revenueExpenditure = $revenueExpenditureModel;
     }
     /**
      * Display a listing of the resource.
@@ -66,7 +69,7 @@ class ImportExportController extends Controller
         // dd($request);
         $now = Carbon::now()->toDateTimeString();
         $billCode = !strcmp($request->bill_code, '') ? 'HD_NHAP_'.Str::random(10) : $request->bill_code;
-        $status = 'Đã giao hàng';
+        $status = '2'; //Đã giao hàng
         // insert table import-export-products
         $dataImportExports = [
             'bill_code'=> $billCode,
@@ -81,6 +84,7 @@ class ImportExportController extends Controller
             'partner_id' => $request->partner_id,
             'type_import_export_id' => $request->type,
             'user_id' =>  $request->user_id,
+            'payment_method' => 'code'
         ];
         // insert table
         try {
@@ -112,9 +116,12 @@ class ImportExportController extends Controller
                         'store_product_id' => 1,
                         'size_name' => $request->size[$i]
                     ];
+                    // 
                     $this->importExportDetail->create($dataImportExportDetails);
                     // insert table product_size_stores
                     $this->productSizeStore->create($dataProductSizeStores);
+                    // insert bảng thu chi, nội dung
+                    
                 }
             }
             DB::commit();
@@ -161,6 +168,7 @@ class ImportExportController extends Controller
     {
         //idL type import export
         $ieProducts = $this->importExport->showListOrderByTypeImportExport($id);
+        // dd($ieProducts);
         return view('admin.import_export.index')->with([
             'type_import_export' => $id,
             'ieProducts' => $ieProducts,
@@ -178,30 +186,49 @@ class ImportExportController extends Controller
     {
         $id = $request->id;
         $newStatus = $request->status;
+        $paymentMethod = $request->payment_method;
+        $totalMoney = $request->into_money;
+        $partnerId = $request->partner_id;
+        $contentRevenueExpenditureId = 1; //phiếu thu
         try {
             DB::beginTransaction();
-            // Update status
-            DB::table('import_export_products')
-            ->where('id', $id)
-            ->update([
-                'status' => $newStatus,
-                'paymented' => DB::raw('into_money')
-            ]);
-            // Update paymented sử dụng trigger trong migation
+            // Cập nhật trạng thái đơn hàng
+            // 1: chờ xử lý
+            // 2: đã giao hàng
             
+            // B1. lấy ra phương thức thanh toán của đơn hàng đó
+            if($paymentMethod != 'momo') {
+                
+                DB::table('import_export_products')
+                ->where('id', $id)
+                ->update([
+                    'status' => $newStatus,
+                    'paymented' => DB::raw('into_money')
+                ]);
+                // xuất phiếu chi -> insert table 
+                $dataRevenueExpenditure = [
+                    'user_id' => Auth::user()->id,
+                    'partner_id' => $partnerId,
+                    'content_revenue_expenditure_id' => $contentRevenueExpenditureId,
+                    're_amount_money' => $totalMoney,
+                    'import_export_id' => $id,
+                    're_content' => 'Thu tiền bán hàng đơn hàng '.$id. ' của khách hàng '.$partnerId,
+                ];
+                $this->revenueExpenditure->create($dataRevenueExpenditure);
+            }
             DB::commit();
-            return response()->json([
+            $response = [
                 'status' => 201,
                 'message' => "Cập nhật trạng thái đơn hàng thành công!"
-            ]);
+            ];
         } catch (\Throwable $th) {
             DB::rollBack();
-            return response()->json([
+            $response = [
                 'status' => 400,
                 'message' => $th
-            ]);
+            ];
         }
-        
+        return response()->json($response);
     }
 
     /**

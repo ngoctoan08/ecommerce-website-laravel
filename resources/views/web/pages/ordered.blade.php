@@ -49,7 +49,7 @@
 					<td>{{$order->status}}</td>
 					<td>
                         <div class="table-data-feature justify-content-center">
-                            <a class="item" title="Chi tiết" href="{{route('web-checkout.show', $order->id )}}">
+                            <a class="item" title="Chi tiết" href="{{route('web-order.show', $order->id )}}">
                                 <i class="fa fa-eye"></i>
                                 Xem chi tiết
                             </a>

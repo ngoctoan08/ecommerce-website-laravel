@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\RevenueExpenditure;
 class CheckoutController extends Controller
 {
 
@@ -21,20 +22,22 @@ class CheckoutController extends Controller
     private $importExport;
     private $importExportDetail;
     private $productSizeStore;
+    private $revenueExpenditure;
+    
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(Menu $menuModel, Partner $partnerModel, ImportExportProduct $importExportModel, ImportExportDetail $importExportDetailModel, ProductSizeStore $productSizeStoreModel)
+    public function __construct(Menu $menuModel, Partner $partnerModel, ImportExportProduct $importExportModel, ImportExportDetail $importExportDetailModel, ProductSizeStore $productSizeStoreModel, RevenueExpenditure $revenueExpenditureModel)
     {
         $this->menu = $menuModel;
         $this->partner = $partnerModel;
         $this->importExport = $importExportModel;
         $this->importExportDetail = $importExportDetailModel;
         $this->productSizeStore = $productSizeStoreModel;
-
+        $this->revenueExpenditure = $revenueExpenditureModel;
     }
     
     public function index()
@@ -76,23 +79,24 @@ class CheckoutController extends Controller
             $billCode = 'HDBL_'.Str::random(10);
             $totalAmount = $request->total_money;
             $typeImportExport = 3; //xuat ban le
-            
+            $paymentMethod = $request->payment_method;
             $dataImportExport = [
                 'bill_code' => $billCode,
                 'day' => $now,
                 'total_amount' =>  $totalAmount,
                 'tax_money' =>  0,
                 'discount' =>  0,
-                'into_money' =>  0,
+                'into_money' =>  $totalAmount,
                 'paymented' =>  0,
                 'note' => 'xuất bán lẻ',
                 'partner_id' =>  $partnerId,
                 'type_import_export_id' =>  3, //1: 2: 3: xuat ban le
                 'user_id' =>  Auth::user()->id, //thong tin account cua nguoi dat hang
+                'payment_method' => $paymentMethod
             ];
             // insert to tbl import_export_products
             $importExportId = $this->importExport->create($dataImportExport)->id;
-
+            
             //1. xac dinh co bao nhieu san pham
             // foreach theo id va size
             foreach(session('cart') as $productId) {
@@ -121,14 +125,26 @@ class CheckoutController extends Controller
                     ->decrement('quantity', $productDetail['product_qty']);
                 }
             }
-            
+            if($paymentMethod != 'code') {
+                // xuất phiếu thu -> insert table 
+                $contentRevenueExpenditureId = 1; //phiếu thu
+                $dataRevenueExpenditure = [
+                    'user_id' => Auth::user()->id,
+                    'partner_id' => $partnerId,
+                    'content_revenue_expenditure_id' => $contentRevenueExpenditureId,
+                    're_amount_money' => $totalAmount,
+                    'import_export_id' => $importExportId,
+                    're_content' => 'Thu tiền bán hàng đơn hàng '.$importExportId. ' của khách hàng '.$partnerId,
+                ];
+                $this->revenueExpenditure->create($dataRevenueExpenditure);
+            }
             DB::commit();
             // hủy bỏ session
             session()->forget('cart');
             return response()->json([
                 'status' => 201,
                 'message' => 'Bạn đã đặt hàng thành công!',
-                'redirect'=> route('web-order.index') 
+                'redirect'=> route('web-order.show', $importExportId) 
             ]);
             
         } catch (\Throwable $th) {
@@ -141,5 +157,6 @@ class CheckoutController extends Controller
 
     // 
 
+    // Xử lý thanh toán bằng app momo
 }
 }

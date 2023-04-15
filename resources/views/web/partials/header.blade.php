@@ -9,7 +9,7 @@
             </div>
 
             <div class="icon-logo ml-60">
-                <a href="trang-chu">
+                <a href="{{route('/')}}">
                     <img src="{{asset('web/image/logo/logo.png')}}" alt="">
                 </a>
             </div>
@@ -151,7 +151,7 @@
                     </div>
                     <div class="form-inp-search">
                         <div class="inp-search">
-                            <input type="text" name="inp-search" class="search_product" placeholder="Nhập tên sản phẩm cần tìm ..." autocomplete="off">
+                            <input type="text" url = "{{route('web-product.search-item')}}" name="inp-search" class="search_product" placeholder="Nhập tên sản phẩm cần tìm ..." autocomplete="off">
                         </div>
                         <div class="search-suggestions">
                             <ul class="custom-nav list-search-suggestions">

@@ -33,7 +33,7 @@
 </section>
 
 <footer id="footer" class="footer">
-    <div class="footer-address">
+    {{-- <div class="footer-address">
         <div class="container">
             <div class="row">
                 <!-- Ha Noi  -->
@@ -247,7 +247,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="footer-main">
         <div class="container">

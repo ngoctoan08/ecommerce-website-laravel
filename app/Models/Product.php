@@ -68,19 +68,7 @@ class Product extends Model
         ->get();
     }
 
-    // Show list feedback
-    public function showListFeedback($id)
-    {
-        // show name users
-        // show images feedback
-        return DB::table('products')
-        ->join('feedback', 'products.id', '=', 'feedback.product_id')
-        ->join('users', 'users.id', '=', 'feedback.user_id')
-        ->join('profiles', 'users.id', '=', 'profiles.user_id')
-        ->select('feedback.*', 'profiles.name')
-        ->where('products.id', '=', $id)
-        ->get();
-    }
+    
 
 
     // Admin 
@@ -97,5 +85,31 @@ class Product extends Model
         ->get();
         // ->paginate(5);
         // nếu sử dụng phân trang thì thay bằng get
+    }
+
+    public function sumOfRateProduct($id)
+    {
+        return DB::table('feedback')
+        ->join('products', 'products.id', '=', 'feedback.product_id')
+        // ->select(DB::raw('SUM(feedback.rate) as quantity'))
+        ->where('products.id', '=', $id)
+        ->avg('feedback.rate');
+        // ->get();
+    }
+
+    // tìm kiếm những sản phẩm đang còn hàng
+    public function searchByNameProduct($name)
+    {
+        return DB::table('products')
+        ->join('categories', 'products.category_id', '=', 'categories.id')
+        ->select('products.id', 'products.name', 'products.name_image', 'products.path_image', 'products.retail_price', 'products.slug', 'products.description', 'categories.slug')
+        ->where('products.name', 'like', '%'.$name.'%')
+        ->whereExists(function ($query) {
+            $query->select(DB::raw(1))
+                ->from('product_size_stores')
+                ->whereRaw('product_size_stores.product_id = products.id')
+                ->where('product_size_stores.quantity', '>', 0);
+        })
+        ->get();
     }
 }

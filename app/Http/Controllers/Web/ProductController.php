@@ -30,7 +30,6 @@ class ProductController extends Controller
         $this->menu = $menuModel;
         $this->category = $categoryModel;
         $this->product = $productModel;
-        $this->product = $productModel;
         $this->feedback = $feedbackModel;
     }
 
@@ -47,8 +46,17 @@ class ProductController extends Controller
         $categories = $this->category->showQtyProductWithCategory();
         
         // Show list product by slug category
-        $products = $this->product->join('categories', 'products.category_id', '=', 'categories.id')->select('products.id', 'products.name', 'products.name_image', 'products.path_image', 'products.retail_price', 'products.slug', 'products.description')->where('categories.slug', 'like', $title)->get();
-        
+        $products = $this->product
+        ->join('categories', 'products.category_id', '=', 'categories.id')
+        ->select('products.id', 'products.name', 'products.name_image', 'products.path_image', 'products.retail_price', 'products.slug', 'products.description')
+        ->where('categories.slug', 'like', $title)
+        ->whereExists(function ($query) {
+            $query->select(DB::raw(1))
+                ->from('product_size_stores')
+                ->whereRaw('product_size_stores.product_id = products.id')
+                ->where('product_size_stores.quantity', '>', 0);
+        })
+        ->get();
         return view('web.pages.products')->with([
             'products' => $products,
             'menus' => $menus,
@@ -71,22 +79,22 @@ class ProductController extends Controller
 
         // Query show info of product detail
         $product = $this->product->showProductDetail($id);
-        
         // Query to show list images of product
         $images = $this->product->showListImagesProduct($id);
         
         // Query to show list sizes of product
         $sizes = $this->product->showSizeProduct($id);
         
+        // Avg of rate product
+        $avgOfRate = $this->product->sumOfRateProduct($id);
         // Query to show list feedback by product's id
-        $feedbacks = $this->product->showListFeedback($id);
-        
-        // show list images feedback
+        $feedbacks = $this->feedback->showListFeedback($this->feedback, $id);
         
         // return view product-detail
         return view('web.pages.detail_product')->with([
             'product' => $product,
             'feedbacks' => $feedbacks,
+            'avgOfRate' => $avgOfRate,
             'menus' => $menus,
             'images' => $images,
             'sizes' => $sizes,
@@ -153,36 +161,25 @@ class ProductController extends Controller
     
 
     /**
-     * Show the form for editing the specified resource.
+     * searching the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $text
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function searchItem(Request $request)
     {
-        //
+        $productName = $request->product_name;
+        $products = $this->product->searchByNameProduct($productName);
+        $htmlSearch = $this->viewListItemSearched($products);
+        return response()->json([
+            'status' => 201,
+            'htmlSearch' => $htmlSearch,
+        ]); 
+        
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function viewListItemSearched($products)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('web.partials.item_searched', ['products' => $products])->render();
     }
 }

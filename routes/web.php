@@ -169,6 +169,11 @@ Route::group(['prefix' => '/'], function() {
             'as' => 'web-product.update-qty-in-cart', //name of route
             'uses' => 'Web\CartController@updateQtyInCart', // 
         ]);
+
+        Route::post('/search-item', [
+            'as' => 'web-product.search-item', //name of route
+            'uses' => 'Web\ProductController@searchItem', // 
+        ]);
         
         // post data to san-pham/id
         Route::post('/feedback', [

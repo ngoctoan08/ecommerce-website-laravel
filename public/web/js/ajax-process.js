@@ -25,7 +25,6 @@ function addToCart(url, data) {
                 $('.cart-order').html(data.htmlIconCart);
             } else {
                 alert("lỗi");
-                
             }
         });
 }
@@ -143,7 +142,29 @@ function handleAddItemToCart() {
 }
 
 function handleSearchItem() {
-    alert("Loading...");
+    var product_name = $(this).val();
+    var url = $(this).attr('url'); 
+    var data = {product_name, url};
+    var options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'accept': '*',
+            Accept: 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        },
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+    };
+    // Fetch API
+    fetch(url, options)
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.status == 201) {
+                $(`.list-search-suggestions`).html(data.htmlSearch);
+            } else {
+                
+            }
+        });
 }
 // Xử lý ajax xóa sản phẩm: Bằng id và size
 $(document).ready(function () {

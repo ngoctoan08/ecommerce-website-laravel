@@ -60,24 +60,25 @@
                         <del style="opacity: 0.5;">@formatMoney($product->retail_price * 11/10)</del>
                         <span>@formatMoney($product->retail_price)</span>
                     </div>
-                    {{-- Choose size --}}
-
-                    <div class="choose-size">
-                        <p>Size</p>
-                        <div class="box-border-choose-size d-flex mb-15 ">
+                    <form action="{{route('web-product.add-to-cart')}}" method="post" id="form_add_to_cart_{{$product->id}}" name="form_add_to_cart_{{$product->id}}">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{$product->id}}">
+                        <input type="hidden" name="product_name" value="{{$product->name}}">
+                        <input type="hidden" name="product_retail_price" value="{{$product->retail_price}}">
+                        <input type="hidden" name="product_path_image" value="{{$product->path_image}}">
+                    {{-- Choose size and quantity--}}
+                    <div style="display: flex;
+                    justify-content: space-around;
+                    align-items: center;" class="choose-container">
+                        <label style="font-weight: 600" for="size">Size</label>
+                        <select style="padding: 10px; outline: none;" id="size" name="product_size" class="product_size_{{$product->id}}">
                             @foreach($sizes as $size)
-                            <div class="border-choose-size" product-size = "{{$size->size_name}}">
-                                <span>{{$size->size_name}}</span>
-                            </div>
+                                <option class="product_size_op" value="{{$size->size_name}}">{{$size->size_name}}</option>
                             @endforeach
-                        </div>
-                        <input type="hidden" min = "1" max ="6" class="product-size" name="size" value="1">
-                    </div>
-
-                    <div class="choose-quantity d-flex alg-center">
-                        <p>Chọn số lượng</p>
+                        </select>
+                        <label style="font-weight: 600" for="quantity">Số lượng</label>
                         <div class="quantity-custom d-flex">
-                            <input aria-label="quantity" class="input-qty" min="1" max="10" name="quantity" type="number" value="1">
+                            <input aria-label="quantity" class="input-qty" min="1" max="10" name="product_qty" id="quantity" type="number" value="1">
                             <div class="btn-up-down">
                                 <input class="plus is-form" type="button" value="+">
                                 <input class="minus is-form" type="button" value="-">
@@ -91,12 +92,13 @@
                         </div>
                     </div>
                     <div class="btn-product-detail">
-                        <a href="">
-                            <button class="btn-submit-product-detail txt-center pay_now" value="{{$product->id}}">
+                        <a href="#">
+                            <button type="submit" class="btn-submit-product-detail txt-center add_item_to_cart" value="{{$product->id}}" url = "{{route('web-product.add-to-cart')}}">
                                 <span>Thêm vào giỏ hàng</span>
                             </button>
                         </a>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -119,12 +121,20 @@
                                     <!-- <span style="font-size: 60px; text-align:center; margin: 0 auto;"><i class="fa-solid fa-star"></i></span> -->
                                     <div class="icon-star">
                                         {{-- Xử lý đánh sao --}}
-
+                                        <?php
+                                            $avgOfRate = ceil($avgOfRate);
+                                            for ($i=1; $i <= $avgOfRate; $i++) { 
+                                                echo '<span><i class="fa-solid fa-star"></i></span>';
+                                            }
+                                            for ($i=1; $i <= 5 - $avgOfRate; $i++) { 
+                                                echo '<span><i class="fa-regular fa-star"></i></span>';
+                                            }
+                                        ?>
                                         </div>
                                 </div>
                                 {{-- Đếm số lượt feedback --}}
                                 <div class="total-number">
-                                    <span> 10 đánh giá</span>
+                                    <span> <?=count($feedbacks)?> đánh giá</span>
                                 </div>
                             </div>
                         </div>
@@ -143,11 +153,12 @@
                                 <div class="name-user">
                                     <div class="txt-name-user">
                                         <span>{{$feedback->name}}</span>
-                                        <span><i>{{$feedback->created_at}}</i></span>
+                                        <span><i>{{ \Carbon\Carbon::parse($feedback->created_at)->format('d-m-Y H:i:s') }}</i></span>
+                                        {{-- <span><i>{{$feedback->created_at}}</i></span> --}}
                                     </div>
                                     <div class="d-flex alg-center">
                                         <div class="icon-star">
-
+                                            
                                         </div>
                                         <div class="tickbuy">
                                             <span>
@@ -163,8 +174,9 @@
                             </div>
                             <div>
                                 {{-- Show list image feedback --}}
-                                
-                                <img width="20%" src="" alt="">
+                                @foreach($feedback->showListImageFeedback($feedback->id) as $feedbackImg)
+                                    <img width="20%" src="{{$feedbackImg->path_image}}" alt="{{$feedbackImg->name_image}}">
+                                @endforeach
                             </div>
                         </div>
                         @endforeach

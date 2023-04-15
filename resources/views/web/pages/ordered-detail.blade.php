@@ -58,8 +58,8 @@
             </tbody>
 		</table>
     </div>
-    <div class="btn">
-        <a class="btn-submit-product-detail txt-center" href="{{url('san-pham/giay-tay-nam')}}">Tiếp tục mua hàng</a>
+    <div class="btn-continue">
+        <a class="" href="{{url('san-pham/giay-tay-nam')}}">Tiếp tục mua hàng</a>
     </div>
 
 </section>

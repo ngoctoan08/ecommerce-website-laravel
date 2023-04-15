@@ -3,6 +3,7 @@
 <title>Sản phẩm</title>
 @endsection
 
+@section('content')
 <!-- banner -->
 <section class="banner">
     <div class="img-banner">
@@ -195,7 +196,6 @@
 
 
 
-@section('lookbook')
 <!-- look-book -->
 <section class="look-book">
     <div class="title-lookbook">
@@ -256,10 +256,7 @@
         </div>
     </div>
 </section>
-@endsection
 
-@section('feedback')
-<!-- feedback -->
 <!-- feedback -->
 <section class="feedback">
     <div class="box-feedback d-flex jtf-between ">
@@ -355,10 +352,8 @@
         </div>
     </div>
 </section>
-@endsection
 
-@section('news')
-<!-- news -->
+
 <!-- news -->
 <section class="news">
     <div class="container">

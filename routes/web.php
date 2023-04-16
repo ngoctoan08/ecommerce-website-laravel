@@ -114,29 +114,29 @@ Route::group(['prefix' => '/'], function() {
         'as' => '/',
         'uses' => 'HomeController@index'
     ]);
+    
+    
     Route::get('trang-chu', [
         'as' => 'trang-chu',
         'uses' => 'HomeController@index'
     ]);
+    
     Route::get('gioi-thieu', [
         'as' => 'gioi-thieu',
-        'uses' => 'HomeController@index'
+        'uses' => 'HomeController@introduce'
     ]);
     Route::get('tin-tuc', [
         'as' => 'tin-tuc',
-        'uses' => 'HomeController@index'
+        'uses' => 'HomeController@news'
     ]);
     Route::get('lien-he', [
         'as' => 'lien-he',
-        'uses' => 'HomeController@index'
+        'uses' => 'HomeController@contact'
     ]);
+    
     Route::get('/danh-muc', [
         'as' => 'danh-muc',
         'uses' => 'HomeController@category'
-    ]);
-    Route::get('/gio-hang', [
-        'as' => 'gio-hang',
-        'uses' => 'Web\CartController@index'
     ]);
 
     Route::group(['prefix' => 'san-pham'], function() { 

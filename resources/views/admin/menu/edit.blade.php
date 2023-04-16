@@ -32,8 +32,8 @@
                             <div class="col-12 col-md-7 col-name">
                                 <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="{{$menu->name ? $menu->name : ''}}">
                             </div>
-                            
                         </div>
+                        <input type="hidden" name="page_id" value="{{$menu->page_id}}">
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary btn-sm" name="edit_menu">
                                 <i class="fa fa-dot-circle-o"></i> Save

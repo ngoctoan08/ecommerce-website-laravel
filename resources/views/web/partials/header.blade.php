@@ -183,7 +183,7 @@
                             <li>
                                 <a href="http://127.0.0.1:8000/logout" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
-                                    <form id="logout-form" action="http://127.0.0.1:8000/logout" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{route('logout')}}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                     <i class="zmdi zmdi-power"></i>

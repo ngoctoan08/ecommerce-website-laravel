@@ -30,6 +30,7 @@ class HomeController extends Controller
     public function index()
     {
         // Show menus of header
+        // dd($menuName);
         $menus = $this->menu->showMenusHeader();
         return view('web.pages.home')->with('menus', $menus);
     }
@@ -63,9 +64,25 @@ class HomeController extends Controller
     }
 
     // get 
-    public function product()
+    public function news()
     {
-        
+        $menus = $this->menu->showMenusHeader();
+        return view('web.pages.news')->with('menus', $menus);
     }
+
+    public function introduce()
+    {
+        $menus = $this->menu->showMenusHeader();
+        return view('web.pages.introduce')->with('menus', $menus);
+    }
+
+    public function contact()
+    {
+        $menus = $this->menu->showMenusHeader();
+        return view('web.pages.contact')->with('menus', $menus);
+    }
+    
+
+    
 
 }

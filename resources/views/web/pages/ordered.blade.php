@@ -2,6 +2,8 @@
 @section('title')
 <title>Theo dõi đơn hàng</title>
 @endsection
+
+@section('content')
 <!-- banner -->
 <section class="banner">
     <div class="img-banner">
@@ -62,6 +64,7 @@
 		</table>
     </div>
 </section>
+@endsection
 
 
 {{-- Section Script --}}

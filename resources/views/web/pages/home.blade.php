@@ -26,7 +26,7 @@
 </section>
 
 <!-- product -->
-<section class="product d-flex">
+{{-- <section class="product d-flex">
     <!-- left -->
     <div class="box-product">
         <div class="box-content-product color-box-left" >
@@ -92,7 +92,7 @@
             </a>
         </div>
     </div>
-</section>
+</section> --}}
 
 <!-- about-the-product -->
 <section class="about-the-product">

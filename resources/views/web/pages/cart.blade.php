@@ -2,6 +2,8 @@
 @section('title')
 <title>Giỏ hàng</title>
 @endsection
+
+@section('content')
 <!-- banner -->
 <section class="banner">
     <div class="img-banner">
@@ -128,6 +130,8 @@
         </div>
     </div>
 </section>
+
+@endsection
 
 
 {{-- Section Script --}}

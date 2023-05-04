@@ -2,6 +2,8 @@
 @section('title')
 <title>Thanh toán</title>
 @endsection
+
+@section('content')
 <!-- banner -->
 <section class="banner">
     <div class="img-banner">
@@ -37,15 +39,15 @@
                     </div>
                     <form action="{{route('web-checkout.store')}}" method="POST" name="frm_checkout" id="frm_checkout">
                         <div class="box-inp-infor">
-                            <input type="text" name="name" id="name" placeholder="Họ và tên" value="Doan Toan">
+                            <input type="text" name="name" id="name" placeholder="Họ và tên" value="">
                         </div>
                         <div class="box-inp-infor">
                             <input type="email" name="email" id="email" placeholder="Địa chỉ email" require
-                                value="toannd158@gmail.com">
+                                value="">
                         </div>
                         <div class="box-inp-infor">
                             <input type="tel" name="phone" id="phone" placeholder="Số điện thoại"
-                                value="0868642605">
+                                value="">
                         </div>
                         <div class="box-input-short-cart">
                             <!-- address-city -->
@@ -91,7 +93,7 @@
                         <div class="box-inp-infor ">
                             <!-- <label for="note">Yêu cầu thêm của bạn về giao hàng</label> -->
                             <textarea name="note" id="note" cols="30" rows="5"
-                                placeholder="Yêu cầu thêm của bạn về giao hàng...">giao nhanh cho em</textarea>
+                                placeholder="Yêu cầu thêm của bạn về giao hàng..."></textarea>
                         </div>
                         <div class="box-radio-infor">
                             <div class="radio-infor">
@@ -177,6 +179,8 @@
         </div>
     </div>
 </section>
+@endsection
+
 
 
 {{-- Section Script --}}

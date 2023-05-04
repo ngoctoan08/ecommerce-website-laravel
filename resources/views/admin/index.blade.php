@@ -32,6 +32,9 @@
   <link href="{{asset('admin_template/vendor/perfect-scrollbar/perfect-scrollbar.css')}}" rel="stylesheet" media="all">
   <link href="{{asset('admin_template/css/mycss.css')}}" rel="stylesheet" media="all">
 
+  {{-- Datatable --}}
+  <link href="{{asset('shared/DataTables/datatables.min.css')}}" rel="stylesheet" media="all">
+
   {{-- My css --}}
   <link href="{{asset('admin/css/mycss.css')}}" rel="stylesheet" media="all">
 
@@ -84,10 +87,17 @@
     <script src="{{asset('admin_template/vendor/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
     <script src="{{asset('admin_template/vendor/chartjs/Chart.bundle.min.js')}}"></script>
     <script src="{{asset('admin_template/vendor/select2/select2.min.js')}}"></script>
+    
     <!-- Main JS-->
     <script src="{{asset('admin_template/js/main.js')}}"></script>
+
+    {{-- Datatable JS --}}
+    <script src="{{asset('shared/DataTables/datatables.min.js')}}"></script>
+    <script src="{{asset('shared/js/handleDatatable.js')}}"></script>
     
-    
+    {{-- Sweet alert --}}
+    <script src="{{asset('shared/js/sweetalert.js')}}"></script>
+
     <!-- CK Editor -->
     @yield('js')
     

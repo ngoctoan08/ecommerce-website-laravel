@@ -35,12 +35,8 @@
                                     <th>
                                         <input type="checkbox" id="check_all">
                                     </th>
-                                    {{-- <th>Nhân viên</th> --}}
                                     <th>Mã</th>
                                     <th>Ngày</th>
-                                    {{-- <th>Tên NCC</th> --}}
-                                    {{-- <th>Địa chỉ</th> --}}
-                                    {{-- <th>Tel</th> --}}
                                     <th>Tổng tiền</th>
                                     <th>VAT</th>
                                     <th>Thành tiền</th>
@@ -60,7 +56,7 @@
                                     {{-- <td>{{$ieProduct->address}}</td> --}}
                                     {{-- <td>{{$ieProduct->tel}}</td> --}}
                                     <td>@formatMoney($ieProduct->total_amount)</td>
-                                    <td>@formatMoney($ieProduct->tax_money)</td>
+                                    <td>{{$ieProduct->tax_money}}</td>
                                     <td>@formatMoney($ieProduct->into_money)</td>
                                     <td>
                                         @if($ieProduct->status == 1)
@@ -78,11 +74,11 @@
                                             <a class="item" title="Edit" href="{{route('import_export.show-detail', [
                                                 'id' => $type_import_export, 'idImportExport' => $ieProduct->id
                                             ] )}}">
-                                                <i class="zmdi zmdi-edit"></i>
+                                                <i class="zmdi zmdi-eye"></i>
                                             </a>
-                                            <a data-id = "{{$ieProduct->id}}" class="item btn btn-del-item" href = "{{route('import_export.destroy', $ieProduct->id )}}" title="Delete">
+                                            {{-- <a data-id = "{{$ieProduct->id}}" class="item btn btn-del-item" href = "{{route('import_export.destroy', $ieProduct->id )}}" title="Delete">
                                                 <i class="zmdi zmdi-delete"></i>
-                                            </a>
+                                            </a> --}}
                                         </div>
                                     </td>
                                 </tr>

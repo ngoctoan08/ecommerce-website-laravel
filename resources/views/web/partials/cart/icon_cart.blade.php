@@ -73,13 +73,13 @@
         </div>
         <!-- pay-cart -->
         <div class="btn-pay-cart">
-            <a href="{{route('web-cart.index')}}">
+            <a href="{{route('web-checkout.index')}}">
                 <button>
                     <span>Thanh toán</span>
                 </button>
             </a>
             <div class="continue-shopping">
-                <a href="san-pham/giay-tay">Tiếp tục mua hàng</a>
+                <a href="{{url('san-pham/giay-tay-nam')}}">Tiếp tục mua hàng</a>
             </div>
         </div>
     @endif

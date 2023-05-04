@@ -158,7 +158,17 @@
                                     </div>
                                     <div class="d-flex alg-center">
                                         <div class="icon-star">
-                                            
+                                            <div class="icon-star">
+                                                {{-- Xử lý đánh sao --}}
+                                                <?php
+                                                    for ($i=1; $i <= $feedback['rate']; $i++) { 
+                                                        echo '<span><i class="fa-solid fa-star"></i></span>';
+                                                    }
+                                                    for ($i=1; $i <= 5 - $feedback['rate']; $i++) { 
+                                                        echo '<span><i class="fa-regular fa-star"></i></span>';
+                                                    }
+                                                ?>
+                                                </div>
                                         </div>
                                         <div class="tickbuy">
                                             <span>

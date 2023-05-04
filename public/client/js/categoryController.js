@@ -1,18 +1,5 @@
 
 const categoryApi = BASE_URL + VERSION + 'category/';
-// start();    
-
-function start() {
-    getCategories(renderCategories)
-}
-
-function getCategories(callback) {
-    fetch(categoryApi)
-    .then(function(response) {
-        return response.json()
-    })
-    .then(callback);    
-}
 
 // function create Category
 function createCaterory(data) {
@@ -49,16 +36,6 @@ function createCaterory(data) {
     })
 }
 
-// function create product
-function createProduct(data) {
-    // var options = {
-    //     method: "POST",
-    //     body: data // body data type must match "Content-Type" header
-    // };
-    // fetch(categoryApi, options)
-    // .catch(console.error);
-}
-
 // function delete Category
 function deleteCategory(id, url_fDelete = '') {
     // Body API
@@ -89,11 +66,6 @@ function restoreCategory(id) {
     // Body API
     var options = {
         method: "GET",
-        // headers: {
-        //     'Content-Type': 'application/json',
-        //     'Accept': 'application/json',
-        //     // 'Content-Type': 'application/x-www-form-urlencoded',
-        //   },
     }
     // Fetch API 
     fetch(categoryApi + 'restore/' + id, options)
@@ -108,47 +80,6 @@ function restoreCategory(id) {
             alertError(data.message);
         }
     })
-}
-
-function renderCategories(categories) {
-    var listCategories = $('#list_categories');
-    var htmls = categories.data.map(function(category) {
-        return `<tr class="tr-shadow" id="item_${category.id}">
-        <td class="desc">
-            <a href="">
-                ${category.id}
-            </a>
-        </td>                                    
-        <td><input type="checkbox" name="choose" id="choose"></td>
-        <td>${category.name}</td>
-        <td>${category.parent_id}</td>
-        <td>${category.slug}</td>
-        <td>
-            <div class="table-data-feature justify-content-center">
-                <button data-id = "${category.id}" type="button" class="item btn-show-item" data-toggle="modal" data-target="#staticModal" title="Edit">
-                    <i class="zmdi zmdi-edit"></i>
-                </button>
-                <button data-id = "${category.id}" type="button" onclick = "handleDelete(${category.id})" class="item btn-del-item" title="Delete">
-                    <i class="zmdi zmdi-delete"></i>
-                </button>
-            </div>
-        </td>
-    </tr>
-        `;
-    });
-    listCategories.append(htmls);
-}
-
-function handleCreate(event) {
-    event.preventDefault();
-    removeError();
-    var parent_id = $('#parent_id').val();
-    var name = $('#name').val();
-    var description = $('#description').val();
-    var slug = convertToSlug(name);
-    var formData = {parent_id, name, slug, description,};
-    console.log(formData);
-    createCaterory(formData);
 }
 
 function handleDelete(event) {

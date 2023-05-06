@@ -253,11 +253,15 @@ class ImportExportController extends Controller
      
     public function showDetail($id, $idImportExport)
     {
-        $orderItems = DB::table('import_export_details')->join('products', 'import_export_details.product_id', '=', 'products.id')->where('import_export_details.import_export_product_id', '=', $idImportExport)->select('products.name', 'products.path_image', 'import_export_details.*')->get();
-        
+        // show info partner ordered
+        $infoPartner = $this->importExport->getInfoPartnerOrdered($idImportExport);
+        // dd($infoPartner);
+        // show list item ordered
+        $orderItems = $this->importExportDetail->showOrderedItemByOrderId($idImportExport);
         return view('admin.import_export.show-detail')->with([
             'type_import_export' => $id,
             'orderItems' => $orderItems,
+            'infoPartner' => $infoPartner
         ]);
     }
     /**

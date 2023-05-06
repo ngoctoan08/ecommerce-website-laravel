@@ -36,7 +36,7 @@
                                         <input type="checkbox" id="check_all">
                                     </th>
                                     <th>Mã</th>
-                                    <th>Ngày</th>
+                                    <th>Ngày đặt</th>
                                     <th>Tổng tiền</th>
                                     <th>VAT</th>
                                     <th>Thành tiền</th>
@@ -61,12 +61,12 @@
                                     <td>
                                         @if($ieProduct->status == 1)
                                         {{-- Select option --}}
-                                        <select url="{{route('import_export.update-status', [$type_import_export, $ieProduct->id])}}" name="status" data-id = "{{$ieProduct->id}}" data-total = "{{$ieProduct->into_money}} " data-payment = "{{$ieProduct->payment_method}}" data-partner = "{{$ieProduct->partner_id}}" id="update_status" class="form-control">
+                                        <select url="{{route('import_export.update-status', [$type_import_export, $ieProduct->id])}}" name="status" data-id = "{{$ieProduct->id}}" data-total = "{{$ieProduct->into_money}} " data-payment = "{{$ieProduct->payment_method}}" data-partner = "{{$ieProduct->partner_id}}" id="update_status" class="form-control update_status">
                                             <option value="1"> Chờ xử lý </option>
                                             <option value="2"> Đã hoàn thành </option>
                                         </select>
                                         @else
-                                        Đã hoàn thành
+                                        <b class="@cssStatusOrdered($ieProduct->status)">Đã hoàn thành</b>
                                         @endif
                                     </td>
                                     <td>
@@ -76,9 +76,6 @@
                                             ] )}}">
                                                 <i class="zmdi zmdi-eye"></i>
                                             </a>
-                                            {{-- <a data-id = "{{$ieProduct->id}}" class="item btn btn-del-item" href = "{{route('import_export.destroy', $ieProduct->id )}}" title="Delete">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </a> --}}
                                         </div>
                                     </td>
                                 </tr>
@@ -164,7 +161,7 @@
                     alertSuccess(data.message);
                     setTimeout(() => {
                         location.reload();
-                    }, 3000);
+                    }, 1500);
                 }
                 else {
                     alertError(data.message);
@@ -174,7 +171,7 @@
 
         // update status
         $(document).ready(function () {
-            $('#update_status').on('change', function() {
+            $('.update_status').on('change', function() {
                 var id = $(this).attr('data-id');
                 var payment_method = $(this).attr('data-payment');
                 var into_money = $(this).attr('data-total');

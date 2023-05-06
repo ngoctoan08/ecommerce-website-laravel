@@ -12,7 +12,7 @@ $(document).ready(function () {
     });
 
     $('.list-ieProduct').DataTable({
-        order: [[7, 'asc']],
+        order: [[7, 'asc'], [3, 'desc']],
     });
 
     

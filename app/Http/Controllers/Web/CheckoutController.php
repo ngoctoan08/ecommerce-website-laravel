@@ -93,7 +93,7 @@ class CheckoutController extends Controller
                 'discount' =>  0,
                 'into_money' =>  $totalAmount,
                 'paymented' =>  0,
-                'note' => 'xuất bán lẻ',
+                'note' => empty($request->note) ? 'Xuất bán lẻ' : $request->note,
                 'partner_id' =>  $partnerId,
                 'type_import_export_id' =>  3, //1: 2: 3: xuat ban le
                 'user_id' =>  Auth::user()->id, //thong tin account cua nguoi dat hang

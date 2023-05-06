@@ -8,20 +8,13 @@
       <nav class="navbar-sidebar">
           <ul class="list-unstyled navbar__list">
               <li class="active has-sub">
-                  <a class="js-arrow" href="#">
-                      <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                  <ul class="list-unstyled navbar__sub-list js-sub-list">
-                      <li>
-                          <a href="index.php?page=product">Product</a>
-                      </li>
-                      <li>
-                          <a href="index.php?page=category">Category</a>
-                      </li>
-                  </ul>
+                    <a class="" href="{{route('admin.dashboard')}}">
+                        <i class="fa fa-signal"></i>Dashboard
+                    </a>
               </li>
               <li class="active has-sub">
                 <a class="js-arrow" href="#">
-                    <i class="fas fa-tachometer-alt"></i>Hệ thống</a>
+                    <i class="fas fa-cogs"></i>Hệ thống</a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list">
                     <li>
                         <a href="{{route('menu.index')}}">Quản lý Menu</a>

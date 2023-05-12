@@ -23,7 +23,7 @@
     
 
     <!-- css -->
-    <link rel="stylesheet" href="{{asset('web/font-awesome/css/all.css')}}">
+    <link rel="stylesheet" href="{{asset('admin/font-awesome/css/all.css')}}">
     {{-- <link rel="stylesheet" href="{{asset('web/css/bootstrap.min.css')}}"> --}}
     <link rel="stylesheet" href="{{asset('shared/bootstrap-5.0.2-dist/css/bootstrap.min.css')}}">
     <!-- toastr -->

@@ -2,7 +2,7 @@ on: push
 name: 🚀 Deploy website on push
 jobs:
   web-deploy:
-    name: 🎉 Deploy 2
+    name: 🎉 Deploy lan 3
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
@@ -14,3 +14,4 @@ jobs:
         server: ftpupload.net
         username: epiz_34177126
         password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: /htdocs/laravel-app/

@@ -11,8 +11,6 @@
                     <a class="" href="{{route('admin.dashboard')}}">
                         <i class="fa fa-signal"></i>Dashboard
                     </a>
-                    <a href=""></a>
-                    <a href=""></a>
               </li>
               <li class="active has-sub">
                 <a class="js-arrow" href="#">

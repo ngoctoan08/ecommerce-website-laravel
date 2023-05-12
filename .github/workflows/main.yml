@@ -11,7 +11,7 @@ jobs:
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: laforce.infinityfreeapp.com
+        server: ftpupload.net
         username: epiz_34177126
         password: ${{ secrets.FTP_PASSWORD }}
         server-dir: /home/vol7_2/epizy.com/epiz_34177126/htdocs/laravel-app/

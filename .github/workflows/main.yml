@@ -5,7 +5,7 @@ on:
 name: 🚀 Deploy website on push
 jobs:
   web-deploy:
-    name: 🎉 Deploy1
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
@@ -14,6 +14,7 @@ jobs:
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: ftp://185.27.134.101
+        server: laforce.infinityfreeapp.com
         username: epiz_34177126
         password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: /home/vol7_2/epizy.com/epiz_34177126/htdocs/laravel-app/
